@@ -1,0 +1,75 @@
+@use "../config" as *;
+
+.nav {
+  @include flex($justify: space-between);
+  background-color: #fff;
+  box-shadow: $box-shadow;
+  width: 100vw;
+  height: 78px;
+  overflow: hidden;
+  padding: 0 $side-padding;
+  position: relative;
+  z-index: 1;
+
+  &__logo {
+    img {
+      vertical-align: bottom;
+      width: 100px;
+    }
+  }
+
+  &__address {
+    @include flex;
+    gap: 12px;
+
+    img {
+      filter: $yellow-filter;
+      width: 1rem;
+    }
+  }
+
+  &__buttons {
+    @include flex;
+    gap: 24px;
+
+    .find-food-button {
+      @include default-trasition;
+      @include flex;
+      background-color: #fff;
+      border: none;
+      color: $font-color-dark;
+      font-size: $font-size;
+      font-weight: 700;
+      gap: 12px;
+      padding: 14px 10px;
+      text-decoration: none;
+
+      img {
+        filter: $yellow-filter;
+        width: 1rem;
+      }
+
+      &:hover {
+        color: $yellow;
+      }
+    }
+
+    .action-button {
+      @extend .find-food-button;
+      @include glow($yellow-light);
+      border-radius: $button-border-radius;
+      color: $yellow;
+      text-decoration: none;
+
+      &:hover {
+        @include glow($orange-light);
+        color: $orange;
+        transform: scale(1.1);
+
+        img {
+          filter: $orange-filter;
+        }
+      }
+    }
+  }
+}

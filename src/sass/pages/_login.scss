@@ -1,0 +1,44 @@
+@use "../config" as *;
+
+.login {
+  @include flex($align: flex-start);
+  margin-top: 4rem;
+
+  form {
+    @include card;
+    @include flex($direction: column, $align: stretch);
+    gap: 1rem;
+    padding: 1.5rem;
+    width: 32rem;
+
+    & > div {
+      @include flex($direction: column, $align: flex-start);
+      gap: 1rem;
+
+      input {
+        @include input;
+      }
+
+      input[type="submit"] {
+        @include submit-button;
+        align-self: center;
+      }
+
+      div {
+        @include flex;
+        width: 100%;
+
+        img {
+          filter: $orange-filter;
+          margin: 0 -26px 0 0;
+          width: 1rem;
+        }
+      }
+
+      p {
+        color: $orange-dark;
+        font-size: 0.8rem;
+      }
+    }
+  }
+}

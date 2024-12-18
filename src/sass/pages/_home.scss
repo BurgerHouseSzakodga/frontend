@@ -1,0 +1,6 @@
+@use "../config" as *;
+
+.home {
+  @include flex;
+  width: 100%;
+}

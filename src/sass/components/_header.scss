@@ -1,0 +1,19 @@
+@use "../config" as *;
+
+.header {
+  background-image: url("src/assets/backgound.png");
+  background-repeat: no-repeat;
+  background-size: auto;
+  height: 600px;
+  width: 100%;
+
+  &__title {
+    margin: 64px $side-padding 16px;
+
+    h1 {
+      color: #fff;
+      font-size: 88px;
+      font-weight: 700;
+    }
+  }
+}

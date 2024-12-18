@@ -1,0 +1,80 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+$orange-light: #f1722833;
+$orange: #f17228;
+$orange-dark: #f15e28;
+$orange-filter: invert(46%) sepia(98%) saturate(468%) hue-rotate(338deg)
+  brightness(96%) contrast(96%);
+
+$yellow-light: #feefd0;
+$yellow: #ffb30e;
+$yellow-filter: invert(72%) sepia(24%) saturate(1516%) hue-rotate(351deg)
+  brightness(101%) contrast(104%);
+
+$pinkish: #ff7474;
+
+$light-grey: #f5f5f5;
+$font-color-dark: #424242;
+$font-color-light: #757575;
+$font-color-light-filter: invert(41%) sepia(0%) saturate(1937%)
+  hue-rotate(220deg) brightness(108%) contrast(77%);
+$font-size: 18px;
+
+$side-padding: 220px;
+
+$border-radius: 16px;
+$button-border-radius: 8px;
+
+$box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+@mixin flex($align: center, $direction: row, $justify: center) {
+  align-items: $align;
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+}
+
+@mixin glow($color) {
+  box-shadow: 0 0 50px 15px $color;
+}
+
+@mixin default-trasition() {
+  transition: 0.2s ease-in-out;
+}
+
+@mixin card() {
+  background-color: #fff;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+}
+
+@mixin input {
+  background-color: $light-grey;
+  border: none;
+  border-radius: $button-border-radius;
+  color: $font-color-light;
+  font-size: $font-size;
+  height: 50px;
+  padding: 0 16px 0 32px;
+  width: 100%;
+}
+
+@mixin submit-button {
+  @include default-trasition;
+  @include flex;
+  border: none;
+  border-radius: $button-border-radius;
+  cursor: pointer;
+  font-size: $font-size;
+  font-weight: 700;
+  gap: 8px;
+  padding: 10px;
+  background-color: $orange;
+  color: #fff;
+  height: 60px;
+  width: 237px;
+
+  &:hover {
+    @include glow($orange-light);
+  }
+}
