@@ -5,12 +5,15 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App.jsx";
 import AuthContextProvider from "./context/AuthContextProvider.jsx";
 import "./sass/index.scss";
+import AdminContextProvider from "./context/AdminContextProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <AuthContextProvider>
-        <App />
+        <AdminContextProvider>
+          <App />
+        </AdminContextProvider>
       </AuthContextProvider>
     </BrowserRouter>
   </StrictMode>
