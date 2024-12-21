@@ -1,30 +1,73 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 
-import { AdminContext } from "./contexts";
+import { AdminContext, AuthContext } from "./contexts";
 import { apiClient } from "../api/axios";
 
 const AdminContextProvider = ({ children }) => {
-  const [menuItems, setMenuItems] = useState(null);
+  const [numberOfUsers, setNumberOfUsers] = useState(0);
+  const [numberOfOrders, setNumberOfOrders] = useState(0);
+  const [totalRevenue, setTotalRevenue] = useState(0);
 
-  const getUser = useCallback(async () => {
-    try {
-      const { data } = await apiClient.get("api/menu-items-admin");
-      setMenuItems(data);
-    } catch (error) {
-      console.error("No authenticated user:", error);
+  const { user } = useContext(AuthContext);
+
+  const isAdmin = user?.is_admin;
+
+  const getNumberOfUsers = useCallback(async () => {
+    if (isAdmin) {
+      try {
+        const { data } = await apiClient.get("api/number-of-users");
+        setNumberOfUsers(data);
+      } catch (error) {
+        console.error("No authenticated user:", error);
+      }
     }
-  }, [setMenuItems]);
+  }, [setNumberOfUsers, isAdmin]);
+
+  const getNumberOfOrders = useCallback(async () => {
+    if (isAdmin) {
+      try {
+        const { data } = await apiClient.get("api/number-of-orders");
+        setNumberOfOrders(data);
+      } catch (error) {
+        console.error("No authenticated user:", error);
+      }
+    }
+  }, [setNumberOfOrders, isAdmin]);
+
+  const getTotalRevenue = useCallback(async () => {
+    if (isAdmin) {
+      try {
+        const { data } = await apiClient.get("api/total-revenue");
+        setTotalRevenue(data);
+      } catch (error) {
+        console.error("No authenticated user:", error);
+      }
+    }
+  }, [setTotalRevenue, isAdmin]);
 
   useEffect(() => {
-    if (!menuItems) {
-      getUser();
+    if (!numberOfUsers) {
+      getNumberOfUsers();
     }
-  }, [menuItems, getUser]);
-
-  console.log(menuItems);
+    if (!numberOfOrders) {
+      getNumberOfOrders();
+    }
+    if (!totalRevenue) {
+      getTotalRevenue();
+    }
+  }, [
+    numberOfUsers,
+    numberOfOrders,
+    totalRevenue,
+    getNumberOfUsers,
+    getNumberOfOrders,
+    getTotalRevenue,
+  ]);
 
   return (
-    <AdminContext.Provider value={{ menuItems }}>
+    <AdminContext.Provider
+      value={{ numberOfUsers, numberOfOrders, totalRevenue }}
+    >
       {children}
     </AdminContext.Provider>
   );

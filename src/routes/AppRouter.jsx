@@ -11,7 +11,7 @@ import Order from "../pages/Order";
 import User from "../pages/User";
 import NoPage from "../pages/NoPage";
 import Cart from "../pages/Cart";
-import AdminDashboard from "../pages/AdminDashboard";
+import Dashboard from "../pages/Dashboard";
 
 const AppRouter = () => {
   return (
@@ -22,7 +22,7 @@ const AppRouter = () => {
         <Route path="/felhasznalo" element={<User />} />
         <Route path="/kosar" element={<Cart />} />
         <Route element={<AdminLayout />}>
-          <Route path="/admin" element={<AdminDashboard />}></Route>
+          <Route path="/admin" element={<Dashboard />}></Route>
         </Route>
       </Route>
       <Route element={<GuestLayout />}>
