@@ -12,57 +12,28 @@ const AdminContextProvider = ({ children }) => {
 
   const isAdmin = user?.is_admin;
 
-  const getNumberOfUsers = useCallback(async () => {
-    if (isAdmin) {
-      try {
-        const { data } = await apiClient.get("api/number-of-users");
-        setNumberOfUsers(data);
-      } catch (error) {
-        console.error("No authenticated user:", error);
-      }
-    }
-  }, [setNumberOfUsers, isAdmin]);
+  const fetchAdminData = useCallback(async () => {
+    if (!isAdmin) return;
 
-  const getNumberOfOrders = useCallback(async () => {
-    if (isAdmin) {
-      try {
-        const { data } = await apiClient.get("api/number-of-orders");
-        setNumberOfOrders(data);
-      } catch (error) {
-        console.error("No authenticated user:", error);
-      }
-    }
-  }, [setNumberOfOrders, isAdmin]);
+    try {
+      const [usersResponse, ordersResponse, revenueResponse] =
+        await Promise.all([
+          apiClient.get("api/number-of-users"),
+          apiClient.get("api/number-of-orders"),
+          apiClient.get("api/total-revenue"),
+        ]);
 
-  const getTotalRevenue = useCallback(async () => {
-    if (isAdmin) {
-      try {
-        const { data } = await apiClient.get("api/total-revenue");
-        setTotalRevenue(data);
-      } catch (error) {
-        console.error("No authenticated user:", error);
-      }
+      setNumberOfUsers(usersResponse.data);
+      setNumberOfOrders(ordersResponse.data);
+      setTotalRevenue(revenueResponse.data);
+    } catch (error) {
+      console.error("Error fetching admin data:", error);
     }
-  }, [setTotalRevenue, isAdmin]);
+  }, [isAdmin]);
 
   useEffect(() => {
-    if (!numberOfUsers) {
-      getNumberOfUsers();
-    }
-    if (!numberOfOrders) {
-      getNumberOfOrders();
-    }
-    if (!totalRevenue) {
-      getTotalRevenue();
-    }
-  }, [
-    numberOfUsers,
-    numberOfOrders,
-    totalRevenue,
-    getNumberOfUsers,
-    getNumberOfOrders,
-    getTotalRevenue,
-  ]);
+    fetchAdminData();
+  }, [fetchAdminData]);
 
   return (
     <AdminContext.Provider
