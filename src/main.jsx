@@ -4,8 +4,8 @@ import { BrowserRouter } from "react-router-dom";
 
 import App from "./App.jsx";
 import AuthContextProvider from "./context/AuthContextProvider.jsx";
-import "./sass/index.scss";
 import AdminContextProvider from "./context/AdminContextProvider.jsx";
+import "./sass/index.scss";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
