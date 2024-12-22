@@ -56,6 +56,15 @@ const AdminContextProvider = ({ children }) => {
     }
   };
 
+  const deleteUser = async (userId) => {
+    try {
+      await apiClient.delete(`api/users/${userId}`);
+      setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
+  };
+
   useEffect(() => {
     fetchAdminData();
   }, [fetchAdminData]);
@@ -67,6 +76,7 @@ const AdminContextProvider = ({ children }) => {
     totalRevenue,
     pendingOrders,
     updateIsAdmin,
+    deleteUser,
   };
 
   return (
