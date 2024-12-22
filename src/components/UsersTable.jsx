@@ -76,7 +76,7 @@ export default function UsersTable() {
   ];
 
   return (
-    <Box sx={{ height: 400, width: 800 }}>
+    <Box sx={{ height: 371, width: 848 }}>
       <DataGrid
         rows={[...users]}
         columns={columns}
@@ -92,6 +92,7 @@ export default function UsersTable() {
         processRowUpdate={handleProcessRowUpdate}
         experimentalFeatures={{ newEditingApi: true }}
         localeText={localeText}
+        sx={{ backgroundColor: "white" }}
       />
     </Box>
   );

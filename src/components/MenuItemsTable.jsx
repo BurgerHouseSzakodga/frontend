@@ -2,14 +2,36 @@ import { useContext } from "react";
 
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
-import { Button } from "@mui/material";
+import { Button, MenuItem, Select } from "@mui/material";
 
-import { AdminContext } from "../context/contexts";
+import { AdminContext, GuestContext } from "../context/contexts";
 import { localeText } from "../utils/locale-text";
 import usersIcon from "../assets/users.svg";
 
 export default function MenuItemsTable() {
-  const { users } = useContext(AdminContext);
+  const { menuItems, categories } = useContext(GuestContext);
+  const { updateMenuItemName, updateMenuItemPrice, updateMenuItemCategory } =
+    useContext(AdminContext);
+
+  const handleDelete = (p) => {
+    console.log("Delete" + p);
+  };
+
+  const handleProcessRowUpdate = async (newRow, oldRow) => {
+    if (newRow.name !== oldRow.name) {
+      await updateMenuItemName(newRow.id, newRow.name);
+    }
+    if (newRow.price !== oldRow.price) {
+      await updateMenuItemPrice(newRow.id, newRow.price);
+    }
+    if (newRow.category_name !== oldRow.category_name) {
+      await updateMenuItemCategory(
+        newRow.id,
+        categories.find((c) => c.name === newRow.category_name).id
+      );
+    }
+    return newRow;
+  };
 
   const columns = [
     {
@@ -29,20 +51,38 @@ export default function MenuItemsTable() {
       field: "name",
       headerName: "Név",
       width: 150,
-      editable: false,
+      editable: true,
     },
     {
-      field: "email",
-      headerName: "Email",
+      field: "price",
+      headerName: "Ár",
       width: 200,
-      editable: false,
+      editable: true,
     },
     {
-      field: "is_admin",
-      headerName: "Admin",
-      type: "boolean",
+      field: "category_name",
+      headerName: "Kategória",
       width: 110,
       editable: true,
+      renderEditCell: (params) => (
+        <Select
+          value={params.value}
+          onChange={(event) => {
+            params.api.setEditCellValue({
+              id: params.id,
+              field: params.field,
+              value: event.target.value,
+            });
+          }}
+          fullWidth
+        >
+          {categories.map((category) => (
+            <MenuItem key={category.id} value={category.name}>
+              {category.name}
+            </MenuItem>
+          ))}
+        </Select>
+      ),
     },
     {
       field: "actions",
@@ -54,17 +94,17 @@ export default function MenuItemsTable() {
           color="primary"
           onClick={() => handleDelete(params.id)}
         >
-          Törlés
+          Módosítás
         </Button>
       ),
     },
   ];
 
   return (
-    <Box sx={{ height: 400, width: 800 }}>
+    <Box sx={{ height: 371, width: 848 }}>
       <DataGrid
-        rows={[...users]}
-        columns={columns}
+        rows={[...menuItems]}
+        columns={[...columns]}
         initialState={{
           pagination: {
             paginationModel: {
@@ -77,6 +117,7 @@ export default function MenuItemsTable() {
         processRowUpdate={handleProcessRowUpdate}
         experimentalFeatures={{ newEditingApi: true }}
         localeText={localeText}
+        sx={{ backgroundColor: "white" }}
       />
     </Box>
   );

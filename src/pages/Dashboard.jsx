@@ -7,6 +7,7 @@ import ordersIcon from "../assets/orders.svg";
 import revenueIcon from "../assets/revenue.svg";
 import pendingOrdersIcon from "../assets/pending-orders.svg";
 import UsersTable from "../components/UsersTable";
+import MenuItemsTable from "../components/MenuItemsTable";
 
 const Dashboard = () => {
   const { numberOfUsers, numberOfOrders, totalRevenue, pendingOrders } =
@@ -37,6 +38,7 @@ const Dashboard = () => {
         />
       </div>
       <UsersTable />
+      <MenuItemsTable />
     </div>
   );
 };

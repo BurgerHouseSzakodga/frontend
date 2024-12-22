@@ -4,7 +4,7 @@
   @include flex($direction: column);
   background-color: #f5f6fa;
   gap: 32px;
-  height: 100%;
+  padding: 32px 0;
 
   .info-cards {
     @include flex;

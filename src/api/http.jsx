@@ -1,5 +1,27 @@
 import { apiClient } from "./axios";
 
+//guest hívások
+
+export const fetchMenuItems = async () => {
+  try {
+    const { data } = await apiClient.get("api/menu-items");
+    return data;
+  } catch (error) {
+    console.error("Error fetching menu items:", error);
+    throw error;
+  }
+};
+
+export const fetchCategories = async () => {
+  try {
+    const { data } = await apiClient.get("api/categories");
+    return data;
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    throw error;
+  }
+};
+
 //auth hívások
 
 const csrf = () => apiClient.get("/sanctum/csrf-cookie");
@@ -19,9 +41,7 @@ export const loginUser = async (payload) => {
   try {
     await apiClient.post("/login", payload);
   } catch (error) {
-    if (error.response.status === 422) {
-      throw error.response.data.errors;
-    }
+    console.error("Failed to login user:", error);
     throw error;
   }
 };
@@ -31,9 +51,7 @@ export const registerUser = async (payload) => {
   try {
     await apiClient.post("/register", payload);
   } catch (error) {
-    if (error.response.status === 422) {
-      throw error.response.data.errors;
-    }
+    console.error("Failed to register user:", error);
     throw error;
   }
 };
@@ -95,6 +113,45 @@ export const deleteUser = async (userId) => {
     await apiClient.delete(`api/users/${userId}`);
   } catch (error) {
     console.error("Error deleting user:", error);
+    throw error;
+  }
+};
+
+export const updateMenuItemName = async (menuItemId, name) => {
+  try {
+    const response = await apiClient.put(`api/menu-items/${menuItemId}/name`, {
+      name,
+    });
+    return response.data.menuItem;
+  } catch (error) {
+    console.error("Error updating menu item name:", error);
+    throw error;
+  }
+};
+
+export const updateMenuItemPrice = async (menuItemId, price) => {
+  try {
+    const response = await apiClient.put(`api/menu-items/${menuItemId}/price`, {
+      price,
+    });
+    return response.data.menuItem;
+  } catch (error) {
+    console.error("Error updating menu item price:", error);
+    throw error;
+  }
+};
+
+export const updateMenuItemCategory = async (menuItemId, categoryId) => {
+  try {
+    const response = await apiClient.put(
+      `api/menu-items/${menuItemId}/category`,
+      {
+        category_id: categoryId,
+      }
+    );
+    return response.data.menuItem;
+  } catch (error) {
+    console.error("Error updating menu item category:", error);
     throw error;
   }
 };
