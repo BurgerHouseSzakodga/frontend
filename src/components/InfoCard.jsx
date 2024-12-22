@@ -1,9 +1,11 @@
 const InfoCard = ({ title, value, image }) => {
   return (
     <div className="info-card">
-      <h5>{title}</h5>
-      {value}
-      <img src={image} />
+      <p>{title}</p>
+      <div className="info-card__content">
+        <h4>{value}</h4>
+        <img src={image} />
+      </div>
     </div>
   );
 };

@@ -14,26 +14,28 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
-      <InfoCard
-        title="Felhasználók száma"
-        value={numberOfUsers}
-        image={usersIcon}
-      />
-      <InfoCard
-        title="Rendelések száma"
-        value={numberOfOrders}
-        image={ordersIcon}
-      />
-      <InfoCard
-        title="Teljes bevétel"
-        value={totalRevenue}
-        image={revenueIcon}
-      />
-      <InfoCard
-        title="Kiszolgálás alatt"
-        value={pendingOrders}
-        image={pendingOrdersIcon}
-      />
+      <div className="info-cards">
+        <InfoCard
+          title="Felhasználók száma"
+          value={numberOfUsers}
+          image={usersIcon}
+        />
+        <InfoCard
+          title="Rendelések száma"
+          value={numberOfOrders}
+          image={ordersIcon}
+        />
+        <InfoCard
+          title="Teljes bevétel"
+          value={totalRevenue}
+          image={revenueIcon}
+        />
+        <InfoCard
+          title="Kiszolgálás alatt"
+          value={pendingOrders}
+          image={pendingOrdersIcon}
+        />
+      </div>
       <UsersTable />
     </div>
   );

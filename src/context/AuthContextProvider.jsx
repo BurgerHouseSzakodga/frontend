@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { AuthContext } from "./contexts";
-import { apiClient } from "../api/axios";
+import { fetchUser, loginUser, registerUser, logoutUser } from "../api/http";
 
 const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -10,11 +10,9 @@ const AuthContextProvider = ({ children }) => {
 
   const navigate = useNavigate();
 
-  const csrf = () => apiClient.get("/sanctum/csrf-cookie");
-
   const getUser = useCallback(async () => {
     try {
-      const { data } = await apiClient.get("api/user");
+      const data = await fetchUser();
       setUser(data);
     } catch (error) {
       console.error("No authenticated user:", error);
@@ -23,9 +21,8 @@ const AuthContextProvider = ({ children }) => {
 
   const login = async (payload) => {
     setError([]);
-    await csrf();
     try {
-      await apiClient.post("/login", payload);
+      await loginUser(payload);
       await getUser();
       navigate("/");
     } catch (error) {
@@ -35,9 +32,8 @@ const AuthContextProvider = ({ children }) => {
 
   const register = async (payload) => {
     setError([]);
-    await csrf();
     try {
-      await apiClient.post("/register", payload);
+      await registerUser(payload);
       await getUser();
       navigate("/");
     } catch (error) {
@@ -46,15 +42,18 @@ const AuthContextProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    await apiClient.post("/logout");
-    setUser(null);
+    try {
+      await logoutUser();
+      setUser(null);
+      navigate("/login");
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
   };
 
   useEffect(() => {
-    if (!user) {
-      getUser();
-    }
-  }, [user, getUser]);
+    getUser();
+  }, [getUser]);
 
   const isAdmin = user?.is_admin === 1 ? true : false;
 

@@ -1,0 +1,13 @@
+@use "../config" as *;
+
+.dashboard {
+  @include flex($direction: column);
+  background-color: #f5f6fa;
+  gap: 32px;
+  height: 100%;
+
+  .info-cards {
+    @include flex;
+    gap: 16px;
+  }
+}

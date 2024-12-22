@@ -13,6 +13,12 @@
   }
 }
 
+html,
+body,
+#root {
+  height: 100%;
+}
+
 body {
   color: $font-color-dark;
   font-family: "Poppins", sans-serif;

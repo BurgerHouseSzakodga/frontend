@@ -1,0 +1,29 @@
+@use "../config" as *;
+
+.info-card {
+  @include default-trasition;
+  @include flex(
+    $direction: column,
+    $align: flex-start,
+    $justify: space-between
+  );
+  background-color: #fff;
+  border-radius: $border-radius;
+  cursor: pointer;
+  height: 120px;
+  padding: 16px;
+  width: 200px;
+
+  &:hover {
+    box-shadow: $box-shadow;
+  }
+
+  p {
+    font-size: 0.8rem;
+  }
+
+  &__content {
+    @include flex($justify: space-between);
+    width: 100%;
+  }
+}

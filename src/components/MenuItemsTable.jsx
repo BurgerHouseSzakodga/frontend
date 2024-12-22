@@ -8,23 +8,8 @@ import { AdminContext } from "../context/contexts";
 import { localeText } from "../utils/locale-text";
 import usersIcon from "../assets/users.svg";
 
-export default function UsersTable() {
-  const { users, updateIsAdmin, deleteUser } = useContext(AdminContext);
-
-  const handleProcessRowUpdate = async (newRow, oldRow) => {
-    if (newRow.is_admin !== oldRow.is_admin) {
-      await updateIsAdmin(newRow.id, newRow.is_admin);
-    }
-    return newRow;
-  };
-
-  const handleDelete = async (id) => {
-    try {
-      await deleteUser(id);
-    } catch (error) {
-      console.error("Error deleting user:", error);
-    }
-  };
+export default function MenuItemsTable() {
+  const { users } = useContext(AdminContext);
 
   const columns = [
     {
