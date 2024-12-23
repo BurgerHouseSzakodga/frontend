@@ -36,7 +36,7 @@ const Nav = () => {
               <img src={cartIcon} />
             </Link>
             {isAdmin && (
-              <Link to="/admin" className="action-button">
+              <Link to="/admin/kezelofelulet" className="action-button">
                 <img src={gearIcon} />
               </Link>
             )}

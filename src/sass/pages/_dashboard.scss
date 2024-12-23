@@ -1,13 +1,14 @@
 @use "../config" as *;
 
 .dashboard {
-  @include flex($direction: column);
-  background-color: #f5f6fa;
+  @include flex($direction: column, $align: stretch);
   gap: 32px;
   padding: 32px 0;
+  width: 100%;
+  overflow-y: scroll;
 
   .info-cards {
-    @include flex;
+    @include flex($justify: flex-start);
     gap: 16px;
   }
 }

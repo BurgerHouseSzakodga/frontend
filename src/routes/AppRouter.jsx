@@ -12,6 +12,7 @@ import User from "../pages/User";
 import NoPage from "../pages/NoPage";
 import Cart from "../pages/Cart";
 import Dashboard from "../pages/Dashboard";
+import ManageMenuItems from "../pages/ManageMenuItems";
 
 const AppRouter = () => {
   return (
@@ -21,8 +22,9 @@ const AppRouter = () => {
         <Route path="/rendeles" element={<Order />} />
         <Route path="/felhasznalo" element={<User />} />
         <Route path="/kosar" element={<Cart />} />
-        <Route element={<AdminLayout />}>
-          <Route path="/admin" element={<Dashboard />}></Route>
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route path="/admin/kezelofelulet" element={<Dashboard />} />
+          <Route path="/admin/etelek-kezelese" element={<ManageMenuItems />} />
         </Route>
       </Route>
       <Route element={<GuestLayout />}>

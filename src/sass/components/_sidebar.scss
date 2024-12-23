@@ -1,0 +1,11 @@
+@use "../config" as *;
+
+.sidebar {
+  @include flex($direction: column);
+  background-color: #fff;
+  flex-shrink: 0;
+  min-height: 100vh;
+  position: sticky;
+  width: 250px;
+  top: 0;
+}
