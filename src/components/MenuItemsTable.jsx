@@ -4,18 +4,21 @@ import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 import { Button, MenuItem, Select } from "@mui/material";
 
-import { AdminContext, GuestContext } from "../context/contexts";
+import { AdminContext, AuthContext, GuestContext } from "../context/contexts";
 import { localeText } from "../utils/locale-text";
 import usersIcon from "../assets/users.svg";
+import Modal from "./Modal";
 
 export default function MenuItemsTable() {
   const { menuItems, categories } = useContext(GuestContext);
-  const { updateMenuItemName, updateMenuItemPrice, updateMenuItemCategory } =
-    useContext(AdminContext);
-
-  const handleDelete = (p) => {
-    console.log("Delete" + p);
-  };
+  const { navigate } = useContext(AuthContext);
+  const {
+    updateMenuItemName,
+    updateMenuItemPrice,
+    updateMenuItemCategory,
+    adminError,
+    setAdminError,
+  } = useContext(AdminContext);
 
   const handleProcessRowUpdate = async (newRow, oldRow) => {
     if (newRow.name !== oldRow.name) {
@@ -88,11 +91,11 @@ export default function MenuItemsTable() {
       field: "actions",
       headerName: "Műveletek",
       width: 150,
-      renderCell: (params) => (
+      renderCell: () => (
         <Button
+          onClick={() => navigate("/admin/etelek-kezelese")}
           variant="contained"
           color="primary"
-          onClick={() => handleDelete(params.id)}
         >
           Módosítás
         </Button>
@@ -101,24 +104,36 @@ export default function MenuItemsTable() {
   ];
 
   return (
-    <Box sx={{ height: 371, width: 848 }}>
-      <DataGrid
-        rows={[...menuItems]}
-        columns={[...columns]}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 5,
+    <>
+      <Modal
+        className="error-modal"
+        open={!!adminError}
+        onCloseModal={() => setAdminError(null)}
+      >
+        <p>{adminError}</p>
+        <form method="dialog">
+          <input type="submit" value="ok" />
+        </form>
+      </Modal>
+      <Box sx={{ height: 371, width: 848 }}>
+        <DataGrid
+          rows={[...menuItems]}
+          columns={[...columns]}
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 5,
+              },
             },
-          },
-        }}
-        pageSizeOptions={[5]}
-        disableRowSelectionOnClick
-        processRowUpdate={handleProcessRowUpdate}
-        experimentalFeatures={{ newEditingApi: true }}
-        localeText={localeText}
-        sx={{ backgroundColor: "white" }}
-      />
-    </Box>
+          }}
+          pageSizeOptions={[5]}
+          disableRowSelectionOnClick
+          processRowUpdate={handleProcessRowUpdate}
+          experimentalFeatures={{ newEditingApi: true }}
+          localeText={localeText}
+          sx={{ backgroundColor: "white" }}
+        />
+      </Box>
+    </>
   );
 }

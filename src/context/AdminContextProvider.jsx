@@ -16,6 +16,7 @@ const AdminContextProvider = ({ children }) => {
   const [numberOfOrders, setNumberOfOrders] = useState(0);
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [pendingOrders, setPendingOrders] = useState(0);
+  const [adminError, setAdminError] = useState(null);
 
   const { user } = useContext(AuthContext);
   const { setMenuItems } = useContext(GuestContext);
@@ -47,7 +48,7 @@ const AdminContextProvider = ({ children }) => {
         prevUsers.map((user) => (user.id === userId ? updatedUser : user))
       );
     } catch (error) {
-      console.error("Error updating user:", error);
+      setAdminError(error.message);
     }
   };
 
@@ -56,7 +57,7 @@ const AdminContextProvider = ({ children }) => {
       await deleteUser(userId);
       setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
     } catch (error) {
-      console.error("Error deleting user:", error);
+      setAdminError(error.message);
     }
   };
 
@@ -69,7 +70,7 @@ const AdminContextProvider = ({ children }) => {
         )
       );
     } catch (error) {
-      console.error("Error updating menu item name:", error);
+      setAdminError(error.message);
     }
   };
 
@@ -82,7 +83,7 @@ const AdminContextProvider = ({ children }) => {
         )
       );
     } catch (error) {
-      console.error("Error updating menu item price:", error);
+      setAdminError(error.message);
     }
   };
 
@@ -98,7 +99,7 @@ const AdminContextProvider = ({ children }) => {
         )
       );
     } catch (error) {
-      console.error("Error updating menu item category:", error);
+      setAdminError(error.message);
     }
   };
 
@@ -108,6 +109,8 @@ const AdminContextProvider = ({ children }) => {
     numberOfOrders,
     totalRevenue,
     pendingOrders,
+    adminError,
+    setAdminError,
     updateIsAdmin: handleUpdateIsAdmin,
     deleteUser: handleDeleteUser,
     updateMenuItemName: handleUpdateMenuItemName,

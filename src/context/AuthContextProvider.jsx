@@ -64,6 +64,7 @@ const AuthContextProvider = ({ children }) => {
     login,
     logout,
     register,
+    navigate,
   };
 
   return (
