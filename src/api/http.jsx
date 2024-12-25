@@ -95,3 +95,13 @@ export const updateMenuItemCategory = async (menuItemId, categoryId) => {
   );
   return response.data.menuItem;
 };
+
+export const createMenuItem = async (payload) => {
+  console.log(payload);
+  const response = await apiClient.post(`api/menu-items`, payload, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response.data.menuItem;
+};

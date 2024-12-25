@@ -6,7 +6,6 @@ import { Button, MenuItem, Select } from "@mui/material";
 
 import { AdminContext, AuthContext, GuestContext } from "../context/contexts";
 import { localeText } from "../utils/locale-text";
-import usersIcon from "../assets/users.svg";
 import Modal from "./Modal";
 
 export default function MenuItemsTable() {
@@ -43,7 +42,7 @@ export default function MenuItemsTable() {
       width: 100,
       renderCell: () => (
         <img
-          src={usersIcon}
+          src="http://localhost:8000/storage/uploads/NBwEGp9TF5vScT2ob3GLSjxvotEziKNbtxljvM8t.png"
           alt="avatar"
           style={{ width: "36px", height: "36px", verticalAlign: "middle" }}
         />

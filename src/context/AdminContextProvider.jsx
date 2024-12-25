@@ -8,6 +8,7 @@ import {
   updateMenuItemName,
   updateMenuItemPrice,
   updateMenuItemCategory,
+  createMenuItem,
 } from "../api/http";
 
 const AdminContextProvider = ({ children }) => {
@@ -103,6 +104,15 @@ const AdminContextProvider = ({ children }) => {
     }
   };
 
+  const handleCreateMenuItem = async (payload) => {
+    try {
+      const newMenuItem = await createMenuItem(payload);
+      setMenuItems((prevMenuItems) => [...prevMenuItems, newMenuItem]);
+    } catch (error) {
+      setAdminError(error.message);
+    }
+  };
+
   const ctxValue = {
     users,
     numberOfUsers,
@@ -116,6 +126,7 @@ const AdminContextProvider = ({ children }) => {
     updateMenuItemName: handleUpdateMenuItemName,
     updateMenuItemPrice: handleUpdateMenuItemPrice,
     updateMenuItemCategory: handleUpdateMenuItemCategory,
+    handleCreateMenuItem,
   };
 
   return (
