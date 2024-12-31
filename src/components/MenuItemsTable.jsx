@@ -38,14 +38,20 @@ export default function MenuItemsTable() {
   const columns = [
     {
       field: "avatar",
-      headerName: "Avatar",
+      headerName: "Kép",
       width: 100,
       renderCell: (params) => (
-        <img
-          src={params.row.image_path}
-          alt="avatar"
-          style={{ width: "36px", height: "36px", verticalAlign: "middle" }}
-        />
+        <div
+          style={{
+            width: "36px",
+            height: "36px",
+            borderRadius: "33%",
+            backgroundImage: `url(${params.row.image_path})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            margin: "8px 0",
+          }}
+        ></div>
       ),
     },
     { field: "id", headerName: "ID", width: 90, editable: false },
