@@ -17,6 +17,7 @@ const AdminContextProvider = ({ children }) => {
   const [numberOfOrders, setNumberOfOrders] = useState(0);
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [pendingOrders, setPendingOrders] = useState(0);
+  const [ingredients, setIngredients] = useState([]);
   const [adminError, setAdminError] = useState(null);
 
   const { user } = useContext(AuthContext);
@@ -30,11 +31,13 @@ const AdminContextProvider = ({ children }) => {
 
       try {
         const data = await fetchAdminData();
+
         setUsers(data.users);
         setNumberOfUsers(data.numberOfUsers);
         setNumberOfOrders(data.numberOfOrders);
         setTotalRevenue(data.totalRevenue);
         setPendingOrders(data.pendingOrders);
+        setIngredients(data.ingredients);
       } catch (error) {
         console.error("Error fetching admin data:", error);
       }
@@ -100,7 +103,9 @@ const AdminContextProvider = ({ children }) => {
         )
       );
     } catch (error) {
-      setAdminError(error.message);
+      setAdminError(
+        error.response.data.message || "Hiba történt a frissítés során."
+      );
     }
   };
 
@@ -109,7 +114,9 @@ const AdminContextProvider = ({ children }) => {
       const newMenuItem = await createMenuItem(payload);
       setMenuItems((prevMenuItems) => [...prevMenuItems, newMenuItem]);
     } catch (error) {
-      setAdminError(error.message);
+      setAdminError(
+        error.response.data.message || "Hiba történt a létrehozás során."
+      );
     }
   };
 
@@ -119,6 +126,7 @@ const AdminContextProvider = ({ children }) => {
     numberOfOrders,
     totalRevenue,
     pendingOrders,
+    ingredients,
     adminError,
     setAdminError,
     updateIsAdmin: handleUpdateIsAdmin,

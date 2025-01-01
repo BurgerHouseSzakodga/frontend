@@ -44,12 +44,14 @@ export const fetchAdminData = async () => {
     ordersResponse,
     revenueResponse,
     pendingOrdersResponse,
+    ingredientsResponse,
   ] = await Promise.all([
     apiClient.get("api/users"),
     apiClient.get("api/number-of-users"),
     apiClient.get("api/number-of-orders"),
     apiClient.get("api/total-revenue"),
     apiClient.get("api/pending-orders"),
+    apiClient.get("api/ingredients"),
   ]);
 
   return {
@@ -58,6 +60,7 @@ export const fetchAdminData = async () => {
     numberOfOrders: ordersResponse.data,
     totalRevenue: revenueResponse.data,
     pendingOrders: pendingOrdersResponse.data,
+    ingredients: ingredientsResponse.data,
   };
 };
 

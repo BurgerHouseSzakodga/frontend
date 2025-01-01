@@ -8,7 +8,7 @@ import { AdminContext, AuthContext, GuestContext } from "../context/contexts";
 import { localeText } from "../utils/locale-text";
 import Modal from "./Modal";
 
-export default function MenuItemsTable() {
+const MenuItemsTable = ({ modifiable, onSelectModify }) => {
   const { menuItems, categories } = useContext(GuestContext);
   const { navigate } = useContext(AuthContext);
   const {
@@ -33,6 +33,14 @@ export default function MenuItemsTable() {
       );
     }
     return newRow;
+  };
+
+  const handleModify = (id) => {
+    if (!modifiable) {
+      navigate("/admin/etelek-kezelese");
+    } else {
+      onSelectModify(true, id);
+    }
   };
 
   const columns = [
@@ -96,9 +104,9 @@ export default function MenuItemsTable() {
       field: "actions",
       headerName: "Műveletek",
       width: 150,
-      renderCell: () => (
+      renderCell: (params) => (
         <Button
-          onClick={() => navigate("/admin/etelek-kezelese")}
+          onClick={() => handleModify(params.id)}
           variant="contained"
           color="primary"
         >
@@ -111,7 +119,7 @@ export default function MenuItemsTable() {
   return (
     <>
       <Modal
-        className="error-modal"
+        className="modal error-modal"
         open={!!adminError}
         onCloseModal={() => setAdminError(null)}
       >
@@ -141,4 +149,6 @@ export default function MenuItemsTable() {
       </Box>
     </>
   );
-}
+};
+
+export default MenuItemsTable;

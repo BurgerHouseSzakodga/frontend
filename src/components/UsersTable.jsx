@@ -6,7 +6,7 @@ import { Button } from "@mui/material";
 
 import { AdminContext } from "../context/contexts";
 import { localeText } from "../utils/locale-text";
-import usersIcon from "../assets/users.svg";
+import usersIcon from "/assets/users.svg";
 
 export default function UsersTable() {
   const { users, updateIsAdmin, deleteUser } = useContext(AdminContext);
