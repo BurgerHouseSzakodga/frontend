@@ -1,12 +1,6 @@
 import { useContext, useState } from "react";
 
 import { AuthContext } from "../context/contexts";
-import "../sass/pages/regiter.scss";
-import emailIcon from "../assets/email.svg";
-import passwordIcon from "../assets/password.svg";
-
-
-
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -37,21 +31,20 @@ const Register = () => {
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
-            type="name"
+            type="text"
             name="name"
           />
-          {registerError.name && <p>{registerError.name}</p>}
+          {registerError?.name && <p>{registerError.name}</p>}
         </div>
         <div className="emailDiv">
           <label htmlFor="email">Email cím:</label>
-          <img src={emailIcon} />
           <input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             type="email"
             name="email"
           />
-          {registerError.email && <p>{registerError.email}</p>}
+          {registerError?.email && <p>{registerError.email}</p>}
         </div>
         <div className="passDiv">
           <label htmlFor="password">Jelszó:</label>
@@ -61,7 +54,7 @@ const Register = () => {
             type="password"
             name="password"
           />
-          {registerError.password && <p>{registerError.password}</p>}
+          {registerError?.password && <p>{registerError.password}</p>}
         </div>
         <div className="passConfDiv">
           <label htmlFor="password-confirmation">Jelszó mégegyszer:</label>
