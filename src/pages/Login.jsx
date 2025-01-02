@@ -2,14 +2,14 @@ import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { AuthContext } from "../context/contexts";
-import emailIcon from "../assets/email.svg";
-import passwordIcon from "../assets/password.svg";
+import emailIcon from "/assets/email.svg";
+import passwordIcon from "/assets/password.svg";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { login, error } = useContext(AuthContext);
+  const { login, loginError } = useContext(AuthContext);
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -33,7 +33,7 @@ const Login = () => {
               placeholder="Írd be az email címed..."
             />
           </div>
-          {error.email && <p>{error.email}</p>}
+          {loginError.email && <p>{loginError.email}</p>}
         </div>
         <div>
           <label htmlFor="password">Jelszó:</label>
@@ -48,7 +48,7 @@ const Login = () => {
               placeholder="Írd be a jelszavad..."
             />
           </div>
-          {error.password && <p>{error.password}</p>}
+          {loginError.password && <p>{loginError.password}</p>}
         </div>
         <div>
           <Link to="/regisztracio">Regsiztráció</Link>

@@ -6,7 +6,8 @@ import { fetchUser, loginUser, registerUser, logoutUser } from "../api/http";
 
 const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [error, setError] = useState([]);
+  const [loginError, setLoginError] = useState([]);
+  const [registerError, setRegisterError] = useState([]);
 
   const navigate = useNavigate();
 
@@ -20,24 +21,26 @@ const AuthContextProvider = ({ children }) => {
   }, [setUser]);
 
   const login = async (payload) => {
-    setError([]);
+    setLoginError([]);
     try {
       await loginUser(payload);
       await getUser();
       navigate("/");
     } catch (error) {
-      error.response.status === 422 && setError(error.response.data.errors);
+      error.response.status === 422 &&
+        setLoginError(error.response.data.errors);
     }
   };
 
   const register = async (payload) => {
-    setError([]);
+    setLoginError([]);
     try {
       await registerUser(payload);
       await getUser();
       navigate("/");
     } catch (error) {
-      error.response.status === 422 && setError(error.response.data.errors);
+      error.response.status === 422 &&
+        setRegisterError(error.response.data.errors);
     }
   };
 
@@ -59,7 +62,8 @@ const AuthContextProvider = ({ children }) => {
 
   const contextValue = {
     user,
-    error,
+    loginError,
+    registerError,
     isAdmin,
     login,
     logout,

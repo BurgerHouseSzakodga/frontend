@@ -14,7 +14,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
-  const { register } = useContext(AuthContext);
+  const { register, registerError } = useContext(AuthContext);
 
   const handleRegister = (event) => {
     event.preventDefault();
@@ -40,6 +40,7 @@ const Register = () => {
             type="name"
             name="name"
           />
+          {registerError.name && <p>{registerError.name}</p>}
         </div>
         <div className="emailDiv">
           <label htmlFor="email">Email cím:</label>
@@ -50,6 +51,7 @@ const Register = () => {
             type="email"
             name="email"
           />
+          {registerError.email && <p>{registerError.email}</p>}
         </div>
         <div className="passDiv">
           <label htmlFor="password">Jelszó:</label>
@@ -59,6 +61,7 @@ const Register = () => {
             type="password"
             name="password"
           />
+          {registerError.password && <p>{registerError.password}</p>}
         </div>
         <div className="passConfDiv">
           <label htmlFor="password-confirmation">Jelszó mégegyszer:</label>

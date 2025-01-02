@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import locationIcon from "../assets/location.svg";
-import deliveryIcon from "../assets/delivery.svg";
-import cartIcon from "../assets/cart.svg";
+import locationIcon from "/assets/location.svg";
+import deliveryIcon from "/assets/delivery.svg";
+import cartIcon from "/assets/cart.svg";
 
 const AddressCard = () => {
   const [address, setAddress] = useState("");

@@ -8,7 +8,7 @@ import { AdminContext, AuthContext, GuestContext } from "../context/contexts";
 import { localeText } from "../utils/locale-text";
 import Modal from "./Modal";
 
-export default function MenuItemsTable() {
+const MenuItemsTable = ({ modifiable, onSelectModify }) => {
   const { menuItems, categories } = useContext(GuestContext);
   const { navigate } = useContext(AuthContext);
   const {
@@ -35,17 +35,31 @@ export default function MenuItemsTable() {
     return newRow;
   };
 
+  const handleModify = (id) => {
+    if (!modifiable) {
+      navigate("/admin/etelek-kezelese");
+    } else {
+      onSelectModify(true, id);
+    }
+  };
+
   const columns = [
     {
       field: "avatar",
-      headerName: "Avatar",
+      headerName: "Kép",
       width: 100,
       renderCell: (params) => (
-        <img
-          src={params.row.image_path}
-          alt="avatar"
-          style={{ width: "36px", height: "36px", verticalAlign: "middle" }}
-        />
+        <div
+          style={{
+            width: "36px",
+            height: "36px",
+            borderRadius: "33%",
+            backgroundImage: `url(${params.row.image_path})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            margin: "8px 0",
+          }}
+        ></div>
       ),
     },
     { field: "id", headerName: "ID", width: 90, editable: false },
@@ -90,9 +104,9 @@ export default function MenuItemsTable() {
       field: "actions",
       headerName: "Műveletek",
       width: 150,
-      renderCell: () => (
+      renderCell: (params) => (
         <Button
-          onClick={() => navigate("/admin/etelek-kezelese")}
+          onClick={() => handleModify(params.id)}
           variant="contained"
           color="primary"
         >
@@ -105,7 +119,7 @@ export default function MenuItemsTable() {
   return (
     <>
       <Modal
-        className="error-modal"
+        className="modal error-modal"
         open={!!adminError}
         onCloseModal={() => setAdminError(null)}
       >
@@ -135,4 +149,6 @@ export default function MenuItemsTable() {
       </Box>
     </>
   );
-}
+};
+
+export default MenuItemsTable;

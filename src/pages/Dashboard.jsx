@@ -2,10 +2,10 @@ import { useContext } from "react";
 
 import InfoCard from "../components/InfoCard";
 import { AdminContext } from "../context/contexts";
-import usersIcon from "../assets/users.svg";
-import ordersIcon from "../assets/orders.svg";
-import revenueIcon from "../assets/revenue.svg";
-import pendingOrdersIcon from "../assets/pending-orders.svg";
+import usersIcon from "/assets/users.svg";
+import ordersIcon from "/assets/orders.svg";
+import revenueIcon from "/assets/revenue.svg";
+import pendingOrdersIcon from "/assets/pending-orders.svg";
 import UsersTable from "../components/UsersTable";
 import MenuItemsTable from "../components/MenuItemsTable";
 
@@ -38,7 +38,7 @@ const Dashboard = () => {
         />
       </div>
       <UsersTable />
-      <MenuItemsTable />
+      <MenuItemsTable modifiable={false} />
     </div>
   );
 };

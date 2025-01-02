@@ -2,12 +2,12 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 
 import { AuthContext } from "../context/contexts";
-import logo from "../assets/logo.png";
-import locationIcon from "../assets/location.svg";
-import searchIcon from "../assets/search.svg";
-import accountIcon from "../assets/account.svg";
-import cartIcon from "../assets/cart.svg";
-import gearIcon from "../assets/gear.svg";
+import logo from "/assets/logo.png";
+import locationIcon from "/assets/location.svg";
+import searchIcon from "/assets/search.svg";
+import accountIcon from "/assets/account.svg";
+import cartIcon from "/assets/cart.svg";
+import gearIcon from "/assets/gear.svg";
 
 const Nav = () => {
   const { user, isAdmin } = useContext(AuthContext);
