@@ -45,6 +45,7 @@ body {
 
 .register form input {
   width: 100%;
+  padding-left: 2.5rem; /* Bal oldali padding a placeholder és az ikon közötti távolságra */
   padding: 0.8rem;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -72,12 +73,39 @@ body {
 }
 
 .register form div img {
-  filter: sepia(1) saturate(3) brightness(0.8); /* Adjusting the filter for the image */
-  margin-right: 10px;
-  width: 1rem;
+  position: absolute;
+  left: 1rem; /* Az ikon bal oldali távolsága */
+  top: 50%;
+  transform: translateY(-50%); /* Az ikon középre igazítása vertikálisan */
+  width: 1.2rem;
 }
 
-.register form p{
+.register form input::placeholder {
+  padding-left: 2rem; /* A placeholder szöveg és az ikon közötti távolság */
+}
+
+.register form p {
   color: #e76f51; /* Orange-dark */
   font-size: 0.8rem;
+}
+
+
+/* Error message bubble style */
+.error-message {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  padding: 0.5rem;
+  background-color: #e76f51;
+  color: white;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  width: 100%;
+  margin-top: 5px;
+  text-align: center;
+  visibility: hidden; /* Initially hidden */
+}
+
+.input-container.error .error-message {
+  visibility: visible; /* Show the error message when the input has error */
 }
