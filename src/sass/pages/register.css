@@ -45,11 +45,17 @@ body {
 
 .register form input {
   width: 100%;
-  padding-left: 2.5rem; /* Bal oldali padding a placeholder és az ikon közötti távolságra */
   padding: 0.8rem;
+  padding-left: 3rem; /* Megfelelő távolság az ikonhoz */
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.register form input:focus {
+  border-color: #f17228; /* Narancssárga szegély fókusz esetén */
+  outline: none; /* Ne legyen kék outline */
 }
 
 .register form input[type="submit"] {
@@ -65,13 +71,7 @@ body {
 }
 
 .register form input[type="submit"]:hover {
-  background-color: #f17228;
-
-}
-
-.register form div {
-  display: flex;
-  width: 100%;
+  background-color: #e65d1e;
 }
 
 .register form div img {
@@ -80,23 +80,22 @@ body {
   top: 50%;
   transform: translateY(-50%); /* Az ikon középre igazítása vertikálisan */
   width: 1.2rem;
+  pointer-events: none; /* Az ikon ne akadályozza az input használatát */
 }
 
-/* Az ikonok színének módosítása narancssárgára (#f17228) */
+/* Az ikon színének beállítása narancssárgára (#f17228) */
 .input-container img {
   filter: invert(39%) sepia(94%) saturate(4907%) hue-rotate(3deg);
 }
 
-
 .register form input::placeholder {
-  padding-left: 2rem; /* A placeholder szöveg és az ikon közötti távolság */
+  padding-left: 0.5rem; /* A placeholder szöveg távolsága az ikontól */
 }
 
 .register form p {
   color: #e76f51; /* Orange-dark */
   font-size: 0.8rem;
 }
-
 
 /* Error message bubble style */
 .error-message {
@@ -116,4 +115,9 @@ body {
 
 .input-container.error .error-message {
   visibility: visible; /* Show the error message when the input has error */
+}
+
+/* Input padding adjustment on error */
+.input-container.error input {
+  border-color: #e76f51;
 }
