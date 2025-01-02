@@ -1,6 +1,12 @@
 import { useContext, useState } from "react";
 
 import { AuthContext } from "../context/contexts";
+import "../sass/pages/regiter.scss";
+import emailIcon from "../assets/email.svg";
+import passwordIcon from "../assets/password.svg";
+
+
+
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -26,7 +32,7 @@ const Register = () => {
   return (
     <div className="register">
       <form onSubmit={handleRegister}>
-        <div>
+        <div className="nameDiv">
           <label htmlFor="name">Felhasználónév:</label>
           <input
             value={name}
@@ -35,8 +41,9 @@ const Register = () => {
             name="name"
           />
         </div>
-        <div>
+        <div className="emailDiv">
           <label htmlFor="email">Email cím:</label>
+          <img src={emailIcon} />
           <input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -44,7 +51,7 @@ const Register = () => {
             name="email"
           />
         </div>
-        <div>
+        <div className="passDiv">
           <label htmlFor="password">Jelszó:</label>
           <input
             value={password}
@@ -53,7 +60,7 @@ const Register = () => {
             name="password"
           />
         </div>
-        <div>
+        <div className="passConfDiv">
           <label htmlFor="password-confirmation">Jelszó mégegyszer:</label>
           <input
             value={passwordConfirmation}
@@ -62,7 +69,7 @@ const Register = () => {
             name="password-confirmation"
           />
         </div>
-        <div>
+        <div className="submitDiv">
           <input type="submit" value="Regisztráció" />
         </div>
       </form>
