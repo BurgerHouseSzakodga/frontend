@@ -1,0 +1,83 @@
+/* Resetting styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: #424242;
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+}
+
+.register {
+  display: flex;
+  justify-content: center; /* Középre igazítja a formot */
+  margin-top: 4rem;
+}
+
+.register form {
+  background-color: #fff; /* Card background */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+  padding: 1.5rem;
+  width: 32rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional card shadow */
+  border-radius: 8px; /* Optional card border radius */
+}
+
+.register form > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.register form .input-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+.register form input {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.register form input[type="submit"] {
+  background-color: orange;
+  color: white;
+  padding: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.register form input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.register form div {
+  display: flex;
+  width: 100%;
+}
+
+.register form div img {
+  filter: sepia(1) saturate(3) brightness(0.8); /* Adjusting the filter for the image */
+  margin-right: 10px;
+  width: 1rem;
+}
+
+.register form p{
+  color: #e76f51; /* Orange-dark */
+  font-size: 0.8rem;
+}

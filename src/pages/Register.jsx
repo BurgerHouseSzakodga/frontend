@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
-
 import { AuthContext } from "../context/contexts";
+import "../sass/pages/register.css";
+import emailIcon from "/assets/email.svg"; // A helyes útvonalra állítsd be
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -26,24 +27,31 @@ const Register = () => {
   return (
     <div className="register">
       <form onSubmit={handleRegister}>
+        <h3>Registráció</h3>
         <div className="nameDiv">
           <label htmlFor="name">Felhasználónév:</label>
-          <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            type="text"
-            name="name"
-          />
+          <div className="input-container">
+            <img src={emailIcon} alt="Email icon" />
+            <input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              type="text"
+              name="name"
+            />
+          </div>
           {registerError?.name && <p>{registerError.name}</p>}
         </div>
         <div className="emailDiv">
           <label htmlFor="email">Email cím:</label>
-          <input
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            type="email"
-            name="email"
-          />
+          <div className="input-container">
+            <img src={emailIcon} alt="Email icon" />
+            <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              name="email"
+            />
+          </div>
           {registerError?.email && <p>{registerError.email}</p>}
         </div>
         <div className="passDiv">
