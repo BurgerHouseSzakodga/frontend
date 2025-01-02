@@ -25,7 +25,7 @@ body {
   gap: 1rem;
   padding: 1.5rem;
   width: 32rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional card shadow */
+  box-shadow: 0 50px 100px rgba(0, 0, 0, 0.1); /* Optional card shadow */
   border-radius: 8px; /* Optional card border radius */
 }
 
@@ -53,18 +53,20 @@ body {
 }
 
 .register form input[type="submit"] {
-  background-color: orange;
+  background-color: #f17228;
+  font-weight: bolder;
   color: white;
   padding: 1rem;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 18px;
   transition: background-color 0.3s ease;
 }
 
 .register form input[type="submit"]:hover {
-  background-color: #0056b3;
+  background-color: #f17228;
+
 }
 
 .register form div {
@@ -79,6 +81,12 @@ body {
   transform: translateY(-50%); /* Az ikon középre igazítása vertikálisan */
   width: 1.2rem;
 }
+
+/* Az ikonok színének módosítása narancssárgára (#f17228) */
+.input-container img {
+  filter: invert(39%) sepia(94%) saturate(4907%) hue-rotate(3deg);
+}
+
 
 .register form input::placeholder {
   padding-left: 2rem; /* A placeholder szöveg és az ikon közötti távolság */

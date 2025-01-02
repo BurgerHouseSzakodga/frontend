@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/contexts";
 import "../sass/pages/register.css";
-import emailIcon from "/assets/email.svg"; // A helyes útvonalra állítsd be
+import emailIcon from "/assets/email.svg"; 
 import userIcon from "/assets/users.svg"; 
 import passwordIcon from "/assets/password.svg"; 
 
@@ -10,28 +10,51 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  
+  const [nameError, setNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
   const { register, registerError } = useContext(AuthContext);
 
-  // Jelszó validáció
-  const passwordRegex = /^(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/; // Minimum 8 karakter, és tartalmaz egy speciális karaktert
+  // Jelszó regex: minimum 8 karakter és kell speciális karakter
+  const passwordRegex = /^(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
+
+  // Email regex: valid email formátum
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   const handleRegister = (event) => {
     event.preventDefault();
 
-    // Ha a jelszó nem felel meg a regexnek, ne engedjük a regisztrációt
+    // Felhasználónév validálása
+    if (!name) {
+      setNameError("A felhasználónév kötelező.");
+      return;
+    } else {
+      setNameError("");
+    }
+
+    // Email validálása
+    if (!email) {
+      setEmailError("Az email cím kötelező.");
+      return;
+    } else if (!emailRegex.test(email)) {
+      setEmailError("Érvénytelen email cím.");
+      return;
+    } else {
+      setEmailError("");
+    }
+
+    // Jelszó validálása
     if (!passwordRegex.test(password)) {
       setPasswordError("A jelszónak legalább 8 karakter hosszúnak kell lennie, és tartalmaznia kell speciális karaktert.");
       return;
-    }
-
-    if (password !== passwordConfirmation) {
+    } else if (password !== passwordConfirmation) {
       setPasswordError("A jelszavak nem egyeznek meg.");
       return;
+    } else {
+      setPasswordError("");
     }
-
-    setPasswordError(""); // Töröljük a hibát, ha minden rendben
 
     const payload = {
       name,
@@ -47,9 +70,11 @@ const Register = () => {
     <div className="register">
       <form onSubmit={handleRegister}>
         <h3>Regisztráció</h3>
+        
+        {/* Felhasználónév */}
         <div className="nameDiv">
           <label htmlFor="name">Felhasználónév:</label>
-          <div className="input-container">
+          <div className={`input-container ${nameError ? "error" : ""}`}>
             <img src={userIcon} alt="User icon" />
             <input
               value={name}
@@ -58,12 +83,14 @@ const Register = () => {
               name="name"
               placeholder="Példa János"
             />
+            {nameError && <div className="error-message">{nameError}</div>}
           </div>
-          {registerError?.name && <p>{registerError.name}</p>}
         </div>
+        
+        {/* Email cím */}
         <div className="emailDiv">
           <label htmlFor="email">Email cím:</label>
-          <div className="input-container">
+          <div className={`input-container ${emailError ? "error" : ""}`}>
             <img src={emailIcon} alt="Email icon" />
             <input
               value={email}
@@ -72,9 +99,11 @@ const Register = () => {
               name="email"
               placeholder="peldajani@freemail.hu"
             />
+            {emailError && <div className="error-message">{emailError}</div>}
           </div>
-          {registerError?.email && <p>{registerError.email}</p>}
         </div>
+        
+        {/* Jelszó */}
         <div className="passDiv">
           <label htmlFor="password">Jelszó:</label>
           <div className={`input-container ${passwordError ? "error" : ""}`}>
@@ -88,8 +117,9 @@ const Register = () => {
             />
             {passwordError && <div className="error-message">{passwordError}</div>}
           </div>
-          {registerError?.password && <p>{registerError.password}</p>}
         </div>
+
+        {/* Jelszó megerősítése */}
         <div className="passConfDiv">
           <label htmlFor="password-confirmation">Jelszó mégegyszer:</label>
           <div className="input-container">
@@ -103,6 +133,8 @@ const Register = () => {
             />
           </div>
         </div>
+
+        {/* Submit gomb */}
         <div className="submitDiv">
           <input type="submit" value="Regisztráció" />
         </div>
