@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import MenuItemsTable from "../components/MenuItemsTable";
 import { AdminContext, GuestContext } from "../context/contexts";
@@ -20,9 +20,15 @@ const ManageMenuItems = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
-  const [category, setCategory] = useState(categories[0].id || "");
+  const [category, setCategory] = useState("");
   const [composition, setComposition] = useState([]);
   const [image, setImage] = useState(null);
+
+  useEffect(() => {
+    if (categories.length) {
+      setCategory(categories[0].id);
+    }
+  }, [categories]);
 
   const handleSetIngredient = (event) => {
     const ingredientId = event.target.id;

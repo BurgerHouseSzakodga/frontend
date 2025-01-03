@@ -1,16 +1,17 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/contexts";
 import "../sass/pages/register.css";
-import emailIcon from "/assets/email.svg"; 
-import userIcon from "/assets/users.svg"; 
-import passwordIcon from "/assets/password.svg"; 
+import emailIcon from "/assets/email.svg";
+import userIcon from "/assets/users.svg";
+import passwordIcon from "/assets/password.svg";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  
+  //OLVASD EL PLS
+  //Ezek a statek meg a regex nem kellenek, mert a hibák a backenden vannak kezelve, onnan jönnek az üzenetek is. Hasonlóan a loginhoz.
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -47,7 +48,9 @@ const Register = () => {
 
     // Jelszó validálása
     if (!passwordRegex.test(password)) {
-      setPasswordError("A jelszónak legalább 8 karakter hosszúnak kell lennie, és tartalmaznia kell speciális karaktert.");
+      setPasswordError(
+        "A jelszónak legalább 8 karakter hosszúnak kell lennie, és tartalmaznia kell speciális karaktert."
+      );
       return;
     } else if (password !== passwordConfirmation) {
       setPasswordError("A jelszavak nem egyeznek meg.");
@@ -70,7 +73,7 @@ const Register = () => {
     <div className="register">
       <form onSubmit={handleRegister}>
         <h3>Regisztráció</h3>
-        
+
         {/* Felhasználónév */}
         <div className="nameDiv">
           <label htmlFor="name">Felhasználónév:</label>
@@ -86,7 +89,7 @@ const Register = () => {
             {nameError && <div className="error-message">{nameError}</div>}
           </div>
         </div>
-        
+
         {/* Email cím */}
         <div className="emailDiv">
           <label htmlFor="email">Email cím:</label>
@@ -102,7 +105,7 @@ const Register = () => {
             {emailError && <div className="error-message">{emailError}</div>}
           </div>
         </div>
-        
+
         {/* Jelszó */}
         <div className="passDiv">
           <label htmlFor="password">Jelszó:</label>
@@ -115,7 +118,9 @@ const Register = () => {
               name="password"
               placeholder="123456@"
             />
-            {passwordError && <div className="error-message">{passwordError}</div>}
+            {passwordError && (
+              <div className="error-message">{passwordError}</div>
+            )}
           </div>
         </div>
 

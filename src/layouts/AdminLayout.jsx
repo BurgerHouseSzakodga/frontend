@@ -5,7 +5,11 @@ import { AuthContext } from "../context/contexts";
 import Sidebar from "../components/Sidebar";
 
 const AdminLayout = () => {
-  const { isAdmin } = useContext(AuthContext);
+  const { isAdmin, loading } = useContext(AuthContext);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return isAdmin ? (
     <div className="admin-layout">
