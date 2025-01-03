@@ -8,6 +8,7 @@ import revenueIcon from "/assets/revenue.svg";
 import pendingOrdersIcon from "/assets/pending-orders.svg";
 import UsersTable from "../components/UsersTable";
 import MenuItemsTable from "../components/MenuItemsTable";
+import RevenueChart from "../components/RevenueChart";
 
 const Dashboard = () => {
   const { numberOfUsers, numberOfOrders, totalRevenue, pendingOrders } =
@@ -37,6 +38,7 @@ const Dashboard = () => {
           image={pendingOrdersIcon}
         />
       </div>
+      <RevenueChart />
       <UsersTable />
       <MenuItemsTable modifiable={false} />
     </div>
