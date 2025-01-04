@@ -6,18 +6,12 @@ import { Button, MenuItem, Select } from "@mui/material";
 
 import { AdminContext, AuthContext, GuestContext } from "../context/contexts";
 import { localeText } from "../utils/locale-text";
-import Modal from "./Modal";
 
 const MenuItemsTable = ({ modifiable, onSelectModify }) => {
   const { menuItems, categories } = useContext(GuestContext);
   const { navigate } = useContext(AuthContext);
-  const {
-    updateMenuItemName,
-    updateMenuItemPrice,
-    updateMenuItemCategory,
-    adminError,
-    setAdminError,
-  } = useContext(AdminContext);
+  const { updateMenuItemName, updateMenuItemPrice, updateMenuItemCategory } =
+    useContext(AdminContext);
 
   const handleProcessRowUpdate = async (newRow, oldRow) => {
     if (newRow.name !== oldRow.name) {
@@ -117,37 +111,25 @@ const MenuItemsTable = ({ modifiable, onSelectModify }) => {
   ];
 
   return (
-    <>
-      <Modal
-        className="modal error-modal"
-        open={!!adminError}
-        onCloseModal={() => setAdminError(null)}
-      >
-        <p>{adminError}</p>
-        <form method="dialog">
-          <input type="submit" value="ok" />
-        </form>
-      </Modal>
-      <Box sx={{ height: 371, width: 848 }}>
-        <DataGrid
-          rows={[...menuItems]}
-          columns={[...columns]}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 5,
-              },
+    <Box sx={{ height: 371, width: 848 }}>
+      <DataGrid
+        rows={[...menuItems]}
+        columns={[...columns]}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 5,
             },
-          }}
-          pageSizeOptions={[5]}
-          disableRowSelectionOnClick
-          processRowUpdate={handleProcessRowUpdate}
-          experimentalFeatures={{ newEditingApi: true }}
-          localeText={localeText}
-          sx={{ backgroundColor: "white" }}
-        />
-      </Box>
-    </>
+          },
+        }}
+        pageSizeOptions={[5]}
+        disableRowSelectionOnClick
+        processRowUpdate={handleProcessRowUpdate}
+        experimentalFeatures={{ newEditingApi: true }}
+        localeText={localeText}
+        sx={{ backgroundColor: "white" }}
+      />
+    </Box>
   );
 };
 

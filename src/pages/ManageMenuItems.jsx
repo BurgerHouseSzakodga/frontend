@@ -1,7 +1,7 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 
-import MenuItemsTable from "../components/MenuItemsTable";
 import { AdminContext, GuestContext } from "../context/contexts";
+import MenuItemsTable from "../components/MenuItemsTable";
 import ModifyPanel from "../components/ModifyPanel";
 import nameIcon from "/assets/name.svg";
 import descriptionIcon from "/assets/description.svg";
@@ -9,13 +9,11 @@ import priceIcon from "/assets/price.svg";
 import categoryIcon from "/assets/category.svg";
 
 const ManageMenuItems = () => {
-  const { categories, menuItems } = useContext(GuestContext);
+  const { categories } = useContext(GuestContext);
   const { handleCreateMenuItem, ingredients } = useContext(AdminContext);
 
   const [isEditing, setIsEditing] = useState(false);
-  const [selectedMenuItem, setSelectedMenuItem] = useState(
-    menuItems[0] || null
-  );
+  const [selectedMenuItemId, setSelectedMenuItemId] = useState(null);
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -24,6 +22,8 @@ const ManageMenuItems = () => {
   const [composition, setComposition] = useState([]);
   const [image, setImage] = useState(null);
 
+  const fileInputRef = useRef();
+
   useEffect(() => {
     if (categories.length) {
       setCategory(categories[0].id);
@@ -31,7 +31,7 @@ const ManageMenuItems = () => {
   }, [categories]);
 
   const handleSetIngredient = (event) => {
-    const ingredientId = event.target.id;
+    const ingredientId = parseInt(event.target.id);
     const isChecked = event.target.checked;
 
     if (isChecked) {
@@ -46,7 +46,7 @@ const ManageMenuItems = () => {
 
     if (!id) return;
 
-    setSelectedMenuItem(menuItems.find((item) => item.id === id));
+    setSelectedMenuItemId(id);
   };
 
   const onCreateMenuItem = (event) => {
@@ -67,6 +67,16 @@ const ManageMenuItems = () => {
     }
 
     handleCreateMenuItem(formData);
+
+    setName("");
+    setDescription("");
+    setPrice("");
+    setComposition([]);
+    setImage(null);
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   return (
@@ -75,7 +85,7 @@ const ManageMenuItems = () => {
         {isEditing ? (
           <ModifyPanel
             onCloseModifyPanel={handleClickEdit}
-            selectedItem={selectedMenuItem}
+            selectedItemId={selectedMenuItemId}
           />
         ) : (
           <form onSubmit={onCreateMenuItem}>
@@ -143,6 +153,7 @@ const ManageMenuItems = () => {
             <div>
               <label htmlFor="menu-item-image">Kép</label>
               <input
+                ref={fileInputRef}
                 onChange={(e) => setImage(e.target.files[0])}
                 type="file"
                 accept="image/*"
@@ -155,7 +166,8 @@ const ManageMenuItems = () => {
               {ingredients.map((ingredient) => (
                 <div key={ingredient.id}>
                   <input
-                    onClick={handleSetIngredient}
+                    checked={composition.includes(ingredient.id)}
+                    onChange={handleSetIngredient}
                     type="checkbox"
                     id={ingredient.id}
                     name={ingredient.id}

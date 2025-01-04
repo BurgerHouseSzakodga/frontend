@@ -113,3 +113,7 @@ export const createMenuItem = async (payload) => {
   });
   return response.data.menuItem;
 };
+
+export const deleteMenuItem = async (menuItemId) => {
+  await apiClient.delete(`api/menu-items/${menuItemId}`);
+};
