@@ -79,17 +79,17 @@ $box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
 }
 
-@mixin swim-in {
-  @keyframes swimIn {
-    0% {
-      transform: translate(-50%, -100%);
-      opacity: 0;
-    }
-    100% {
-      transform: translate(-50%, -50%);
-      opacity: 1;
-    }
+@keyframes swimIn {
+  0% {
+    transform: translate(-50%, -100%);
+    opacity: 0;
   }
+  100% {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+}
 
+@mixin swim-in {
   animation: swimIn 0.5s forwards;
 }

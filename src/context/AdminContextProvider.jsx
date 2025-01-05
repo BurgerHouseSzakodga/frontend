@@ -9,6 +9,7 @@ import {
   updateMenuItemPrice,
   updateMenuItemCategory,
   createMenuItem,
+  deleteMenuItem,
 } from "../api/http";
 
 const AdminContextProvider = ({ children }) => {
@@ -120,6 +121,19 @@ const AdminContextProvider = ({ children }) => {
     }
   };
 
+  const handleDeleteMenuItem = async (menuItemId) => {
+    try {
+      await deleteMenuItem(menuItemId);
+      setMenuItems((prevMenuItems) =>
+        prevMenuItems.filter((item) => item.id !== menuItemId)
+      );
+    } catch (error) {
+      setAdminError(
+        error.response.data.message || "Hiba történt a törlés során."
+      );
+    }
+  };
+
   const ctxValue = {
     users,
     numberOfUsers,
@@ -135,6 +149,7 @@ const AdminContextProvider = ({ children }) => {
     updateMenuItemPrice: handleUpdateMenuItemPrice,
     updateMenuItemCategory: handleUpdateMenuItemCategory,
     handleCreateMenuItem,
+    handleDeleteMenuItem,
   };
 
   return (

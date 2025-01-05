@@ -6,17 +6,21 @@ import { fetchUser, loginUser, registerUser, logoutUser } from "../api/http";
 
 const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [loginError, setLoginError] = useState([]);
   const [registerError, setRegisterError] = useState([]);
 
   const navigate = useNavigate();
 
   const getUser = useCallback(async () => {
+    setLoading(true);
     try {
       const data = await fetchUser();
       setUser(data);
     } catch (error) {
       console.error("No authenticated user:", error);
+    } finally {
+      setLoading(false);
     }
   }, [setUser]);
 
@@ -65,6 +69,7 @@ const AuthContextProvider = ({ children }) => {
     loginError,
     registerError,
     isAdmin,
+    loading,
     login,
     logout,
     register,

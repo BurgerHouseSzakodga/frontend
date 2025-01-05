@@ -64,6 +64,11 @@ export const fetchAdminData = async () => {
   };
 };
 
+export const fetchRevenueChartData = async (days) => {
+  const response = await apiClient.get(`api/revenue-by-days/${days}`);
+  return response.data[0];
+};
+
 export const updateIsAdmin = async (userId, isAdmin) => {
   const response = await apiClient.put(`api/users/${userId}`, {
     is_admin: isAdmin,
@@ -107,4 +112,8 @@ export const createMenuItem = async (payload) => {
     },
   });
   return response.data.menuItem;
+};
+
+export const deleteMenuItem = async (menuItemId) => {
+  await apiClient.delete(`api/menu-items/${menuItemId}`);
 };
