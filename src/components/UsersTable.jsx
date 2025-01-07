@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 import { Button } from "@mui/material";
 
-import { AdminContext } from "../context/contexts";
+import { UserContext } from "../context/contexts";
 import { localeText } from "../utils/locale-text";
 import usersIcon from "/assets/users.svg";
 import Modal from "./Modal";
@@ -15,7 +15,7 @@ export default function UsersTable() {
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [confirmAction, setConfirmAction] = useState(() => () => {});
 
-  const { users, updateIsAdmin, deleteUser } = useContext(AdminContext);
+  const { users, updateIsAdmin, deleteUser } = useContext(UserContext);
 
   const handleProcessRowUpdate = async (newRow, oldRow) => {
     if (newRow.is_admin !== oldRow.is_admin) {

@@ -1,6 +1,10 @@
 import { useContext, useEffect, useRef, useState } from "react";
 
-import { AdminContext, GuestContext } from "../context/contexts";
+import {
+  CategoryContext,
+  MenuItemContext,
+  UserContext,
+} from "../context/contexts";
 import MenuItemsTable from "../components/MenuItemsTable";
 import ModifyPanel from "../components/ModifyPanel";
 import nameIcon from "/assets/name.svg";
@@ -9,8 +13,9 @@ import priceIcon from "/assets/price.svg";
 import categoryIcon from "/assets/category.svg";
 
 const ManageMenuItems = () => {
-  const { categories } = useContext(GuestContext);
-  const { handleCreateMenuItem, ingredients } = useContext(AdminContext);
+  const { categories } = useContext(CategoryContext);
+  const { ingredients } = useContext(UserContext);
+  const { handleCreateMenuItem } = useContext(MenuItemContext);
 
   const [isEditing, setIsEditing] = useState(false);
   const [selectedMenuItemId, setSelectedMenuItemId] = useState(null);
@@ -39,14 +44,6 @@ const ManageMenuItems = () => {
     } else {
       setComposition(composition.filter((id) => id !== ingredientId));
     }
-  };
-
-  const handleClickEdit = (isEditing, id) => {
-    setIsEditing(isEditing);
-
-    if (!id) return;
-
-    setSelectedMenuItemId(id);
   };
 
   const onCreateMenuItem = (event) => {
@@ -79,6 +76,14 @@ const ManageMenuItems = () => {
     }
   };
 
+  const handleClickEdit = (isEditing, id) => {
+    setIsEditing(isEditing);
+
+    if (!id) return;
+
+    setSelectedMenuItemId(id);
+  };
+
   return (
     <div className="manage-menu-items">
       <div className="menu-item-form">
@@ -96,7 +101,6 @@ const ManageMenuItems = () => {
                 onChange={(e) => setName(e.target.value)}
                 value={name}
                 maxLength={25}
-                required
                 type="text"
                 placeholder="Név"
                 name="menu-item-name"
@@ -110,7 +114,6 @@ const ManageMenuItems = () => {
                 onChange={(e) => setDescription(e.target.value)}
                 value={description}
                 maxLength={100}
-                required
                 name="menu-item-description"
                 id="menu-item-description"
                 placeholder="Leírás"
@@ -125,7 +128,6 @@ const ManageMenuItems = () => {
                   value={price}
                   max={100000}
                   min={1}
-                  required
                   type="number"
                   name="menu-item-price"
                   id="menu-item-price"
@@ -138,7 +140,6 @@ const ManageMenuItems = () => {
                 <select
                   onChange={(e) => setCategory(e.target.value)}
                   value={category}
-                  required
                   name="menu-item-category"
                   id="menu-item-category"
                 >

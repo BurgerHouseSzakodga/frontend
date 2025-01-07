@@ -4,9 +4,9 @@ import { Navigate, Outlet } from "react-router-dom";
 import { AuthContext } from "../context/contexts";
 
 const AuthLayout = () => {
-  const { user, loading } = useContext(AuthContext);
+  const { user, authLoading } = useContext(AuthContext);
 
-  if (loading) {
+  if (authLoading) {
     return <div>Loading...</div>;
   }
 

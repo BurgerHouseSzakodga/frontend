@@ -4,20 +4,23 @@ import { BrowserRouter } from "react-router-dom";
 
 import App from "./App.jsx";
 import AuthContextProvider from "./context/AuthContextProvider.jsx";
-import AdminContextProvider from "./context/AdminContextProvider.jsx";
-import GuestContextProvider from "./context/GuestContextProvider.jsx";
+import UserContextProvider from "./context/UserContextProvider.jsx";
+import CategoryContextProvider from "./context/CategoryContextProvider.jsx";
+import MenuItemContextProvider from "./context/MenuItemContextProvider.jsx";
 import "./sass/index.scss";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
-      <GuestContextProvider>
+      <CategoryContextProvider>
         <AuthContextProvider>
-          <AdminContextProvider>
-            <App />
-          </AdminContextProvider>
+          <UserContextProvider>
+            <MenuItemContextProvider>
+              <App />
+            </MenuItemContextProvider>
+          </UserContextProvider>
         </AuthContextProvider>
-      </GuestContextProvider>
+      </CategoryContextProvider>
     </BrowserRouter>
   </StrictMode>
 );

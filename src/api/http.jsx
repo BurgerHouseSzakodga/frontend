@@ -37,34 +37,37 @@ export const logoutUser = async () => {
 
 // Admin hívások
 
-export const fetchAdminData = async () => {
-  const [
-    usersResponse,
-    userNumberResponse,
-    ordersResponse,
-    revenueResponse,
-    pendingOrdersResponse,
-    ingredientsResponse,
-  ] = await Promise.all([
-    apiClient.get("api/users"),
-    apiClient.get("api/number-of-users"),
-    apiClient.get("api/number-of-orders"),
-    apiClient.get("api/total-revenue"),
-    apiClient.get("api/pending-orders"),
-    apiClient.get("api/ingredients"),
-  ]);
-
-  return {
-    users: usersResponse.data,
-    numberOfUsers: userNumberResponse.data,
-    numberOfOrders: ordersResponse.data,
-    totalRevenue: revenueResponse.data,
-    pendingOrders: pendingOrdersResponse.data,
-    ingredients: ingredientsResponse.data,
-  };
+export const fetchNumberOfUsers = async () => {
+  const response = await apiClient.get("api/number-of-users");
+  return response.data;
 };
 
-export const fetchRevenueChartData = async (days) => {
+export const fetchNumberOfOrders = async () => {
+  const response = await apiClient.get("api/number-of-orders");
+  return response.data;
+};
+
+export const fetchTotalRevenue = async () => {
+  const response = await apiClient.get("api/total-revenue");
+  return response.data;
+};
+
+export const fetchPendingOrders = async () => {
+  const response = await apiClient.get("api/pending-orders");
+  return response.data;
+};
+
+export const fetchIngredients = async () => {
+  const response = await apiClient.get("api/ingredients");
+  return response.data;
+};
+
+export const fetchUsers = async () => {
+  const response = await apiClient.get("api/users");
+  return response.data;
+};
+
+export const fetchRevenueByTimePeriod = async (days) => {
   const response = await apiClient.get(`api/revenue-by-days/${days}`);
   return response.data[0];
 };

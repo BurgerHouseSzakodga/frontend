@@ -4,24 +4,32 @@ import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 import { Button, MenuItem, Select } from "@mui/material";
 
-import { AdminContext, AuthContext, GuestContext } from "../context/contexts";
+import {
+  AuthContext,
+  CategoryContext,
+  MenuItemContext,
+} from "../context/contexts";
 import { localeText } from "../utils/locale-text";
 
 const MenuItemsTable = ({ modifiable, onSelectModify }) => {
-  const { menuItems, categories } = useContext(GuestContext);
+  const { categories } = useContext(CategoryContext);
   const { navigate } = useContext(AuthContext);
-  const { updateMenuItemName, updateMenuItemPrice, updateMenuItemCategory } =
-    useContext(AdminContext);
+  const {
+    menuItems,
+    handleUpdateMenuItemName,
+    handleUpdateMenuItemPrice,
+    handleUpdateMenuItemCategory,
+  } = useContext(MenuItemContext);
 
   const handleProcessRowUpdate = async (newRow, oldRow) => {
     if (newRow.name !== oldRow.name) {
-      await updateMenuItemName(newRow.id, newRow.name);
+      await handleUpdateMenuItemName(newRow.id, newRow.name);
     }
     if (newRow.price !== oldRow.price) {
-      await updateMenuItemPrice(newRow.id, newRow.price);
+      await handleUpdateMenuItemPrice(newRow.id, newRow.price);
     }
     if (newRow.category_name !== oldRow.category_name) {
-      await updateMenuItemCategory(
+      await handleUpdateMenuItemCategory(
         newRow.id,
         categories.find((c) => c.name === newRow.category_name).id
       );
@@ -126,6 +134,7 @@ const MenuItemsTable = ({ modifiable, onSelectModify }) => {
         disableRowSelectionOnClick
         processRowUpdate={handleProcessRowUpdate}
         experimentalFeatures={{ newEditingApi: true }}
+        onProcessRowUpdateError={(error) => console.log(error)}
         localeText={localeText}
         sx={{ backgroundColor: "white" }}
       />

@@ -1,15 +1,15 @@
 import { useContext } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
-import { AdminContext, AuthContext } from "../context/contexts";
+import { AuthContext, MenuItemContext } from "../context/contexts";
 import Sidebar from "../components/Sidebar";
 import Modal from "../components/Modal";
 
 const AdminLayout = () => {
-  const { isAdmin, loading } = useContext(AuthContext);
-  const { adminError, setAdminError } = useContext(AdminContext);
+  const { isAdmin, authLoading } = useContext(AuthContext);
+  const { menuItemError, setMenuItemError } = useContext(MenuItemContext);
 
-  if (loading) {
+  if (authLoading) {
     return <div>Loading...</div>;
   }
 
@@ -17,10 +17,10 @@ const AdminLayout = () => {
     <div className="admin-layout">
       <Modal
         className="modal error-modal"
-        open={!!adminError}
-        onCloseModal={() => setAdminError(null)}
+        open={!!menuItemError}
+        onCloseModal={() => setMenuItemError(null)}
       >
-        <p>{adminError}</p>
+        <p>{menuItemError}</p>
         <form method="dialog">
           <input type="submit" value="ok" />
         </form>

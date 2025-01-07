@@ -1,7 +1,7 @@
 import { useContext } from "react";
 
 import InfoCard from "../components/InfoCard";
-import { AdminContext } from "../context/contexts";
+import { UserContext } from "../context/contexts";
 import usersIcon from "/assets/users.svg";
 import ordersIcon from "/assets/orders.svg";
 import revenueIcon from "/assets/revenue.svg";
@@ -12,7 +12,7 @@ import RevenueChart from "../components/RevenueChart";
 
 const Dashboard = () => {
   const { numberOfUsers, numberOfOrders, totalRevenue, pendingOrders } =
-    useContext(AdminContext);
+    useContext(UserContext);
 
   return (
     <div className="dashboard">

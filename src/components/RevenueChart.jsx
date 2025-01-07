@@ -2,17 +2,17 @@ import { useEffect, useState } from "react";
 
 import { LineChart } from "@mui/x-charts/LineChart";
 
-import { fetchRevenueChartData } from "../api/http";
+import { fetchRevenueByTimePeriod } from "../api/http";
 
 const RevenueChart = () => {
-  const [revenueByDays, setRevenueByDays] = useState([]);
+  const [revenueByTimePeriod, setRevenueByTimePeriod] = useState([]);
   const [selectedRange, setSelectedRange] = useState(15);
 
   useEffect(() => {
     const fetchRevenue = async () => {
       try {
-        const data = await fetchRevenueChartData(selectedRange);
-        setRevenueByDays(data);
+        const data = await fetchRevenueByTimePeriod(selectedRange);
+        setRevenueByTimePeriod(data);
       } catch (error) {
         console.error("Error fetching revenue data:", error);
       }
@@ -34,7 +34,7 @@ const RevenueChart = () => {
       <LineChart
         series={[
           {
-            data: [...revenueByDays],
+            data: [...revenueByTimePeriod],
           },
         ]}
         width={848}
