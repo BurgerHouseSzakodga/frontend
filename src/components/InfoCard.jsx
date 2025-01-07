@@ -1,4 +1,10 @@
-const InfoCard = ({ title, value, image }) => {
+import Loader from "./Loader";
+
+const InfoCard = ({ title, value, image, loading }) => {
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <div className="info-card">
       <p>{title}</p>

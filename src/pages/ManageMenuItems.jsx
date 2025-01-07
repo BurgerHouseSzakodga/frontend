@@ -2,8 +2,8 @@ import { useContext, useEffect, useRef, useState } from "react";
 
 import {
   CategoryContext,
+  IngredientContext,
   MenuItemContext,
-  UserContext,
 } from "../context/contexts";
 import MenuItemsTable from "../components/MenuItemsTable";
 import ModifyPanel from "../components/ModifyPanel";
@@ -14,7 +14,7 @@ import categoryIcon from "/assets/category.svg";
 
 const ManageMenuItems = () => {
   const { categories } = useContext(CategoryContext);
-  const { ingredients } = useContext(UserContext);
+  const { ingredients } = useContext(IngredientContext);
   const { handleCreateMenuItem } = useContext(MenuItemContext);
 
   const [isEditing, setIsEditing] = useState(false);

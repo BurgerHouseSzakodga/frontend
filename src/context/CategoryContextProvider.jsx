@@ -4,15 +4,23 @@ import { fetchCategories } from "../api/http";
 
 const CategoryContextProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
+  const [categoriesError, setCategoriesError] = useState("");
+  const [categoriesLoading, setCategoriesLoading] = useState(false);
 
   useEffect(() => {
     const getData = async () => {
+      setCategoriesLoading(true);
       try {
         const categoriesData = await fetchCategories();
 
         setCategories(categoriesData);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        setCategoriesError(
+          error.message.data.message ||
+            "Hiba történt a kategóriák betöltése során."
+        );
+      } finally {
+        setCategoriesLoading(false);
       }
     };
 
@@ -20,7 +28,9 @@ const CategoryContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <CategoryContext.Provider value={{ categories }}>
+    <CategoryContext.Provider
+      value={{ categories, categoriesError, categoriesLoading }}
+    >
       {children}
     </CategoryContext.Provider>
   );

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 
 import InfoCard from "../components/InfoCard";
-import { UserContext } from "../context/contexts";
+import { OrderContext, UserContext } from "../context/contexts";
 import usersIcon from "/assets/users.svg";
 import ordersIcon from "/assets/orders.svg";
 import revenueIcon from "/assets/revenue.svg";
@@ -11,8 +11,10 @@ import MenuItemsTable from "../components/MenuItemsTable";
 import RevenueChart from "../components/RevenueChart";
 
 const Dashboard = () => {
-  const { numberOfUsers, numberOfOrders, totalRevenue, pendingOrders } =
-    useContext(UserContext);
+  const { numberOfOrders, totalRevenue, pendingOrders, ordersLoading } =
+    useContext(OrderContext);
+
+  const { numberOfUsers, userLoading } = useContext(UserContext);
 
   return (
     <div className="dashboard">
@@ -20,21 +22,25 @@ const Dashboard = () => {
         <InfoCard
           title="Felhasználók száma"
           value={numberOfUsers}
+          loading={userLoading}
           image={usersIcon}
         />
         <InfoCard
           title="Rendelések száma"
           value={numberOfOrders}
+          loading={ordersLoading}
           image={ordersIcon}
         />
         <InfoCard
           title="Teljes bevétel"
           value={totalRevenue}
+          loading={ordersLoading}
           image={revenueIcon}
         />
         <InfoCard
           title="Kiszolgálás alatt"
           value={pendingOrders}
+          loading={ordersLoading}
           image={pendingOrdersIcon}
         />
       </div>

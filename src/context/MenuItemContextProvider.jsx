@@ -22,7 +22,10 @@ const MenuItemContextProvider = ({ children }) => {
         const menuItemsData = await fetchMenuItems();
         setMenuItems(menuItemsData);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        setMenuItemError(
+          error.message.data.message ||
+            "Hiba történt az ételek betöltése során."
+        );
       } finally {
         setMenuItemLoading(false);
       }
@@ -41,7 +44,9 @@ const MenuItemContextProvider = ({ children }) => {
         )
       );
     } catch (error) {
-      setMenuItemError(error.message);
+      setMenuItemError(
+        error.message.data.message || "Hiba történt a frissítés során."
+      );
     } finally {
       setMenuItemLoading(false);
     }
@@ -57,7 +62,9 @@ const MenuItemContextProvider = ({ children }) => {
         )
       );
     } catch (error) {
-      setMenuItemError(error.message);
+      setMenuItemError(
+        error.response.data.message || "Hiba történt a frissítés során."
+      );
     } finally {
       setMenuItemLoading(false);
     }

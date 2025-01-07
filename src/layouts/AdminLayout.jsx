@@ -4,13 +4,14 @@ import { Navigate, Outlet } from "react-router-dom";
 import { AuthContext, MenuItemContext } from "../context/contexts";
 import Sidebar from "../components/Sidebar";
 import Modal from "../components/Modal";
+import Loader from "../components/Loader";
 
 const AdminLayout = () => {
   const { isAdmin, authLoading } = useContext(AuthContext);
   const { menuItemError, setMenuItemError } = useContext(MenuItemContext);
 
   if (authLoading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   return isAdmin ? (

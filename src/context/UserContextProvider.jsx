@@ -1,16 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 
 import { AuthContext, UserContext } from "./contexts";
-import { fetchAdminData, updateIsAdmin, deleteUser } from "../api/http";
+import { updateIsAdmin, deleteUser, fetchData } from "../api/http";
 
 const UserContextProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
   const [numberOfUsers, setNumberOfUsers] = useState(0);
-  const [numberOfOrders, setNumberOfOrders] = useState(0);
-  const [totalRevenue, setTotalRevenue] = useState(0);
-  const [pendingOrders, setPendingOrders] = useState(0);
-  const [ingredients, setIngredients] = useState([]);
-  const [adminError, setAdminError] = useState(null);
+  const [userError, setUserError] = useState(null);
+  const [userLoading, setUserLoading] = useState(false);
 
   const { user } = useContext(AuthContext);
 
@@ -20,59 +17,69 @@ const UserContextProvider = ({ children }) => {
     const getAdminData = async () => {
       if (!isAdmin) return;
 
-      try {
-        const data = await fetchAdminData();
+      setUserLoading(true);
 
-        setUsers(data.users);
-        setNumberOfUsers(data.numberOfUsers);
-        setNumberOfOrders(data.numberOfOrders);
-        setTotalRevenue(data.totalRevenue);
-        setPendingOrders(data.pendingOrders);
-        setIngredients(data.ingredients);
+      try {
+        const usersData = await fetchData("api/users");
+        const numberOfUsersData = await fetchData("api/number-of-users");
+
+        setUsers(usersData);
+        setNumberOfUsers(numberOfUsersData);
       } catch (error) {
         console.error("Error fetching admin data:", error);
+      } finally {
+        setUserLoading(false);
       }
     };
     getAdminData();
   }, [isAdmin]);
 
   const handleUpdateIsAdmin = async (userId, isAdmin) => {
+    setUserLoading(true);
+
     try {
       const updatedUser = await updateIsAdmin(userId, isAdmin);
       setUsers((prevUsers) =>
         prevUsers.map((user) => (user.id === userId ? updatedUser : user))
       );
     } catch (error) {
-      setAdminError(error.message);
+      setUserError(
+        error.message.data.message ||
+          "Hiba történt a frissítés betöltése során."
+      );
+    } finally {
+      setUserLoading(false);
     }
   };
 
   const handleDeleteUser = async (userId) => {
+    setUserLoading(true);
+
     try {
       await deleteUser(userId);
       setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
     } catch (error) {
-      setAdminError(error.message);
+      setUserError(
+        error.message.data.message || "Hiba történt a törlés során."
+      );
+    } finally {
+      setUserLoading(false);
     }
   };
 
   const ctxValue = {
     users,
     numberOfUsers,
-    numberOfOrders,
-    totalRevenue,
-    pendingOrders,
-    ingredients,
-    adminError,
-    setAdminError,
+    userError,
+    userLoading,
+    isAdmin,
+    setUserError,
     updateIsAdmin: handleUpdateIsAdmin,
     deleteUser: handleDeleteUser,
   };
 
   return (
-    <UserContext.Provider value={{ ...ctxValue }}>
-      {children}
-    </UserContext.Provider>
+    <UserContext.Provider value={ctxValue}>{children}</UserContext.Provider>
   );
 };
 

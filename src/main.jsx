@@ -8,19 +8,25 @@ import UserContextProvider from "./context/UserContextProvider.jsx";
 import CategoryContextProvider from "./context/CategoryContextProvider.jsx";
 import MenuItemContextProvider from "./context/MenuItemContextProvider.jsx";
 import "./sass/index.scss";
+import OrderContextProivder from "./context/OrderContextProivder.jsx";
+import IngredientContextProvider from "./context/IngredientContextProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
-      <CategoryContextProvider>
-        <AuthContextProvider>
-          <UserContextProvider>
+      <AuthContextProvider>
+        <UserContextProvider>
+          <IngredientContextProvider>
             <MenuItemContextProvider>
-              <App />
+              <CategoryContextProvider>
+                <OrderContextProivder>
+                  <App />
+                </OrderContextProivder>
+              </CategoryContextProvider>
             </MenuItemContextProvider>
-          </UserContextProvider>
-        </AuthContextProvider>
-      </CategoryContextProvider>
+          </IngredientContextProvider>
+        </UserContextProvider>
+      </AuthContextProvider>
     </BrowserRouter>
   </StrictMode>
 );

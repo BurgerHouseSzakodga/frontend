@@ -1,11 +1,16 @@
 import { useContext, useState } from "react";
-import { CategoryContext, UserContext } from "../context/contexts";
+import {
+  CategoryContext,
+  IngredientContext,
+  MenuItemContext,
+} from "../context/contexts";
 
 import Modal from "./Modal";
 
 const ModifyPanel = ({ onCloseModifyPanel, selectedItemId }) => {
-  const { categories, menuItems } = useContext(CategoryContext);
-  const { ingredients, handleDeleteMenuItem } = useContext(UserContext);
+  const { categories } = useContext(CategoryContext);
+  const { menuItems, handleDeleteMenuItem } = useContext(MenuItemContext);
+  const { ingredients } = useContext(IngredientContext);
 
   const selectedItem = menuItems.find((item) => item.id === selectedItemId);
 

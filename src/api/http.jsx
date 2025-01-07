@@ -2,6 +2,11 @@ import { apiClient } from "./axios";
 
 // Guest hívások
 
+export const fetchData = async (path) => {
+  const response = await apiClient.get(path);
+  return response.data;
+};
+
 export const fetchMenuItems = async () => {
   const { data } = await apiClient.get("api/menu-items");
   return data;

@@ -1,32 +1,54 @@
-import { useEffect, useState } from "react";
-import { fetchAdminData } from "../api/http";
+import { useContext, useEffect, useState } from "react";
+import { fetchData } from "../api/http";
+import { OrderContext, UserContext } from "./contexts";
 
-const OrderContextProivder = () => {
+const OrderContextProivder = ({ children }) => {
+  const { isAdmin } = useContext(UserContext);
+
   const [numberOfOrders, setNumberOfOrders] = useState(0);
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [pendingOrders, setPendingOrders] = useState(0);
+  const [orderError, setOrderError] = useState("");
+  const [ordersLoading, setOrdersLoading] = useState(false);
 
   useEffect(() => {
-    const getAdminData = async () => {
+    const getOrdersData = async () => {
       if (!isAdmin) return;
 
-      try {
-        const data = await fetchAdminData();
+      setOrdersLoading(true);
 
-        setUsers(data.users);
-        setNumberOfUsers(data.numberOfUsers);
-        setNumberOfOrders(data.numberOfOrders);
-        setTotalRevenue(data.totalRevenue);
-        setPendingOrders(data.pendingOrders);
-        setIngredients(data.ingredients);
+      try {
+        const orders = await fetchData("api/number-of-orders");
+        const revenue = await fetchData("api/total-revenue");
+        const pending = await fetchData("api/total-revenue");
+
+        setNumberOfOrders(orders);
+        setTotalRevenue(revenue);
+        setPendingOrders(pending);
       } catch (error) {
-        console.error("Error fetching admin data:", error);
+        setOrderError(
+          error.message.data.message ||
+            "Hiba történt az adatok betöltése során."
+        );
+      } finally {
+        setOrdersLoading(false);
       }
     };
-    getAdminData();
+
+    getOrdersData();
   }, [isAdmin]);
 
-  return <div>DataContextProivder</div>;
+  const ctxValue = {
+    numberOfOrders,
+    totalRevenue,
+    pendingOrders,
+    orderError,
+    ordersLoading,
+  };
+
+  return (
+    <OrderContext.Provider value={ctxValue}>{children}</OrderContext.Provider>
+  );
 };
 
 export default OrderContextProivder;
