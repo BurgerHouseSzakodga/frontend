@@ -7,7 +7,7 @@ import {
   deleteMenuItem,
   updateMenuItemName,
   updateMenuItemPrice,
-  fetchMenuItems,
+  fetchData,
 } from "../api/http";
 
 const MenuItemContextProvider = ({ children }) => {
@@ -19,7 +19,7 @@ const MenuItemContextProvider = ({ children }) => {
     const getMenuItems = async () => {
       setMenuItemLoading(true);
       try {
-        const menuItemsData = await fetchMenuItems();
+        const menuItemsData = await fetchData("api/menu-items");
         setMenuItems(menuItemsData);
       } catch (error) {
         setMenuItemError(

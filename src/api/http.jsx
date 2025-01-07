@@ -7,16 +7,6 @@ export const fetchData = async (path) => {
   return response.data;
 };
 
-export const fetchMenuItems = async () => {
-  const { data } = await apiClient.get("api/menu-items");
-  return data;
-};
-
-export const fetchCategories = async () => {
-  const { data } = await apiClient.get("api/categories");
-  return data;
-};
-
 // Auth hívások
 
 const csrf = () => apiClient.get("/sanctum/csrf-cookie");
@@ -41,36 +31,6 @@ export const logoutUser = async () => {
 };
 
 // Admin hívások
-
-export const fetchNumberOfUsers = async () => {
-  const response = await apiClient.get("api/number-of-users");
-  return response.data;
-};
-
-export const fetchNumberOfOrders = async () => {
-  const response = await apiClient.get("api/number-of-orders");
-  return response.data;
-};
-
-export const fetchTotalRevenue = async () => {
-  const response = await apiClient.get("api/total-revenue");
-  return response.data;
-};
-
-export const fetchPendingOrders = async () => {
-  const response = await apiClient.get("api/pending-orders");
-  return response.data;
-};
-
-export const fetchIngredients = async () => {
-  const response = await apiClient.get("api/ingredients");
-  return response.data;
-};
-
-export const fetchUsers = async () => {
-  const response = await apiClient.get("api/users");
-  return response.data;
-};
 
 export const fetchRevenueByTimePeriod = async (days) => {
   const response = await apiClient.get(`api/revenue-by-days/${days}`);
