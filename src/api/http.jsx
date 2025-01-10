@@ -72,6 +72,26 @@ export const updateMenuItemCategory = async (menuItemId, categoryId) => {
   return response.data.menuItem;
 };
 
+export const updateMenuItemDescription = async (menuItemId, description) => {
+  const response = await apiClient.put(
+    `api/menu-items/${menuItemId}/description`,
+    {
+      description,
+    }
+  );
+  return response.data.menuItem;
+};
+
+export const updateMenuItemComposition = async (menuItemId, composition) => {
+  const response = await apiClient.put(
+    `api/menu-items/${menuItemId}/composition`,
+    {
+      composition,
+    }
+  );
+  return response.data.menuItem;
+};
+
 export const createMenuItem = async (payload) => {
   console.log(payload);
   const response = await apiClient.post(`api/menu-items`, payload, {

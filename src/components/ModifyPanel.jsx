@@ -8,21 +8,25 @@ import {
 import Modal from "./Modal";
 
 const ModifyPanel = ({ onCloseModifyPanel, selectedItemId }) => {
+  const {
+    menuItems,
+    handleDeleteMenuItem,
+    handleUpdateMenuItemCategory,
+    handleUpdateMenuItemName,
+    handleUpdateMenuItemPrice,
+    handleUpdateMenuItemDescription,
+    handleUpdateMenuItemComposition,
+  } = useContext(MenuItemContext);
   const { categories } = useContext(CategoryContext);
-  const { menuItems, handleDeleteMenuItem } = useContext(MenuItemContext);
   const { ingredients } = useContext(IngredientContext);
 
   const selectedItem = menuItems.find((item) => item.id === selectedItemId);
 
-  const [name, setName] = useState(selectedItem.name || "");
-  const [description, setDescription] = useState(
-    selectedItem.description || ""
-  );
-  const [price, setPrice] = useState(selectedItem.price || "");
-  const [category, setCategory] = useState(selectedItem.category_id || "");
-  const [composition, setComposition] = useState(
-    selectedItem.compositions || []
-  );
+  const [name, setName] = useState(selectedItem.name);
+  const [description, setDescription] = useState(selectedItem.description);
+  const [price, setPrice] = useState(selectedItem.price);
+  const [category, setCategory] = useState(selectedItem.category_id);
+  const [composition, setComposition] = useState(selectedItem.compositions);
   const [confirmDeleteModalOpen, setConfirmDeleteModalOpen] = useState(false);
 
   const handleSetIngredient = (event) => {
@@ -47,8 +51,14 @@ const ModifyPanel = ({ onCloseModifyPanel, selectedItemId }) => {
     handleDeleteMenuItem(selectedItem.id);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
+    await handleUpdateMenuItemName(selectedItem.id, name);
+    await handleUpdateMenuItemPrice(selectedItem.id, price);
+    await handleUpdateMenuItemCategory(selectedItem.id, category);
+    await handleUpdateMenuItemDescription(selectedItem.id, description);
+    await handleUpdateMenuItemComposition(selectedItem.id, composition);
   };
 
   return (

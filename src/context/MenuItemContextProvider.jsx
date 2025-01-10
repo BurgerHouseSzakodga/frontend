@@ -8,6 +8,8 @@ import {
   updateMenuItemName,
   updateMenuItemPrice,
   fetchData,
+  updateMenuItemDescription,
+  updateMenuItemComposition,
 } from "../api/http";
 
 const MenuItemContextProvider = ({ children }) => {
@@ -23,8 +25,8 @@ const MenuItemContextProvider = ({ children }) => {
         setMenuItems(menuItemsData);
       } catch (error) {
         setMenuItemError(
-          error.message.data.message ||
-            "Hiba történt az ételek betöltése során."
+          "Hiba történt az ételek betöltése során.",
+          error.message
         );
       } finally {
         setMenuItemLoading(false);
@@ -91,6 +93,48 @@ const MenuItemContextProvider = ({ children }) => {
     }
   };
 
+  const handleUpdateMenuItemDescription = async (menuItemId, description) => {
+    setMenuItemLoading(true);
+    try {
+      const updatedMenuItem = await updateMenuItemDescription(
+        menuItemId,
+        description
+      );
+      setMenuItems((prevMenuItems) =>
+        prevMenuItems.map((item) =>
+          item.id === menuItemId ? updatedMenuItem : item
+        )
+      );
+    } catch (error) {
+      setMenuItemError(
+        error.response.data.message || "Hiba történt a frissítés során."
+      );
+    } finally {
+      setMenuItemLoading(false);
+    }
+  };
+
+  const handleUpdateMenuItemComposition = async (menuItemId, composition) => {
+    setMenuItemLoading(true);
+    try {
+      const updatedMenuItem = await updateMenuItemComposition(
+        menuItemId,
+        composition
+      );
+      setMenuItems((prevMenuItems) =>
+        prevMenuItems.map((item) =>
+          item.id === menuItemId ? updatedMenuItem : item
+        )
+      );
+    } catch (error) {
+      setMenuItemError(
+        error.response.data.message || "Hiba történt a frissítés során."
+      );
+    } finally {
+      setMenuItemLoading(false);
+    }
+  };
+
   const handleCreateMenuItem = async (payload) => {
     setMenuItemLoading(true);
     try {
@@ -133,6 +177,8 @@ const MenuItemContextProvider = ({ children }) => {
         handleDeleteMenuItem,
         handleUpdateMenuItemName,
         handleUpdateMenuItemPrice,
+        handleUpdateMenuItemDescription,
+        handleUpdateMenuItemComposition,
       }}
     >
       {children}

@@ -1,7 +1,11 @@
 import { useContext } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
-import { AuthContext, MenuItemContext } from "../context/contexts";
+import {
+  AuthContext,
+  CategoryContext,
+  MenuItemContext,
+} from "../context/contexts";
 import Sidebar from "../components/Sidebar";
 import Modal from "../components/Modal";
 import Loader from "../components/Loader";
@@ -9,6 +13,7 @@ import Loader from "../components/Loader";
 const AdminLayout = () => {
   const { isAdmin, authLoading } = useContext(AuthContext);
   const { menuItemError, setMenuItemError } = useContext(MenuItemContext);
+  const { categoriesError, setCategoriesError } = useContext(CategoryContext);
 
   if (authLoading) {
     return <Loader />;
@@ -16,6 +21,8 @@ const AdminLayout = () => {
 
   return isAdmin ? (
     <div className="admin-layout">
+      <Sidebar />
+      <Outlet />
       <Modal
         className="modal error-modal"
         open={!!menuItemError}
@@ -26,8 +33,16 @@ const AdminLayout = () => {
           <input type="submit" value="ok" />
         </form>
       </Modal>
-      <Sidebar />
-      <Outlet />
+      <Modal
+        className="modal error-modal"
+        open={!!categoriesError}
+        onCloseModal={() => setCategoriesError(null)}
+      >
+        <p>{categoriesError}</p>
+        <form method="dialog">
+          <input type="submit" value="ok" />
+        </form>
+      </Modal>
     </div>
   ) : (
     <Navigate to="/" />

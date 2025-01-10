@@ -16,8 +16,8 @@ const CategoryContextProvider = ({ children }) => {
         setCategories(categoriesData);
       } catch (error) {
         setCategoriesError(
-          error.message.data.message ||
-            "Hiba történt a kategóriák betöltése során."
+          "Hiba történt a kategóriák betöltése során.",
+          error.message
         );
       } finally {
         setCategoriesLoading(false);

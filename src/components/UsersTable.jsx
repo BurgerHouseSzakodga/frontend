@@ -15,7 +15,8 @@ export default function UsersTable() {
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [confirmAction, setConfirmAction] = useState(() => () => {});
 
-  const { users, updateIsAdmin, deleteUser } = useContext(UserContext);
+  const { users, userLoading, updateIsAdmin, deleteUser } =
+    useContext(UserContext);
 
   const handleProcessRowUpdate = async (newRow, oldRow) => {
     if (newRow.is_admin !== oldRow.is_admin) {
@@ -103,6 +104,10 @@ export default function UsersTable() {
       ),
     },
   ];
+
+  if (userLoading) {
+    return <div className="loader"></div>;
+  }
 
   return (
     <>

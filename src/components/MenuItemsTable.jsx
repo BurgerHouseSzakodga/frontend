@@ -16,6 +16,7 @@ const MenuItemsTable = ({ modifiable, onSelectModify }) => {
   const { navigate } = useContext(AuthContext);
   const {
     menuItems,
+    menuItemLoading,
     handleUpdateMenuItemName,
     handleUpdateMenuItemPrice,
     handleUpdateMenuItemCategory,
@@ -117,6 +118,10 @@ const MenuItemsTable = ({ modifiable, onSelectModify }) => {
       ),
     },
   ];
+
+  if (menuItemLoading) {
+    return <div className="loader"></div>;
+  }
 
   return (
     <Box sx={{ height: 371, width: 848 }}>

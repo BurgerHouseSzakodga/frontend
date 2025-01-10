@@ -13,8 +13,8 @@ import priceIcon from "/assets/price.svg";
 import categoryIcon from "/assets/category.svg";
 
 const ManageMenuItems = () => {
-  const { categories } = useContext(CategoryContext);
-  const { ingredients } = useContext(IngredientContext);
+  const { categories, categoriesLoading } = useContext(CategoryContext);
+  const { ingredients, ingredientLoading } = useContext(IngredientContext);
   const { handleCreateMenuItem } = useContext(MenuItemContext);
 
   const [isEditing, setIsEditing] = useState(false);
@@ -83,6 +83,10 @@ const ManageMenuItems = () => {
 
     setSelectedMenuItemId(id);
   };
+
+  if (categoriesLoading || ingredientLoading) {
+    return <div className="loader"></div>;
+  }
 
   return (
     <div className="manage-menu-items">
