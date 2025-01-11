@@ -4,6 +4,7 @@ import "../sass/pages/register.css";
 import emailIcon from "/assets/email.svg";
 import userIcon from "/assets/users.svg";
 import passwordIcon from "/assets/password.svg";
+import orderIcon from "/assets/orders.svg";
 
 const Register = () => {
   const { register } = useContext(AuthContext);
@@ -27,7 +28,7 @@ const Register = () => {
         <h3>Regisztráció</h3>
 
         {/* Felhasználónév */}
-        <div className="nameDiv">
+        <div>
           <label htmlFor="name">Felhasználónév:</label>
           <div className="input-container">
             <img src={userIcon} alt="User icon" />
@@ -40,7 +41,7 @@ const Register = () => {
         </div>
 
         {/* Email cím */}
-        <div className="emailDiv">
+        <div >
           <label htmlFor="email">Email cím:</label>
           <div className="input-container">
             <img src={emailIcon} alt="Email icon" />
@@ -53,7 +54,7 @@ const Register = () => {
         </div>
 
         {/* Jelszó */}
-        <div className="passDiv">
+        <div >
           <label htmlFor="password">Jelszó:</label>
           <div className="input-container">
             <img src={passwordIcon} alt="Password icon" />
@@ -66,7 +67,7 @@ const Register = () => {
         </div>
 
         {/* Jelszó megerősítése */}
-        <div className="passConfDiv">
+        <div>
           <label htmlFor="password-confirmation">Jelszó mégegyszer:</label>
           <div className="input-container">
             <img src={passwordIcon} alt="Password icon" />
@@ -78,14 +79,15 @@ const Register = () => {
           </div>
         </div>
 
+    
         <div >
-          <label htmlFor="password-confirmation">Jelszó mégegyszer:</label>
+          <label htmlFor="order-addres">Szállitási cim:</label>
           <div className="input-container">
-            <img src={passwordIcon} alt="Password icon" />
+            <img src={orderIcon} alt="Orders icon" />
             <input
-              type="password"
-              name="passwordConfirmation"
-              placeholder="123456@"
+              type="addres"
+              name="orderAddres"
+              placeholder="1119 Budapest Rátz László utca 5-7"
             />
           </div>
         </div>
