@@ -13,6 +13,7 @@ import NoPage from "../pages/NoPage";
 import Cart from "../pages/Cart";
 import Dashboard from "../pages/Dashboard";
 import ManageMenuItems from "../pages/ManageMenuItems";
+import ManageOrders from "../pages/ManageOrders";
 
 const AppRouter = () => {
   return (
@@ -25,6 +26,7 @@ const AppRouter = () => {
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="/admin/kezelofelulet" element={<Dashboard />} />
           <Route path="/admin/etelek-kezelese" element={<ManageMenuItems />} />
+          <Route path="/admin/rendelesek-kezelese" element={<ManageOrders />} />
         </Route>
       </Route>
       <Route element={<GuestLayout />}>

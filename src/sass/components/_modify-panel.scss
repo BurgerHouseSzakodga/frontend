@@ -1,0 +1,66 @@
+@use "../config" as *;
+
+.modify-panel {
+  &__header {
+    @include flex($justify: space-between);
+
+    & > img {
+      @include default-trasition;
+      align-self: flex-start;
+      cursor: pointer;
+      filter: $font-color-light-filter;
+      width: 1rem;
+
+      &:hover {
+        filter: $orange-filter;
+      }
+    }
+  }
+
+  .input-group {
+    input,
+    textarea,
+    select {
+      @include input;
+    }
+
+    textarea {
+      height: 150px;
+      padding: 1rem;
+      resize: none;
+    }
+  }
+
+  .img-container {
+    @include flex;
+    border-radius: $border-radius / 2;
+    height: 100px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    width: 100px;
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__button-group {
+    @include flex($justify: space-around);
+
+    button {
+      @include default-trasition;
+      border-radius: $border-radius / 2;
+      background-color: #fff;
+      border: 1px solid rgb(255, 0, 0);
+      color: rgb(255, 0, 0);
+      height: 60px;
+      width: 120px;
+
+      &:hover {
+        @include glow(rgba(255, 0, 0, 0.199));
+      }
+    }
+  }
+}

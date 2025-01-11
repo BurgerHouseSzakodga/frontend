@@ -1,11 +1,12 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+
 import {
   CategoryContext,
   IngredientContext,
   MenuItemContext,
 } from "../context/contexts";
-
 import Modal from "./Modal";
+import exitIcon from "/assets/exit.svg";
 
 const ModifyPanel = ({ onCloseModifyPanel, selectedItemId }) => {
   const {
@@ -28,6 +29,16 @@ const ModifyPanel = ({ onCloseModifyPanel, selectedItemId }) => {
   const [category, setCategory] = useState(selectedItem.category_id);
   const [composition, setComposition] = useState(selectedItem.compositions);
   const [confirmDeleteModalOpen, setConfirmDeleteModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (selectedItem) {
+      setName(selectedItem.name);
+      setDescription(selectedItem.description);
+      setPrice(selectedItem.price);
+      setCategory(selectedItem.category_id);
+      setComposition(selectedItem.compositions);
+    }
+  }, [selectedItem]);
 
   const handleSetIngredient = (event) => {
     const ingredientId = parseInt(event.target.id);
@@ -63,47 +74,66 @@ const ModifyPanel = ({ onCloseModifyPanel, selectedItemId }) => {
 
   return (
     <>
-      <div>
+      <div className="modify-panel">
+        <div className="modify-panel__header">
+          <div className="img-container">
+            <img src={selectedItem.image_path} />
+          </div>
+          <img onClick={() => onCloseModifyPanel(false, null)} src={exitIcon} />
+        </div>
         <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-          <input
-            type="number"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-          />
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            {categories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
+          <div className="input-group">
+            <input
+              type="text"
+              value={selectedItem.name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+          <div className="input-group">
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+          <div className="input-group">
+            <input
+              type="number"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+            />
+          </div>
+          <div className="input-group">
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              {categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="ingredients">
+            {ingredients.map((ingredient) => (
+              <div key={ingredient.id}>
+                <input
+                  type="checkbox"
+                  id={ingredient.id}
+                  name={ingredient.id}
+                  checked={composition.includes(ingredient.id)}
+                  onChange={handleSetIngredient}
+                />
+                <label htmlFor={ingredient.id}>{ingredient.name}</label>
+              </div>
             ))}
-          </select>
-          {ingredients.map((ingredient) => (
-            <div key={ingredient.id}>
-              <input
-                type="checkbox"
-                id={ingredient.id}
-                name={ingredient.id}
-                checked={composition.includes(ingredient.id)}
-                onChange={handleSetIngredient}
-              />
-              <label htmlFor={ingredient.id}>{ingredient.name}</label>
+          </div>
+          <div>
+            <div className="modify-panel__button-group">
+              <button onClick={onDeleteMenuItem}>törlés</button>
+              <input type="submit" value="mentés" />
             </div>
-          ))}
-          <input type="submit" value="mentés" />
-          <button onClick={() => onCloseModifyPanel(false, null)}>mégse</button>
-          <button onClick={onDeleteMenuItem}>étel törlése</button>
+          </div>
         </form>
       </div>
       <Modal

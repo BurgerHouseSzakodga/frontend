@@ -20,7 +20,7 @@ const OrderContextProivder = ({ children }) => {
       try {
         const orders = await fetchData("api/number-of-orders");
         const revenue = await fetchData("api/total-revenue");
-        const pending = await fetchData("api/total-revenue");
+        const pending = await fetchData("api/pending-orders");
 
         setNumberOfOrders(orders);
         setTotalRevenue(revenue);
