@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../context/contexts";
 import "../sass/pages/register.css";
 import emailIcon from "/assets/email.svg";
@@ -6,64 +6,16 @@ import userIcon from "/assets/users.svg";
 import passwordIcon from "/assets/password.svg";
 
 const Register = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  //OLVASD EL PLS
-  //Ezek a statek meg a regex nem kellenek, mert a hibák a backenden vannak kezelve, onnan jönnek az üzenetek is. Hasonlóan a loginhoz.
-  const [nameError, setNameError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-
-  const { register, registerError } = useContext(AuthContext);
-
-  // Jelszó regex: minimum 8 karakter és kell speciális karakter
-  const passwordRegex = /^(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
-
-  // Email regex: valid email formátum
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const { register } = useContext(AuthContext);
 
   const handleRegister = (event) => {
     event.preventDefault();
 
-    // Felhasználónév validálása
-    if (!name) {
-      setNameError("A felhasználónév kötelező.");
-      return;
-    } else {
-      setNameError("");
-    }
-
-    // Email validálása
-    if (!email) {
-      setEmailError("Az email cím kötelező.");
-      return;
-    } else if (!emailRegex.test(email)) {
-      setEmailError("Érvénytelen email cím.");
-      return;
-    } else {
-      setEmailError("");
-    }
-
-    // Jelszó validálása
-    if (!passwordRegex.test(password)) {
-      setPasswordError(
-        "A jelszónak legalább 8 karakter hosszúnak kell lennie, és tartalmaznia kell speciális karaktert."
-      );
-      return;
-    } else if (password !== passwordConfirmation) {
-      setPasswordError("A jelszavak nem egyeznek meg.");
-      return;
-    } else {
-      setPasswordError("");
-    }
-
     const payload = {
-      name,
-      email,
-      password,
-      password_confirmation: passwordConfirmation,
+      name: event.target.name.value,
+      email: event.target.email.value,
+      password: event.target.password.value,
+      password_confirmation: event.target.passwordConfirmation.value,
     };
 
     register(payload);
@@ -77,50 +29,39 @@ const Register = () => {
         {/* Felhasználónév */}
         <div className="nameDiv">
           <label htmlFor="name">Felhasználónév:</label>
-          <div className={`input-container ${nameError ? "error" : ""}`}>
+          <div className="input-container">
             <img src={userIcon} alt="User icon" />
             <input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
               type="text"
               name="name"
               placeholder="Példa János"
             />
-            {nameError && <div className="error-message">{nameError}</div>}
           </div>
         </div>
 
         {/* Email cím */}
         <div className="emailDiv">
           <label htmlFor="email">Email cím:</label>
-          <div className={`input-container ${emailError ? "error" : ""}`}>
+          <div className="input-container">
             <img src={emailIcon} alt="Email icon" />
             <input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
               type="email"
               name="email"
               placeholder="peldajani@freemail.hu"
             />
-            {emailError && <div className="error-message">{emailError}</div>}
           </div>
         </div>
 
         {/* Jelszó */}
         <div className="passDiv">
           <label htmlFor="password">Jelszó:</label>
-          <div className={`input-container ${passwordError ? "error" : ""}`}>
+          <div className="input-container">
             <img src={passwordIcon} alt="Password icon" />
             <input
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
               type="password"
               name="password"
               placeholder="123456@"
             />
-            {passwordError && (
-              <div className="error-message">{passwordError}</div>
-            )}
           </div>
         </div>
 
@@ -130,14 +71,25 @@ const Register = () => {
           <div className="input-container">
             <img src={passwordIcon} alt="Password icon" />
             <input
-              value={passwordConfirmation}
-              onChange={(e) => setPasswordConfirmation(e.target.value)}
               type="password"
-              name="password-confirmation"
+              name="passwordConfirmation"
               placeholder="123456@"
             />
           </div>
         </div>
+
+        <div >
+          <label htmlFor="password-confirmation">Jelszó mégegyszer:</label>
+          <div className="input-container">
+            <img src={passwordIcon} alt="Password icon" />
+            <input
+              type="password"
+              name="passwordConfirmation"
+              placeholder="123456@"
+            />
+          </div>
+        </div>
+
 
         {/* Submit gomb */}
         <div className="submitDiv">
