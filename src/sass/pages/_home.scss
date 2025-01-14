@@ -1,9 +1,7 @@
 @use "../config" as *;
 
 .home {
-  @include flex;
-  // display: gr
-  // grid-template-rows: auto au
-  // gap: 20
-  // padding: 0p;
+  display: flex;
+  flex-direction: column;
+
 }
