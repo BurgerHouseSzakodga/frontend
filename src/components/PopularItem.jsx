@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useRef } from 'react'
 import { Swiper, SwiperSlide } from "swiper/react"
 
 import { MenuItemContext } from '../context/contexts'
@@ -9,15 +9,32 @@ import "swiper/modules"
 
 function PopularItem() {
     const { menuItems } = useContext(MenuItemContext);
+    const swiperRef = useRef(null);
+
+    const handleImage = (direction) => {
+        if (direction === 'next') {
+            swiperRef.current.swiper.slideNext();
+        } else if (direction === 'prev') {
+            swiperRef.current.swiper.slidePrev();
+        }
+    };
 
     return (
-        <div>
-            <Swiper slidesPerView={5} spaceBetween={10} autoplay={{
-                delay: 2500, // Képváltás késleltetése 2.5 másodpercenként
-                disableOnInteraction: false, // Az interakciók után is folytatódjon az autoplay
-            }}>
+        <div className="popular-item-container">
+            <button className="swiper-button prev"
+                onClick={() => handleImage('prev')}>Elöző</button>
+           
+            <Swiper
+                ref={swiperRef}
+                slidesPerView={5}
+                spaceBetween={10}
+                autoplay={{
+                    delay: 2500,
+                    disableOnInteraction: false,
+                }}
+            >
                 {menuItems.map((item) => (
-                    <SwiperSlide key={item.id} >
+                    <SwiperSlide key={item.id}>
                         <MenuItemCard
                             image={item.image_path}
                             name={item.name}
@@ -28,6 +45,8 @@ function PopularItem() {
                     </SwiperSlide>
                 ))}
             </Swiper>
+            <button className="swiper-button next"
+                onClick={() => handleImage('next')}>Következő</button>
         </div>
     )
 }
