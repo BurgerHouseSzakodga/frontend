@@ -5,6 +5,7 @@ import { OrderContext, UserContext } from "./contexts";
 const OrderContextProivder = ({ children }) => {
   const { isAdmin } = useContext(UserContext);
 
+  const [orders, setOrders] = useState([]);
   const [numberOfOrders, setNumberOfOrders] = useState(0);
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [pendingOrders, setPendingOrders] = useState(0);
@@ -18,16 +19,18 @@ const OrderContextProivder = ({ children }) => {
       setOrdersLoading(true);
 
       try {
-        const orders = await fetchData("api/number-of-orders");
+        const ordersResponse = await fetchData("api/orders");
+        const totalOrders = await fetchData("api/number-of-orders");
         const revenue = await fetchData("api/total-revenue");
         const pending = await fetchData("api/pending-orders");
 
-        setNumberOfOrders(orders);
+        setOrders(ordersResponse);
+        setNumberOfOrders(totalOrders);
         setTotalRevenue(revenue);
         setPendingOrders(pending);
       } catch (error) {
         setOrderError(
-          error.message.data.message ||
+          error.response.data.message ||
             "Hiba történt az adatok betöltése során."
         );
       } finally {
@@ -39,6 +42,7 @@ const OrderContextProivder = ({ children }) => {
   }, [isAdmin]);
 
   const ctxValue = {
+    orders,
     numberOfOrders,
     totalRevenue,
     pendingOrders,
