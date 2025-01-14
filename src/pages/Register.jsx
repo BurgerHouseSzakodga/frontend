@@ -1,22 +1,23 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
+
 import { AuthContext } from "../context/contexts";
-import "../sass/pages/register.css";
-import emailIcon from "/assets/email.svg";
-import userIcon from "/assets/users.svg";
-import passwordIcon from "/assets/password.svg";
-import orderIcon from "/assets/orders.svg";
 
 const Register = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+
   const { register } = useContext(AuthContext);
 
   const handleRegister = (event) => {
     event.preventDefault();
 
     const payload = {
-      name: event.target.name.value,
-      email: event.target.email.value,
-      password: event.target.password.value,
-      password_confirmation: event.target.passwordConfirmation.value,
+      name,
+      email,
+      password,
+      password_confirmation: passwordConfirmation,
     };
 
     register(payload);
@@ -25,76 +26,43 @@ const Register = () => {
   return (
     <div className="register">
       <form onSubmit={handleRegister}>
-        <h3>Regisztráció</h3>
-
-        {/* Felhasználónév */}
         <div>
           <label htmlFor="name">Felhasználónév:</label>
-          <div className="input-container">
-            <img src={userIcon} alt="User icon" />
-            <input
-              type="text"
-              name="name"
-              placeholder="Példa János"
-            />
-          </div>
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            type="name"
+            name="name"
+          />
         </div>
-
-        {/* Email cím */}
-        <div >
+        <div>
           <label htmlFor="email">Email cím:</label>
-          <div className="input-container">
-            <img src={emailIcon} alt="Email icon" />
-            <input
-              type="email"
-              name="email"
-              placeholder="peldajani@freemail.hu"
-            />
-          </div>
+          <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            name="email"
+          />
         </div>
-
-        {/* Jelszó */}
-        <div >
+        <div>
           <label htmlFor="password">Jelszó:</label>
-          <div className="input-container">
-            <img src={passwordIcon} alt="Password icon" />
-            <input
-              type="password"
-              name="password"
-              placeholder="123456@"
-            />
-          </div>
+          <input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            name="password"
+          />
         </div>
-
-        {/* Jelszó megerősítése */}
         <div>
           <label htmlFor="password-confirmation">Jelszó mégegyszer:</label>
-          <div className="input-container">
-            <img src={passwordIcon} alt="Password icon" />
-            <input
-              type="password"
-              name="passwordConfirmation"
-              placeholder="123456@"
-            />
-          </div>
+          <input
+            value={passwordConfirmation}
+            onChange={(e) => setPasswordConfirmation(e.target.value)}
+            type="password"
+            name="password-confirmation"
+          />
         </div>
-
-    
-        <div >
-          <label htmlFor="order-addres">Szállitási cim:</label>
-          <div className="input-container">
-            <img src={orderIcon} alt="Orders icon" />
-            <input
-              type="addres"
-              name="orderAddres"
-              placeholder="1119 Budapest Rátz László utca 5-7"
-            />
-          </div>
-        </div>
-
-
-        {/* Submit gomb */}
-        <div className="submitDiv">
+        <div>
           <input type="submit" value="Regisztráció" />
         </div>
       </form>
