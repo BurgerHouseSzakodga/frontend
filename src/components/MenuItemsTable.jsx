@@ -77,6 +77,7 @@ const MenuItemsTable = ({ modifiable, onSelectModify }) => {
       headerName: "Ár",
       width: 200,
       editable: true,
+      renderCell: (params) => params.value + " Ft",
     },
     {
       field: "category_name",
