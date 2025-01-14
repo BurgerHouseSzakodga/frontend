@@ -1,0 +1,6 @@
+.slides{
+    border: 5 px solid black;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr ;
+    padding-left: 100px;
+}
