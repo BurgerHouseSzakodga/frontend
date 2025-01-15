@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import {
   CategoryContext,
@@ -11,6 +11,7 @@ import nameIcon from "/assets/name.svg";
 import descriptionIcon from "/assets/description.svg";
 import priceIcon from "/assets/price.svg";
 import categoryIcon from "/assets/category.svg";
+import ImageDropzone from "../components/ImageDropZone";
 
 const ManageMenuItems = () => {
   const { categories, categoriesLoading } = useContext(CategoryContext);
@@ -26,8 +27,6 @@ const ManageMenuItems = () => {
   const [category, setCategory] = useState("");
   const [composition, setComposition] = useState([]);
   const [image, setImage] = useState(null);
-
-  const fileInputRef = useRef();
 
   useEffect(() => {
     if (categories.length) {
@@ -70,10 +69,6 @@ const ManageMenuItems = () => {
     setPrice("");
     setComposition([]);
     setImage(null);
-
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
   };
 
   const handleClickEdit = (isEditing, id) => {
@@ -156,17 +151,10 @@ const ManageMenuItems = () => {
               </div>
             </div>
             <div>
-              <label htmlFor="menu-item-image">Kép</label>
-              <input
-                ref={fileInputRef}
-                onChange={(e) => setImage(e.target.files[0])}
-                type="file"
-                accept="image/*"
-                name="menu-item-image"
-                id="menu-item-image"
-                multiple={false}
-              />
+              <label>Kép</label>
+              <ImageDropzone onDropImage={setImage} />
             </div>
+            <label>Összetevők</label>
             <div className="ingredients">
               {ingredients.map((ingredient) => (
                 <div key={ingredient.id}>
