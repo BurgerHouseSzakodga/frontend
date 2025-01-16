@@ -1,6 +1,9 @@
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
+import imageIcon from "/assets/image-font-color.svg";
+import dropIcon from "/assets/drop.svg";
+
 const ImageDropzone = ({ onDropImage }) => {
   const [preview, setPreview] = useState(null);
 
@@ -22,19 +25,25 @@ const ImageDropzone = ({ onDropImage }) => {
   });
 
   return (
-    <div {...getRootProps()} className="image-dropzone">
-      <input {...getInputProps()} />
-      {isDragActive ? (
-        <p>Húzd a képeket ide ...</p>
-      ) : preview ? (
-        <div className="image-preview">
-          <img src={preview} alt="Hibás formátum" />
-        </div>
-      ) : (
-        <p>
-          Húzd be a feltölteni kívánt képeket, vagy kattints és válaszd ki őket
-        </p>
-      )}
+    <div className="dropzone-container">
+      <div className="image-preview">
+        <img src={preview ? preview : imageIcon} alt="Hibás formátum" />
+      </div>
+      <div {...getRootProps()} className="image-dropzone">
+        <input {...getInputProps()} />
+        {isDragActive ? (
+          <>
+            <img className="drop-icon" src={dropIcon} />
+            <p>Húzd a képet ide ...</p>
+          </>
+        ) : (
+          <>
+            <p>
+              Húzd be a feltölteni kívánt képeket, vagy kattints és válaszd ki
+            </p>
+          </>
+        )}
+      </div>
     </div>
   );
 };

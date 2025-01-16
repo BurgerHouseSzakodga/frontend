@@ -88,6 +88,7 @@ const ManageMenuItems = () => {
       <div className="menu-item-form">
         {isEditing ? (
           <ModifyPanel
+            key={selectedMenuItemId}
             onCloseModifyPanel={handleClickEdit}
             selectedItemId={selectedMenuItemId}
           />

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 
 import {
   CategoryContext,
@@ -29,16 +29,6 @@ const ModifyPanel = ({ onCloseModifyPanel, selectedItemId }) => {
   const [category, setCategory] = useState(selectedItem.category_id);
   const [composition, setComposition] = useState(selectedItem.compositions);
   const [confirmDeleteModalOpen, setConfirmDeleteModalOpen] = useState(false);
-
-  useEffect(() => {
-    if (selectedItem) {
-      setName(selectedItem.name);
-      setDescription(selectedItem.description);
-      setPrice(selectedItem.price);
-      setCategory(selectedItem.category_id);
-      setComposition(selectedItem.compositions);
-    }
-  }, [selectedItem]);
 
   const handleSetIngredient = (event) => {
     const ingredientId = parseInt(event.target.id);
@@ -85,7 +75,7 @@ const ModifyPanel = ({ onCloseModifyPanel, selectedItemId }) => {
           <div className="input-group">
             <input
               type="text"
-              value={selectedItem.name}
+              value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
