@@ -79,6 +79,12 @@ const ManageMenuItems = () => {
     }
   };
 
+  useEffect(() => {
+    if (resetImage) {
+      setResetImage(false);
+    }
+  }, [resetImage]);
+
   const handleClickEdit = (isEditing, id) => {
     setIsEditing(isEditing);
 
