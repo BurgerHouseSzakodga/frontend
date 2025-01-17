@@ -140,10 +140,12 @@ const MenuItemContextProvider = ({ children }) => {
     try {
       const newMenuItem = await createMenuItem(payload);
       setMenuItems((prevMenuItems) => [...prevMenuItems, newMenuItem]);
+      return true;
     } catch (error) {
       setMenuItemError(
         error.response.data.message || "Hiba történt a létrehozás során."
       );
+      return false;
     } finally {
       setMenuItemLoading(false);
     }

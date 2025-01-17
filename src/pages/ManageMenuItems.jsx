@@ -12,6 +12,7 @@ import descriptionIcon from "/assets/description.svg";
 import priceIcon from "/assets/price.svg";
 import categoryIcon from "/assets/category.svg";
 import ImageDropzone from "../components/ImageDropZone";
+import { Alert, Snackbar } from "@mui/material";
 
 const ManageMenuItems = () => {
   const { categories, categoriesLoading } = useContext(CategoryContext);
@@ -27,6 +28,9 @@ const ManageMenuItems = () => {
   const [category, setCategory] = useState("");
   const [composition, setComposition] = useState([]);
   const [image, setImage] = useState(null);
+
+  const [open, setOpen] = useState(false);
+  const [resetImage, setResetImage] = useState(false);
 
   useEffect(() => {
     if (categories.length) {
@@ -45,7 +49,7 @@ const ManageMenuItems = () => {
     }
   };
 
-  const onCreateMenuItem = (event) => {
+  const onCreateMenuItem = async (event) => {
     event.preventDefault();
 
     const formData = new FormData();
@@ -62,13 +66,17 @@ const ManageMenuItems = () => {
       formData.append("image", image);
     }
 
-    handleCreateMenuItem(formData);
+    const success = await handleCreateMenuItem(formData);
 
-    setName("");
-    setDescription("");
-    setPrice("");
-    setComposition([]);
-    setImage(null);
+    if (success) {
+      setOpen(true);
+      setName("");
+      setDescription("");
+      setPrice("");
+      setComposition([]);
+      setImage(null);
+      setResetImage(true);
+    }
   };
 
   const handleClickEdit = (isEditing, id) => {
@@ -77,6 +85,13 @@ const ManageMenuItems = () => {
     if (!id) return;
 
     setSelectedMenuItemId(id);
+  };
+
+  const handleClose = (reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
   };
 
   if (categoriesLoading || ingredientLoading) {
@@ -153,7 +168,7 @@ const ManageMenuItems = () => {
             </div>
             <div>
               <label>Kép</label>
-              <ImageDropzone onDropImage={setImage} />
+              <ImageDropzone onDropImage={setImage} reset={resetImage} />
             </div>
             <label>Összetevők</label>
             <div className="ingredients">
@@ -175,6 +190,16 @@ const ManageMenuItems = () => {
         )}
       </div>
       <MenuItemsTable modifiable={true} onSelectModify={handleClickEdit} />
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert
+          onClose={handleClose}
+          severity="success"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Étel sikeresen létrehozva.
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

@@ -1,10 +1,10 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
-import imageIcon from "/assets/image-font-color.svg";
+import imageIcon from "/assets/image.svg";
 import dropIcon from "/assets/drop.svg";
 
-const ImageDropzone = ({ onDropImage }) => {
+const ImageDropzone = ({ onDropImage, reset }) => {
   const [preview, setPreview] = useState(null);
 
   const onDrop = useCallback(
@@ -15,6 +15,12 @@ const ImageDropzone = ({ onDropImage }) => {
     },
     [onDropImage]
   );
+
+  useEffect(() => {
+    if (reset) {
+      setPreview(null);
+    }
+  }, [reset]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
