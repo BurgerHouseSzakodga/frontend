@@ -10,6 +10,7 @@ import {
   fetchData,
   updateMenuItemDescription,
   updateMenuItemComposition,
+  updateMenuItemImage,
 } from "../api/http";
 
 const MenuItemContextProvider = ({ children }) => {
@@ -25,8 +26,8 @@ const MenuItemContextProvider = ({ children }) => {
         setMenuItems(menuItemsData);
       } catch (error) {
         setMenuItemError(
-          "Hiba történt az ételek betöltése során.",
-          error.message
+          error.message.data.message ||
+            "Hiba történt az ételek betöltése során."
         );
       } finally {
         setMenuItemLoading(false);
@@ -135,6 +136,24 @@ const MenuItemContextProvider = ({ children }) => {
     }
   };
 
+  const handleUpdateMenuItemImage = async (menuItemId, image) => {
+    setMenuItemLoading(true);
+    try {
+      const updatedMenuItem = await updateMenuItemImage(menuItemId, image);
+      setMenuItems((prevMenuItems) =>
+        prevMenuItems.map((item) =>
+          item.id === menuItemId ? updatedMenuItem : item
+        )
+      );
+    } catch (error) {
+      setMenuItemError(
+        error.response.data.message || "Hiba történt a frissítés során."
+      );
+    } finally {
+      setMenuItemLoading(false);
+    }
+  };
+
   const handleCreateMenuItem = async (payload) => {
     setMenuItemLoading(true);
     try {
@@ -167,22 +186,23 @@ const MenuItemContextProvider = ({ children }) => {
     }
   };
 
+  const ctxValue = {
+    menuItems,
+    menuItemError,
+    menuItemLoading,
+    setMenuItemError,
+    handleCreateMenuItem,
+    handleUpdateMenuItemCategory,
+    handleDeleteMenuItem,
+    handleUpdateMenuItemName,
+    handleUpdateMenuItemPrice,
+    handleUpdateMenuItemDescription,
+    handleUpdateMenuItemComposition,
+    handleUpdateMenuItemImage,
+  };
+
   return (
-    <MenuItemContext.Provider
-      value={{
-        menuItems,
-        menuItemError,
-        menuItemLoading,
-        setMenuItemError,
-        handleCreateMenuItem,
-        handleUpdateMenuItemCategory,
-        handleDeleteMenuItem,
-        handleUpdateMenuItemName,
-        handleUpdateMenuItemPrice,
-        handleUpdateMenuItemDescription,
-        handleUpdateMenuItemComposition,
-      }}
-    >
+    <MenuItemContext.Provider value={ctxValue}>
       {children}
     </MenuItemContext.Provider>
   );

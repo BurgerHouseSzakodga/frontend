@@ -82,6 +82,22 @@ export const updateMenuItemDescription = async (menuItemId, description) => {
   return response.data.menuItem;
 };
 
+export const updateMenuItemImage = async (menuItemId, image) => {
+  const formData = new FormData();
+  formData.append("image", image);
+
+  const response = await apiClient.post(
+    `api/menu-items/${menuItemId}/image`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+  return response.data.menuItem;
+};
+
 export const updateMenuItemComposition = async (menuItemId, composition) => {
   const response = await apiClient.put(
     `api/menu-items/${menuItemId}/composition`,
@@ -93,7 +109,6 @@ export const updateMenuItemComposition = async (menuItemId, composition) => {
 };
 
 export const createMenuItem = async (payload) => {
-  console.log(payload);
   const response = await apiClient.post(`api/menu-items`, payload, {
     headers: {
       "Content-Type": "multipart/form-data",

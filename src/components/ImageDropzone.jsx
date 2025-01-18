@@ -4,14 +4,16 @@ import { useDropzone } from "react-dropzone";
 import imageIcon from "/assets/image.svg";
 import dropIcon from "/assets/drop.svg";
 
-const ImageDropzone = ({ onDropImage, reset }) => {
+const ImageDropzone = ({ imageSource, onDropImage, reset }) => {
   const [preview, setPreview] = useState(null);
+  const [hasImageSource, setHasImageSource] = useState(!!imageSource);
 
   const onDrop = useCallback(
     (acceptedFiles) => {
       const file = acceptedFiles[0];
       onDropImage(file);
       setPreview(URL.createObjectURL(file));
+      setHasImageSource(false);
     },
     [onDropImage]
   );
@@ -33,7 +35,11 @@ const ImageDropzone = ({ onDropImage, reset }) => {
   return (
     <div className="dropzone-container">
       <div className="image-preview">
-        <img src={preview ? preview : imageIcon} alt="Hibás formátum" />
+        {hasImageSource ? (
+          <img src={imageSource} />
+        ) : (
+          <img src={preview ? preview : imageIcon} />
+        )}
       </div>
       <div {...getRootProps()} className="image-dropzone">
         <input {...getInputProps()} />
