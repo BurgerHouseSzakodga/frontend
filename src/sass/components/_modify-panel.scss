@@ -2,11 +2,11 @@
 
 .modify-panel {
   &__header {
-    @include flex($justify: space-between);
+    @include flex($direction: column);
 
     & > img {
       @include default-trasition;
-      align-self: flex-start;
+      align-self: flex-end;
       cursor: pointer;
       filter: $font-color-light-filter;
       width: 1rem;

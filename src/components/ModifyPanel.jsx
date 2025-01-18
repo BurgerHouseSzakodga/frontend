@@ -85,11 +85,11 @@ const ModifyPanel = ({ onCloseModifyPanel, selectedItemId }) => {
     <>
       <div className="modify-panel">
         <div className="modify-panel__header">
+          <img onClick={() => onCloseModifyPanel(false, null)} src={exitIcon} />
           <ImageDropzone
             onDropImage={setImage}
             imageSource={selectedItem.image_path}
           />
-          <img onClick={() => onCloseModifyPanel(false, null)} src={exitIcon} />
         </div>
         <form onSubmit={handleSubmit}>
           <div className="input-group">
