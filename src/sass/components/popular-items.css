@@ -21,7 +21,7 @@
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    z-index: 5; /* Biztosítja, hogy a gombok a galéria fölött legyenek */
+    z-index: 5; 
 }
 
 /* Hover állapot */
@@ -39,7 +39,7 @@
 /* Bal oldali (Előző) gomb */
 .swiper-button.prev {
     left: -25px;
-    transform: translate(-50%, -50%);/* Függetlenül középre igazít */
+    transform: translate(-50%, -50%);
 }
 
 /* Jobb oldali (Következő) gomb */
@@ -66,17 +66,17 @@
     }
 }
 
-/* Reszponzív h1 stílus */
+
 h1 {
     text-align: center;
     padding: 20px;
-    font-size: 3vw;  /* Nagy képernyők esetén */    
+    font-size: 3vw;   
     margin: 0;
 }
 
 /* Kisebb képernyők esetén csökkentett font-size */
 @media (max-width: 480px) {
     h1 {
-        font-size: 8vw;  /* Nagyon kicsi képernyők esetén */
+        font-size: 8vw; 
     }
 }

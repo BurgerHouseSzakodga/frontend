@@ -52,7 +52,7 @@ function PopularItem() {
             </Swiper>
 
             <button className="swiper-button next" onClick={() => handleImage('next')}>
-                <img src={rightIcon} alt="Next" />
+                <img src={rightIcon}  />
             </button>
         </div>
     );
