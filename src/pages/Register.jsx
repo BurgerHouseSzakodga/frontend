@@ -29,7 +29,7 @@ const Register = () => {
     <div className="register">
       <form onSubmit={handleRegister}>
         <div>
-          <label htmlFor="name">Felhasználónév:</label>
+          <label htmlFor="name">Teljes nevem:</label>
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
