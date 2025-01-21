@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import "../sass/pages/user.css";
 import emailIcon from "/assets/email.svg";
 import userIcon from "/assets/users.svg";
-import passwordIcon from "/assets/password.svg";
 import orderIcon from "/assets/orders.svg";
 
 const UserProfile = () => {
@@ -15,9 +14,6 @@ const UserProfile = () => {
   const [formData, setFormData] = useState({
     name: user?.name || '',
     email: user?.email || '',
-    current_password: '',
-    password: '',
-    password_confirmation: '',
     address: user?.address || '',
   });
   const [error, setError] = useState('');
@@ -28,9 +24,6 @@ const UserProfile = () => {
       setFormData({
         name: user.name || '',
         email: user.email || '',
-        current_password: '',
-        password: '',
-        password_confirmation: '',
         address: user.address || '',
       });
     }
@@ -47,24 +40,15 @@ const UserProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formData.password && formData.password !== formData.password_confirmation) {
-      setError("A jelszavak nem egyeznek meg!");
-      return;
-    }
-
     try {
       const payload = {
         name: formData.name,
         email: formData.email,
-        current_password: formData.current_password || undefined,
-        password: formData.password || undefined,
-        password_confirmation: formData.password_confirmation || undefined,
         address: formData.address || undefined,
       };
 
       // Felhasználói adat frissítése
-      const response = await apiClient.patch("/api/user/profile", { email: "ujemail@example.com" });
-
+      const response = await apiClient.put("/api/user/profile", payload);
 
       setSuccessMessage("Profil sikeresen frissítve!");
       setError('');
@@ -92,7 +76,6 @@ const UserProfile = () => {
               name="name"
               value={formData.name}
               onChange={handleInputChange}
-              placeholder="Végh László"
             />
           </div>
         </div>
@@ -105,48 +88,6 @@ const UserProfile = () => {
               id="email"
               name="email"
               value={formData.email}
-              onChange={handleInputChange}
-              placeholder="vlaki@gmail.com"
-            />
-          </div>
-        </div>
-
-        <div>
-          <label htmlFor="current_password">Jelenlegi jelszó</label>
-          <div className="input-container">
-            <img src={passwordIcon} alt="Password Icon" />
-            <input
-              type="password"
-              id="current_password"
-              name="current_password"
-              value={formData.current_password}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-
-        <div>
-          <label htmlFor="password">Új jelszó</label>
-          <div className="input-container">
-            <img src={passwordIcon} alt="Password Icon" />
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-        <div>
-          <label htmlFor="password_confirmation">Jelszó megerősítése</label>
-          <div className="input-container">
-            <img src={passwordIcon} alt="Password Icon" />
-            <input
-              type="password"
-              id="password_confirmation"
-              name="password_confirmation"
-              value={formData.password_confirmation}
               onChange={handleInputChange}
             />
           </div>
@@ -162,7 +103,6 @@ const UserProfile = () => {
               name="address"
               value={formData.address}
               onChange={handleInputChange}
-              placeholder="2040, Budaörs, Lévai utca 29."
             />
           </div>
         </div>
