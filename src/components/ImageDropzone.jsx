@@ -51,7 +51,7 @@ const ImageDropzone = ({ imageSource, onDropImage, reset }) => {
         ) : (
           <>
             <p>
-              Húzd be a feltölteni kívánt képeket, vagy kattints és válaszd ki
+              Húzd be a feltölteni kívánt képeket, vagy kattints és válaszd ki.
             </p>
           </>
         )}
