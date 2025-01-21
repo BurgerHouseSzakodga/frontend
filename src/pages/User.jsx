@@ -1,129 +1,126 @@
 import { useContext, useEffect, useState } from "react";
-import { Await, Link } from "react-router-dom";
+import { apiClient } from "../api/axios"; // Az axios konfiguráció importálása
 import { AuthContext } from "../context/contexts";
+import { logoutUser } from "../api/http";
 
-
-const User = () => {
+const UserProfile = () => {
   const { logout } = useContext(AuthContext);
-  const { user, getUser, authLoading } = useContext(AuthContext);
+  const { user, authLoading } = useContext(AuthContext);
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    address: "",
+    name: user?.name || '',
+    email: user?.email || '',
+    password: '',
+    password_confirmation: '',
+    address: user?.address || '',
   });
+  const [error, setError] = useState('');
 
-  //Itt töltöm be a felhsz. adatait, amikor a komp be tötlödik akkor ha még nincs betöltve
   useEffect(() => {
-    if (!user && !authLoading) {
-      getUser();
-    }
-  }, [getUser, user, authLoading]);
-
-//beálitom a formon a felhasználó adatait
-  useEffect(() => {
-    console.log(user);
-   
     if (user) {
       setFormData({
-        name: user.name || "",
-        email: user.email || "",
-        password: "********",
-        address: user.address || "",
+        name: user.name || '',
+        email: user.email || '',
+        password: '*******',
+        password_confirmation: '******',
+        address: user.address || '',
       });
     }
-  }, [user]); 
+  }, [user]);
 
-  //fügvény ha a felhsz uj adatott vissz be
-  const handleInputChange=(e)=>{
-    const{name, value}=e.target;
-    setFormData({...formData, [name]: value});
-  }
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
-  //ha kész az adatok elküldjük a backendre ezzel a fvg-vel
-  const saveChanges=(e)=>{
-    console.log(formData);
-    e.preventDefault();
-    const payload={
-      name: formData.name,
-      email: formData.email,
-      password: formData.password,
-      address: formData.address||undefined, //ha jelszot nem modositunk nem küldöm el
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Megakadályozza az alapértelmezett form beküldést
+
+    try {
+      const payload = {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password || undefined,
+        password_confirmation: formData.password_confirmation || undefined,
+        address: formData.address || undefined,
+      };
+
+      const response = await apiClient.put("/api/user/profile", payload);
+
+      alert("Profil sikeresen frissítve!");
+    } catch (error) {
+      setError("Hiba történt a profil frissítése közben!");
+      console.error(error);
     }
-
-    try{
-      //itt kellene a backendnek elküldeni a módosított adatokat
-      console.log("Módosítások elküldve", payload);
-    }
-    catch(error){
-      console.error("Nem sikerült a módosítás", error);
-    }
-  }
-
-  if (authLoading) return <div>Loading...</div>;
+  };
 
   return (
     <div>
-      <h3>Adataim</h3>
-      <form onSubmit={saveChanges}>
-        <button onClick={logout}>Módostiás</button>
-        <div>
-          <label htmlFor="name">Teljes nevem :</label>
-          <div>
-            <input
-              type="name"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
+      <h3>Profil frissítése</h3>
+      {authLoading && <p>Betöltés...</p>}
 
+      <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="name">E-mail cim :</label>
-          <div>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-
-        <div>
-          <label htmlFor="password">Jelszó:</label>
-          <div>
-            <img alt="Jelszó ikon" />
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Jelszó"
-              value={formData.password}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-
-        <div>
-          <label htmlFor="address">Szállitási cim:</label>
+          <label htmlFor="name">Név</label>
           <input
             type="text"
-            id=""
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="email">Email cím</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="password">Új jelszó</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={formData.password}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="password_confirmation">Jelszó megerősítése</label>
+          <input
+            type="password"
+            id="password_confirmation"
+            name="password_confirmation"
+            value={formData.password_confirmation}
+            onChange={handleInputChange}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="address">Szállitási cim</label>
+          <input
+            type="text"
+            id="address"
             name="address"
             value={formData.address}
             onChange={handleInputChange}
           />
         </div>
-
+        {error && <p>{error}</p>}
+        <button type="submit" disabled={authLoading}>
+          Profil frissítése
+        </button>
       </form>
-
-      <button onClick={logout}>Mentés</button>
+      <button onClick={logout}>Kijelentkezés</button>
     </div>
   );
 };
 
-export default User;
+export default UserProfile;
