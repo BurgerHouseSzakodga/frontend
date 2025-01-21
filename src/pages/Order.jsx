@@ -1,5 +1,11 @@
+import { MenuItemContext } from "../context/contexts";
+
 const Order = () => {
-  return <div>Order</div>;
+
+  return <div>
+
+  </div>;
+
 };
 
 export default Order;

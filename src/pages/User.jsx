@@ -47,7 +47,6 @@ const UserProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Ellenőrizzük, hogy a két jelszó mező megegyezik-e, ha az új jelszó meg van adva
     if (formData.password && formData.password !== formData.password_confirmation) {
       setError("A jelszavak nem egyeznek meg!");
       return;
@@ -64,7 +63,8 @@ const UserProfile = () => {
       };
 
       // Felhasználói adat frissítése
-      const response = await apiClient.put("/api/user/profile", payload);
+      const response = await apiClient.patch("/api/user/profile", { email: "ujemail@example.com" });
+
 
       setSuccessMessage("Profil sikeresen frissítve!");
       setError('');
