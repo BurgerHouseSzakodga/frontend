@@ -1,11 +1,13 @@
-import { useContext, useRef } from 'react'
-import { Swiper, SwiperSlide } from "swiper/react"
+import { useContext, useRef } from 'react';
+import { Swiper, SwiperSlide } from "swiper/react";
 
-import { MenuItemContext } from '../context/contexts'
-import MenuItemCard from './MenuItemCrard'
-import '../sass/pages/popular-items.css'
-import "swiper/css"
-import "swiper/modules"
+import { MenuItemContext } from '../context/contexts';
+import MenuItemCard from './MenuItemCrard';
+import '../sass/components/popular-items.css';
+import "swiper/css";
+import "swiper/modules";
+import rightIcon from "/assets/right.svg";
+import leftIcon from "/assets/left.svg";
 
 function PopularItem() {
     const { menuItems } = useContext(MenuItemContext);
@@ -20,10 +22,13 @@ function PopularItem() {
     };
 
     return (
+        
         <div className="popular-item-container">
-            <button className="swiper-button prev"
-                onClick={() => handleImage('prev')}>Elöző</button>
-           
+            <h1>Népszerűek</h1>
+            <button className="swiper-button prev" onClick={() => handleImage('prev')}>
+                <img src={leftIcon} alt="Previous" />
+            </button>
+
             <Swiper
                 ref={swiperRef}
                 slidesPerView={5}
@@ -45,10 +50,12 @@ function PopularItem() {
                     </SwiperSlide>
                 ))}
             </Swiper>
-            <button className="swiper-button next"
-                onClick={() => handleImage('next')}>Következő</button>
+
+            <button className="swiper-button next" onClick={() => handleImage('next')}>
+                <img src={rightIcon} alt="Next" />
+            </button>
         </div>
-    )
+    );
 }
 
-export default PopularItem
+export default PopularItem;

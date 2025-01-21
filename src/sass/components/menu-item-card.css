@@ -28,10 +28,14 @@ card-price{
 }
 
 .basket-button{
-    background-color: #f17228;
+    background-color: #ff6600;
     color: white;
     border: none;
     padding: 10px;
     border-radius: 10px;
     width: 200px;
+}
+
+.basket-button:hover{
+    background-color: #ff4500;
 }

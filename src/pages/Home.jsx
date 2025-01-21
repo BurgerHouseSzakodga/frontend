@@ -7,6 +7,7 @@ const Home = () => {
   return (
     <div className="home">
       <Header />
+    
       <PopularItem />
     </div>
   );
