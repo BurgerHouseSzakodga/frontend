@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 
 import {
   CategoryContext,
@@ -7,6 +7,8 @@ import {
 } from "../context/contexts";
 import Modal from "./Modal";
 import exitIcon from "/assets/exit.svg";
+import { Alert, Snackbar } from "@mui/material";
+import ImageDropzone from "./ImageDropZone";
 
 const ModifyPanel = ({ onCloseModifyPanel, selectedItemId }) => {
   const {
@@ -17,11 +19,14 @@ const ModifyPanel = ({ onCloseModifyPanel, selectedItemId }) => {
     handleUpdateMenuItemPrice,
     handleUpdateMenuItemDescription,
     handleUpdateMenuItemComposition,
+    handleUpdateMenuItemImage,
   } = useContext(MenuItemContext);
   const { categories } = useContext(CategoryContext);
   const { ingredients } = useContext(IngredientContext);
 
   const selectedItem = menuItems.find((item) => item.id === selectedItemId);
+
+  const [open, setOpen] = useState(false);
 
   const [name, setName] = useState(selectedItem.name);
   const [description, setDescription] = useState(selectedItem.description);
@@ -29,16 +34,7 @@ const ModifyPanel = ({ onCloseModifyPanel, selectedItemId }) => {
   const [category, setCategory] = useState(selectedItem.category_id);
   const [composition, setComposition] = useState(selectedItem.compositions);
   const [confirmDeleteModalOpen, setConfirmDeleteModalOpen] = useState(false);
-
-  useEffect(() => {
-    if (selectedItem) {
-      setName(selectedItem.name);
-      setDescription(selectedItem.description);
-      setPrice(selectedItem.price);
-      setCategory(selectedItem.category_id);
-      setComposition(selectedItem.compositions);
-    }
-  }, [selectedItem]);
+  const [image, setImage] = useState(null);
 
   const handleSetIngredient = (event) => {
     const ingredientId = parseInt(event.target.id);
@@ -62,6 +58,13 @@ const ModifyPanel = ({ onCloseModifyPanel, selectedItemId }) => {
     handleDeleteMenuItem(selectedItem.id);
   };
 
+  const handleClose = (reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -70,22 +73,29 @@ const ModifyPanel = ({ onCloseModifyPanel, selectedItemId }) => {
     await handleUpdateMenuItemCategory(selectedItem.id, category);
     await handleUpdateMenuItemDescription(selectedItem.id, description);
     await handleUpdateMenuItemComposition(selectedItem.id, composition);
+
+    if (image) {
+      await handleUpdateMenuItemImage(selectedItem.id, image);
+    }
+
+    setOpen(true);
   };
 
   return (
     <>
       <div className="modify-panel">
         <div className="modify-panel__header">
-          <div className="img-container">
-            <img src={selectedItem.image_path} />
-          </div>
           <img onClick={() => onCloseModifyPanel(false, null)} src={exitIcon} />
+          <ImageDropzone
+            onDropImage={setImage}
+            imageSource={selectedItem.image_path}
+          />
         </div>
         <form onSubmit={handleSubmit}>
           <div className="input-group">
             <input
               type="text"
-              value={selectedItem.name}
+              value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
@@ -150,6 +160,16 @@ const ModifyPanel = ({ onCloseModifyPanel, selectedItemId }) => {
         </form>
         <button onClick={onConfirmDelete}>étel törlése</button>
       </Modal>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert
+          onClose={handleClose}
+          severity="success"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Étel sikeresen módosítva.
+        </Alert>
+      </Snackbar>
     </>
   );
 };

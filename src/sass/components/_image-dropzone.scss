@@ -1,0 +1,40 @@
+@use "../config" as *;
+
+.dropzone-container {
+  @include flex($justify: space-between);
+  gap: 1rem;
+  margin-top: 1rem;
+  width: 100%;
+
+  .image-preview {
+    //border: 2px dashed $font-color-light;
+    border-radius: $button-border-radius;
+    flex-shrink: 0;
+    height: 150px;
+    width: 150px;
+    overflow: hidden;
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .image-dropzone {
+    background-color: $light-grey;
+    border: 2px dashed $font-color-light;
+    border-radius: $button-border-radius;
+    color: $font-color-light;
+    font-size: $font-size;
+    height: 150px;
+    padding: 16px;
+    text-align: center;
+    width: 1000%;
+
+    .drop-icon {
+      width: 30px;
+      height: 30px;
+    }
+  }
+}

@@ -2,11 +2,11 @@
 
 .modify-panel {
   &__header {
-    @include flex($justify: space-between);
+    @include flex($direction: column);
 
     & > img {
       @include default-trasition;
-      align-self: flex-start;
+      align-self: flex-end;
       cursor: pointer;
       filter: $font-color-light-filter;
       width: 1rem;
@@ -33,7 +33,7 @@
 
   .img-container {
     @include flex;
-    border-radius: $border-radius / 2;
+    border-radius: calc($border-radius / 2);
     height: 100px;
     margin-bottom: 1rem;
     overflow: hidden;
@@ -51,7 +51,7 @@
 
     button {
       @include default-trasition;
-      border-radius: $border-radius / 2;
+      border-radius: calc($border-radius / 2);
       background-color: #fff;
       border: 1px solid rgb(255, 0, 0);
       color: rgb(255, 0, 0);

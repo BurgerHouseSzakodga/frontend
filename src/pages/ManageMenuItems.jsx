@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import {
   CategoryContext,
@@ -11,6 +11,8 @@ import nameIcon from "/assets/name.svg";
 import descriptionIcon from "/assets/description.svg";
 import priceIcon from "/assets/price.svg";
 import categoryIcon from "/assets/category.svg";
+import ImageDropzone from "../components/ImageDropZone";
+import { Alert, Snackbar } from "@mui/material";
 
 const ManageMenuItems = () => {
   const { categories, categoriesLoading } = useContext(CategoryContext);
@@ -27,7 +29,8 @@ const ManageMenuItems = () => {
   const [composition, setComposition] = useState([]);
   const [image, setImage] = useState(null);
 
-  const fileInputRef = useRef();
+  const [open, setOpen] = useState(false);
+  const [resetImage, setResetImage] = useState(false);
 
   useEffect(() => {
     if (categories.length) {
@@ -46,7 +49,7 @@ const ManageMenuItems = () => {
     }
   };
 
-  const onCreateMenuItem = (event) => {
+  const onCreateMenuItem = async (event) => {
     event.preventDefault();
 
     const formData = new FormData();
@@ -63,18 +66,24 @@ const ManageMenuItems = () => {
       formData.append("image", image);
     }
 
-    handleCreateMenuItem(formData);
+    const success = await handleCreateMenuItem(formData);
 
-    setName("");
-    setDescription("");
-    setPrice("");
-    setComposition([]);
-    setImage(null);
-
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
+    if (success) {
+      setOpen(true);
+      setName("");
+      setDescription("");
+      setPrice("");
+      setComposition([]);
+      setImage(null);
+      setResetImage(true);
     }
   };
+
+  useEffect(() => {
+    if (resetImage) {
+      setResetImage(false);
+    }
+  }, [resetImage]);
 
   const handleClickEdit = (isEditing, id) => {
     setIsEditing(isEditing);
@@ -82,6 +91,13 @@ const ManageMenuItems = () => {
     if (!id) return;
 
     setSelectedMenuItemId(id);
+  };
+
+  const handleClose = (reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
   };
 
   if (categoriesLoading || ingredientLoading) {
@@ -93,6 +109,7 @@ const ManageMenuItems = () => {
       <div className="menu-item-form">
         {isEditing ? (
           <ModifyPanel
+            key={selectedMenuItemId}
             onCloseModifyPanel={handleClickEdit}
             selectedItemId={selectedMenuItemId}
           />
@@ -156,17 +173,10 @@ const ManageMenuItems = () => {
               </div>
             </div>
             <div>
-              <label htmlFor="menu-item-image">Kép</label>
-              <input
-                ref={fileInputRef}
-                onChange={(e) => setImage(e.target.files[0])}
-                type="file"
-                accept="image/*"
-                name="menu-item-image"
-                id="menu-item-image"
-                multiple={false}
-              />
+              <label>Kép</label>
+              <ImageDropzone onDropImage={setImage} reset={resetImage} />
             </div>
+            <label>Összetevők</label>
             <div className="ingredients">
               {ingredients.map((ingredient) => (
                 <div key={ingredient.id}>
@@ -186,6 +196,16 @@ const ManageMenuItems = () => {
         )}
       </div>
       <MenuItemsTable modifiable={true} onSelectModify={handleClickEdit} />
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert
+          onClose={handleClose}
+          severity="success"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Étel sikeresen létrehozva.
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
