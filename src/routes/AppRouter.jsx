@@ -23,7 +23,7 @@ const AppRouter = () => {
         <Route path="/rendeles" element={<Order />} />
         <Route path="/felhasznalo" element={<User />} />
         <Route path="/kosar" element={<Cart />} />
-        <Route path="/admin" element={<AdminLayout />}>
+        <Route element={<AdminLayout />}>
           <Route path="/admin/kezelofelulet" element={<Dashboard />} />
           <Route path="/admin/etelek-kezelese" element={<ManageMenuItems />} />
           <Route path="/admin/rendelesek-kezelese" element={<ManageOrders />} />

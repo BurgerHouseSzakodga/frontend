@@ -85,3 +85,56 @@ export const createMenuItemColumns = (modifiable, categories, handleModify) => {
 
   return data;
 };
+
+export const createUsersColumns = (usersIcon, handleDelete) => {
+  const columns = [
+    {
+      field: "avatar",
+      headerName: "Avatar",
+      width: 100,
+      renderCell: () => (
+        <img
+          src={usersIcon}
+          alt="avatar"
+          style={{ width: "36px", height: "36px", verticalAlign: "middle" }}
+        />
+      ),
+    },
+    { field: "id", headerName: "ID", width: 90, editable: false },
+    {
+      field: "name",
+      headerName: "Név",
+      width: 150,
+      editable: false,
+    },
+    {
+      field: "email",
+      headerName: "Email",
+      width: 200,
+      editable: false,
+    },
+    {
+      field: "is_admin",
+      headerName: "Admin",
+      type: "boolean",
+      width: 110,
+      editable: true,
+    },
+    {
+      field: "actions",
+      headerName: "Műveletek",
+      width: 150,
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => handleDelete(params.id)}
+        >
+          Törlés
+        </Button>
+      ),
+    },
+  ];
+
+  return columns;
+};

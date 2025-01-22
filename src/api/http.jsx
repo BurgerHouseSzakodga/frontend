@@ -108,6 +108,13 @@ export const updateMenuItemComposition = async (menuItemId, composition) => {
   return response.data.menuItem;
 };
 
+export const updateOrderStatus = async (orderId, status) => {
+  const response = await apiClient.put(`api/orders/${orderId}/status`, {
+    status,
+  });
+  return response.data.order;
+};
+
 export const createMenuItem = async (payload) => {
   const response = await apiClient.post(`api/menu-items`, payload, {
     headers: {

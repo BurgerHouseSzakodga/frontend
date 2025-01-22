@@ -9,6 +9,7 @@ import {
 import Sidebar from "../components/Sidebar";
 import Modal from "../components/Modal";
 import Loader from "../components/Loader";
+import errorIcon from "/assets/error.svg";
 
 const AdminLayout = () => {
   const { isAdmin, authLoading } = useContext(AuthContext);
@@ -28,6 +29,7 @@ const AdminLayout = () => {
         open={!!menuItemError}
         onCloseModal={() => setMenuItemError(null)}
       >
+        <img src={errorIcon} />
         <p>{menuItemError}</p>
         <form method="dialog">
           <input type="submit" value="ok" />
@@ -38,6 +40,7 @@ const AdminLayout = () => {
         open={!!categoriesError}
         onCloseModal={() => setCategoriesError(null)}
       >
+        <img src={errorIcon} />
         <p>{categoriesError}</p>
         <form method="dialog">
           <input type="submit" value="ok" />

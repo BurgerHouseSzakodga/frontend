@@ -8,4 +8,17 @@
   position: sticky;
   width: 250px;
   top: 0;
+
+  img {
+    width: 50px;
+    filter: $font-color-light-filter;
+
+    &:hover {
+      filter: $orange-filter;
+    }
+  }
+
+  .selected-img {
+    filter: $yellow-filter;
+  }
 }

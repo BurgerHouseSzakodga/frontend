@@ -4,6 +4,7 @@ import { LineChart } from "@mui/x-charts/LineChart";
 
 import Modal from "./Modal";
 import { fetchRevenueByTimePeriod } from "../api/http";
+import errorIcon from "/assets/error.svg";
 
 const RevenueChart = () => {
   const [revenueByTimePeriod, setRevenueByTimePeriod] = useState([]);
@@ -59,6 +60,7 @@ const RevenueChart = () => {
         open={!!chartError}
         onCloseModal={() => setChartError(null)}
       >
+        <img src={errorIcon} />
         <p>{chartError}</p>
         <form method="dialog">
           <input type="submit" value="ok" />
