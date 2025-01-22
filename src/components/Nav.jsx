@@ -12,6 +12,7 @@ import gearIcon from "/assets/gear.svg";
 const Nav = () => {
   const { user, isAdmin } = useContext(AuthContext);
 
+
   return (
     <div className="nav">
       <Link className="nav__logo" to="/">
@@ -20,7 +21,7 @@ const Nav = () => {
       <div className="nav__address">
         <img src={locationIcon} />
         <p>Kiszállítás ide:</p>
-        <strong>2040, Budaörs, Lévai utca 29.</strong>
+        <strong>{user ? user.address : "2040, Budaörs, Lévai utca 29."}</strong>
       </div>
       <div className="nav__buttons">
         <Link to="/rendeles" className="find-food-button">

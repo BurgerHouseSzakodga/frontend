@@ -6,44 +6,58 @@ body {
   
   .user {
     display: flex;
+    align-items: flex-start;
     justify-content: center;
     margin-top: 4rem;
   }
   
   .user form {
     background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     align-items: stretch;
     gap: 1rem;
     padding: 1.5rem;
     width: 32rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
   .user form div {
+    position: relative;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem; /* Csökkentett távolság a label és input között */
   }
   
   .user form label {
-    margin-bottom: 0.5rem;
-    font-weight: bold;
+    margin-bottom: 0.2rem; /* Kisebb margó a label alatt */
   }
   
   .user form input {
-    padding: 0.5rem;
+    padding: 0.5rem 0.5rem 0.5rem 2.5rem; /* Bal oldalon hozzáadott hely az ikon számára */
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
+    width: 460px; 
+  }
+  
+  .user form div img {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    pointer-events: none; /* Az ikon nem blokkolja a mezőt */
   }
   
   .user form button {
     padding: 0.75rem;
     border: none;
     border-radius: 4px;
-    background-color: #007bff;
+    background-color: #ff4500;
     color: #fff;
     font-size: 16px;
     cursor: pointer;
@@ -55,7 +69,8 @@ body {
   }
   
   .user form p {
-    color: red;
-    font-size: 14px;
+    color: #ff4500;
+    font-size: 0.8rem;
     margin-top: -0.5rem;
   }
+  
