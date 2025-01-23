@@ -11,14 +11,14 @@
 
   img {
     width: 50px;
-    filter: $font-color-light-filter;
+    filter: $side-bar-icon-filter;
 
     &:hover {
-      filter: $orange-filter;
+      filter: $hover-side-bar-icon-filter;
     }
   }
 
   .selected-img {
-    filter: $yellow-filter;
+    filter: $selected-side-bar-icon-filter;
   }
 }

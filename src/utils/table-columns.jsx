@@ -22,19 +22,18 @@ export const createMenuItemColumns = (modifiable, categories, handleModify) => {
         ></div>
       ),
     },
-    { field: "id", headerName: "ID", width: width / 3, editable: false },
+    {
+      field: "id",
+      headerName: "ID",
+      type: "number",
+      width: width / 3,
+      editable: false,
+    },
     {
       field: "name",
       headerName: "Név",
       width,
       editable: true,
-    },
-    {
-      field: "price",
-      headerName: "Ár",
-      width,
-      editable: true,
-      renderCell: (params) => params.value + " Ft",
     },
     {
       field: "category_name",
@@ -60,6 +59,14 @@ export const createMenuItemColumns = (modifiable, categories, handleModify) => {
           ))}
         </Select>
       ),
+    },
+    {
+      field: "price",
+      headerName: "Ár",
+      width,
+      type: "number",
+      editable: true,
+      renderCell: (params) => params.value + " Ft",
     },
   ];
 
@@ -100,7 +107,13 @@ export const createUsersColumns = (usersIcon, handleDelete) => {
         />
       ),
     },
-    { field: "id", headerName: "ID", width: 90, editable: false },
+    {
+      field: "id",
+      headerName: "ID",
+      type: "number",
+      width: 90,
+      editable: false,
+    },
     {
       field: "name",
       headerName: "Név",

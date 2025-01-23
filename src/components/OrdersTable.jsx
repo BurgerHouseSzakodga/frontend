@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, Chip } from "@mui/material";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 import { useContext, useState } from "react";
@@ -12,6 +12,8 @@ const OrdersTable = () => {
     useContext(OrderContext);
   const [open, setOpen] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
+
+  console.log(orders);
 
   const handleOpenModal = (items) => {
     setSelectedItems(items);
@@ -32,22 +34,26 @@ const OrdersTable = () => {
   const rows = [...orders];
 
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
+    { field: "id", headerName: "ID", type: "number", width: 90 },
     {
       field: "user_name",
       headerName: "Felhasználó",
       width: 150,
     },
     {
-      field: "total",
-      headerName: "Totál",
-      type: "number",
-      width: 150,
-      renderCell: (params) => params.value + " Ft",
+      field: "delivery_address",
+      headerName: "Szállítási cím",
+      width: 200,
+      renderCell: (params) =>
+        params.value ? (
+          "📍 " + params.value
+        ) : (
+          <Chip label="Átvétel az étteremben" />
+        ),
     },
     {
       field: "status",
-      headerName: "Status",
+      headerName: "Státusz",
       width: 150,
       renderCell: (params) => {
         const color = params.value === "kiszállítva" ? "success" : "warning";
@@ -75,7 +81,13 @@ const OrdersTable = () => {
 
   return (
     <>
-      <Box sx={{ height: 400, width: "100%" }}>
+      <Box
+        sx={{
+          height: 400,
+          width: "100%",
+          bgcolor: "background.paper",
+        }}
+      >
         <DataGrid
           rows={rows}
           columns={columns.map((col) => {
