@@ -36,7 +36,7 @@ body {
 .admin-layout {
   @include flex($justify: flex-start, $align: flex-start);
   @include default-trasition;
-  gap: 6rem;
+  gap: 12rem;
   background-color: $admin-layout-background;
   min-height: 100%;
 }

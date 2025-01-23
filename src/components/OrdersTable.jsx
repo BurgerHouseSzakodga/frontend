@@ -13,8 +13,6 @@ const OrdersTable = () => {
   const [open, setOpen] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
 
-  console.log(orders);
-
   const handleOpenModal = (items) => {
     setSelectedItems(items);
     setOpen(true);

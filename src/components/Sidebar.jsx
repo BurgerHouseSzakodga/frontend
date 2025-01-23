@@ -36,7 +36,7 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       {sidebarItems.map((item, i) => (
-        <Tooltip key={i} title={item.title} placement="right-start" arrow>
+        <Tooltip key={i} title={item.title} placement="right">
           <Link to={item.path}>
             <img
               className={location == item.path ? "selected-img" : ""}
