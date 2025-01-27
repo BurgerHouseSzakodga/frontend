@@ -1,13 +1,17 @@
 import React, { useEffect, useState, useContext } from 'react';
 import MenuItemCard from './MenuItemCrard';
-import axios from 'axios';
 import { MenuItemContext } from '../context/contexts';
+import '../sass/components/all-items.css'
 
 function AllMenuWithCategory() {
+
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState('name-asc');  // Changed default to name-asc
   const { menuItems } = useContext(MenuItemContext);
 
+
+
+  
   // Szűrt és rendezett elemek
   const filteredAndSortedItems = menuItems
     .filter(item => selectedCategory === 'all' || item.category_id === parseInt(selectedCategory))

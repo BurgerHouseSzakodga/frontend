@@ -2,7 +2,7 @@ import Header from "../components/Header";
 
 import "swiper/css";
 import PopularItem from "../components/PopularItem";
-import AllMenuWithCategory from "../components/AllMenuWithCategory";
+import AllMenuWithCategory from "../components/AllItems";
 
 
 const Home = () => {
