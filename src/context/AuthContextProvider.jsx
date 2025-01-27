@@ -68,7 +68,7 @@ const AuthContextProvider = ({ children }) => {
     getUser();
   }, [getUser]);
 
-  const isAdmin = user?.is_admin === 1 ? true : false;
+  const isAdmin = user?.is_admin === 1;
 
   const contextValue = {
     user,

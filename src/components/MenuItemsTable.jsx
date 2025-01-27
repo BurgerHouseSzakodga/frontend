@@ -3,17 +3,12 @@ import { useContext } from "react";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 
-import {
-  AuthContext,
-  CategoryContext,
-  MenuItemContext,
-} from "../context/contexts";
+import { CategoryContext, MenuItemContext } from "../context/contexts";
 import { localeText } from "../utils/locale-text";
 import { createMenuItemColumns } from "../utils/table-columns";
 
 const MenuItemsTable = ({ modifiable, onSelectModify }) => {
   const { categories } = useContext(CategoryContext);
-  const { navigate } = useContext(AuthContext);
   const {
     menuItems,
     menuItemLoading,
@@ -39,11 +34,8 @@ const MenuItemsTable = ({ modifiable, onSelectModify }) => {
   };
 
   const handleModify = (id) => {
-    if (!modifiable) {
-      navigate("/admin/etelek-kezelese");
-    } else {
-      onSelectModify(true, id);
-    }
+    onSelectModify(true, id);
+    window.scrollTo({ top: 100, behavior: "smooth" });
   };
 
   const data = createMenuItemColumns(modifiable, categories, handleModify);

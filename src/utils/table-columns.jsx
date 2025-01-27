@@ -22,19 +22,18 @@ export const createMenuItemColumns = (modifiable, categories, handleModify) => {
         ></div>
       ),
     },
-    { field: "id", headerName: "ID", width: width / 3, editable: false },
+    {
+      field: "id",
+      headerName: "ID",
+      type: "number",
+      width: width / 3,
+      editable: false,
+    },
     {
       field: "name",
       headerName: "Név",
       width,
       editable: true,
-    },
-    {
-      field: "price",
-      headerName: "Ár",
-      width,
-      editable: true,
-      renderCell: (params) => params.value + " Ft",
     },
     {
       field: "category_name",
@@ -61,6 +60,14 @@ export const createMenuItemColumns = (modifiable, categories, handleModify) => {
         </Select>
       ),
     },
+    {
+      field: "price",
+      headerName: "Ár",
+      width,
+      type: "number",
+      editable: true,
+      renderCell: (params) => params.value + " Ft",
+    },
   ];
 
   const data = modifiable
@@ -84,4 +91,63 @@ export const createMenuItemColumns = (modifiable, categories, handleModify) => {
     : [...columns];
 
   return data;
+};
+
+export const createUsersColumns = (usersIcon, handleDelete) => {
+  const columns = [
+    {
+      field: "avatar",
+      headerName: "Avatar",
+      width: 100,
+      renderCell: () => (
+        <img
+          src={usersIcon}
+          alt="avatar"
+          style={{ width: "36px", height: "36px", verticalAlign: "middle" }}
+        />
+      ),
+    },
+    {
+      field: "id",
+      headerName: "ID",
+      type: "number",
+      width: 90,
+      editable: false,
+    },
+    {
+      field: "name",
+      headerName: "Név",
+      width: 150,
+      editable: false,
+    },
+    {
+      field: "email",
+      headerName: "Email",
+      width: 200,
+      editable: false,
+    },
+    {
+      field: "is_admin",
+      headerName: "Admin",
+      type: "boolean",
+      width: 110,
+      editable: true,
+    },
+    {
+      field: "actions",
+      headerName: "Műveletek",
+      width: 150,
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => handleDelete(params.id)}
+        >
+          Törlés
+        </Button>
+      ),
+    },
+  ];
+
+  return columns;
 };

@@ -2,12 +2,13 @@ import { useContext, useState } from "react";
 
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
-import { Button } from "@mui/material";
 
+import Modal from "./Modal";
 import { UserContext } from "../context/contexts";
 import { localeText } from "../utils/locale-text";
+import { createUsersColumns } from "../utils/table-columns";
 import usersIcon from "/assets/users.svg";
-import Modal from "./Modal";
+import waringIcon from "/assets/warning.svg";
 
 export default function UsersTable() {
   const [confirmDeleteModalOpen, setConfirmDeleteModalOpen] = useState(false);
@@ -56,54 +57,7 @@ export default function UsersTable() {
     }
   };
 
-  const columns = [
-    {
-      field: "avatar",
-      headerName: "Avatar",
-      width: 100,
-      renderCell: () => (
-        <img
-          src={usersIcon}
-          alt="avatar"
-          style={{ width: "36px", height: "36px", verticalAlign: "middle" }}
-        />
-      ),
-    },
-    { field: "id", headerName: "ID", width: 90, editable: false },
-    {
-      field: "name",
-      headerName: "Név",
-      width: 150,
-      editable: false,
-    },
-    {
-      field: "email",
-      headerName: "Email",
-      width: 200,
-      editable: false,
-    },
-    {
-      field: "is_admin",
-      headerName: "Admin",
-      type: "boolean",
-      width: 110,
-      editable: true,
-    },
-    {
-      field: "actions",
-      headerName: "Műveletek",
-      width: 150,
-      renderCell: (params) => (
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => handleDelete(params.id)}
-        >
-          Törlés
-        </Button>
-      ),
-    },
-  ];
+  const columns = createUsersColumns(usersIcon, handleDelete);
 
   if (userLoading) {
     return <div className="loader"></div>;
@@ -137,12 +91,15 @@ export default function UsersTable() {
           setConfirmDeleteModalOpen(false);
         }}
       >
+        <img src={waringIcon} />
         <h2>Biztos törlöd ezt a felhasználót?</h2>
         <p>Ha törlöd nem fogod tudni visszavonni többé.</p>
-        <form method="dialog">
-          <input type="submit" value="mégsem" />
-        </form>
-        <button onClick={onConfirmDelete}>felhasználó törlése</button>
+        <div>
+          <form method="dialog">
+            <input type="submit" value="Mégsem" />
+          </form>
+          <button onClick={onConfirmDelete}>Felhasználó törlése</button>
+        </div>
       </Modal>
       <Modal
         className="modal confirm-modal"
@@ -151,11 +108,14 @@ export default function UsersTable() {
           setConfirmChangeModalOpen(false);
         }}
       >
+        <img src={waringIcon} />
         <p>Biztos változtatsz a felhasználó jogosultságán?</p>
-        <form method="dialog">
-          <input type="submit" value="mégsem" />
-        </form>
-        <button onClick={confirmAction}>jogosultság megváltoztatása</button>
+        <div>
+          <form method="dialog">
+            <input type="submit" value="Mégsem" />
+          </form>
+          <button onClick={confirmAction}>Jogosultság megváltoztatása</button>
+        </div>
       </Modal>
     </>
   );

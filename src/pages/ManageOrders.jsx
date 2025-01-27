@@ -2,7 +2,7 @@ import OrdersTable from "../components/OrdersTable";
 
 const ManageOrders = () => {
   return (
-    <div>
+    <div className="manage-orders">
       <OrdersTable />
     </div>
   );

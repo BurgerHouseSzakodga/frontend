@@ -9,6 +9,7 @@ import Modal from "./Modal";
 import exitIcon from "/assets/exit.svg";
 import { Alert, Snackbar } from "@mui/material";
 import ImageDropzone from "./ImageDropZone";
+import waringIcon from "/assets/warning.svg";
 
 const ModifyPanel = ({ onCloseModifyPanel, selectedItemId }) => {
   const {
@@ -86,34 +87,44 @@ const ModifyPanel = ({ onCloseModifyPanel, selectedItemId }) => {
       <div className="modify-panel">
         <div className="modify-panel__header">
           <img onClick={() => onCloseModifyPanel(false, null)} src={exitIcon} />
+          <label htmlFor="image">Kép</label>
           <ImageDropzone
+            name="image"
             onDropImage={setImage}
             imageSource={selectedItem.image_path}
           />
         </div>
         <form onSubmit={handleSubmit}>
-          <div className="input-group">
+          <div className="modify-panel__input-group">
+            <label htmlFor="name">Név</label>
             <input
+              name="name"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
-          <div className="input-group">
+          <div className="modify-panel__input-group">
+            <label htmlFor="description">Leírás</label>
             <textarea
+              name="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
           </div>
-          <div className="input-group">
+          <div className="modify-panel__input-group">
+            <label htmlFor="price">Ár</label>
             <input
+              name="price"
               type="number"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
             />
           </div>
-          <div className="input-group">
+          <div className="modify-panel__input-group">
+            <label htmlFor="category">Kategória</label>
             <select
+              name="category"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
             >
@@ -124,6 +135,7 @@ const ModifyPanel = ({ onCloseModifyPanel, selectedItemId }) => {
               ))}
             </select>
           </div>
+          <p>Összetevők</p>
           <div className="ingredients">
             {ingredients.map((ingredient) => (
               <div key={ingredient.id}>
@@ -153,12 +165,15 @@ const ModifyPanel = ({ onCloseModifyPanel, selectedItemId }) => {
           setConfirmDeleteModalOpen(false);
         }}
       >
+        <img src={waringIcon} />
         <h2>Biztos törlöd ezt a ételt?</h2>
         <p>Ha törlöd nem fogod tudni visszavonni többé.</p>
-        <form method="dialog">
-          <input type="submit" value="mégsem" />
-        </form>
-        <button onClick={onConfirmDelete}>étel törlése</button>
+        <div>
+          <form method="dialog">
+            <input type="submit" value="Mégsem" />
+          </form>
+          <button onClick={onConfirmDelete}>Étel törlése</button>
+        </div>
       </Modal>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert

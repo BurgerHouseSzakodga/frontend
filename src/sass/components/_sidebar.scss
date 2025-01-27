@@ -1,11 +1,29 @@
 @use "../config" as *;
 
 .sidebar {
-  @include flex($direction: column);
+  @include flex($direction: column, $justify: flex-start);
   background-color: #fff;
   flex-shrink: 0;
+  gap: 1.5rem;
   min-height: 100vh;
+  padding: 2rem 0;
   position: sticky;
-  width: 250px;
+  width: 85px;
   top: 0;
+  a {
+    height: 36px;
+
+    img {
+      width: 36px;
+      filter: $side-bar-icon-filter;
+
+      &:hover {
+        filter: $hover-side-bar-icon-filter;
+      }
+    }
+
+    .selected-img {
+      filter: $selected-side-bar-icon-filter;
+    }
+  }
 }

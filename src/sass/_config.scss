@@ -20,6 +20,15 @@ $font-color-light-filter: invert(41%) sepia(0%) saturate(1937%)
   hue-rotate(220deg) brightness(108%) contrast(77%);
 $font-size: 18px;
 
+$admin-layout-background: #f5f6fa;
+
+$side-bar-icon-filter: invert(82%) sepia(0%) saturate(0%) hue-rotate(248deg)
+  brightness(89%) contrast(87%);
+$hover-side-bar-icon-filter: invert(63%) sepia(5%) saturate(3010%)
+  hue-rotate(187deg) brightness(112%) contrast(104%);
+$selected-side-bar-icon-filter: invert(50%) sepia(61%) saturate(4239%)
+  hue-rotate(207deg) brightness(101%) contrast(102%);
+
 $side-padding: 220px;
 
 $border-radius: 16px;

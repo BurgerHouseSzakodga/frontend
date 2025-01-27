@@ -2,11 +2,62 @@
 
 .modal {
   @include swim-in;
+  border: none;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  left: 50%;
+  padding: 2rem;
   position: fixed;
   top: 50%;
-  left: 50%;
   transform: translate(-50%, -50%);
-  background-color: red;
   transition: transform 0.3s ease-in-out;
   opacity: 0;
+
+  img {
+    display: block;
+    margin: 0 auto 1rem;
+    width: 6rem;
+  }
+
+  form {
+    @include flex;
+  }
+
+  form,
+  button {
+    margin-top: 2rem;
+  }
+
+  input[type="submit"] {
+    @include submit-button;
+  }
+
+  &::backdrop {
+    backdrop-filter: blur(1px);
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+}
+
+.confirm-modal {
+  input[type="submit"] {
+    background-color: white;
+    border: 2px solid $orange;
+    color: $orange;
+  }
+
+  button {
+    @include submit-button;
+  }
+
+  & > div {
+    @include flex;
+    gap: 1rem;
+  }
+}
+
+.error-modal {
+  input[type="submit"] {
+    background-color: red;
+    color: white;
+  }
 }
