@@ -1,7 +1,9 @@
+import { useContext, useState } from "react";
+
 import { Button, Chip } from "@mui/material";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
-import { useContext, useState } from "react";
+
 import { OrderContext } from "../context/contexts";
 
 import Modal from "./Modal";
@@ -12,9 +14,15 @@ const OrdersTable = () => {
     useContext(OrderContext);
   const [open, setOpen] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [selectedUser, setSelectedUser] = useState("");
+  const [selectedAddress, setSelectedAddress] = useState("");
 
-  const handleOpenModal = (items) => {
+  const handleOpenModal = (id, items) => {
+    const selectedOrder = orders.find((order) => order.id === id);
+
     setSelectedItems(items);
+    setSelectedUser(selectedOrder?.user);
+    setSelectedAddress(selectedOrder?.address);
     setOpen(true);
   };
 
@@ -70,6 +78,14 @@ const OrdersTable = () => {
       field: "items",
       headerName: "Részletek",
       width: 200,
+      renderCell: (params) => (
+        <Button
+          variant="outlined"
+          onClick={() => handleOpenModal(params.id, params.value)}
+        >
+          Megtekintés
+        </Button>
+      ),
     },
   ];
 
@@ -88,22 +104,7 @@ const OrdersTable = () => {
       >
         <DataGrid
           rows={rows}
-          columns={columns.map((col) => {
-            if (col.field === "items") {
-              return {
-                ...col,
-                renderCell: (params) => (
-                  <Button
-                    variant="outlined"
-                    onClick={() => handleOpenModal(params.value)}
-                  >
-                    Megtekintés
-                  </Button>
-                ),
-              };
-            }
-            return col;
-          })}
+          columns={columns}
           initialState={{
             pagination: {
               paginationModel: {
@@ -117,6 +118,7 @@ const OrdersTable = () => {
         />
       </Box>
       <Modal className="modal" open={open} onCloseModal={handleCloseModal}>
+        {selectedUser + ", " + selectedAddress}
         {selectedItems.map((item, i) => (
           <div key={i}>
             {item.name} x {item.quantity}
