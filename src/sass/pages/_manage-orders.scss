@@ -1,0 +1,6 @@
+@use "../config" as *;
+
+.manage-orders {
+  @include flex;
+  padding: 32px 0;
+}

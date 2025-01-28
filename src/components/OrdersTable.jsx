@@ -81,7 +81,7 @@ const OrdersTable = () => {
     <>
       <Box
         sx={{
-          height: 400,
+          height: 785,
           width: "100%",
           bgcolor: "background.paper",
         }}
@@ -107,7 +107,7 @@ const OrdersTable = () => {
           initialState={{
             pagination: {
               paginationModel: {
-                pageSize: 5,
+                pageSize: 13,
               },
             },
             sorting: { sortModel: [{ field: "status", sort: "asc" }] },
