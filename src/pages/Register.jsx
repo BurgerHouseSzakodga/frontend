@@ -11,7 +11,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState({zip: "", city:"",  street: ""+" utca",num: ""+"."});
 
   const { register, registerError } = useContext(AuthContext);
 
@@ -23,7 +23,7 @@ const Register = () => {
       email,
       password,
       password_confirmation: passwordConfirmation,
-      address,
+      address: address.zip + ", " +address.city+""+ address.street + " " + address.num,
     };
 
     register(payload);
@@ -86,14 +86,50 @@ const Register = () => {
         </div>
 
         <div className="input-container">
-          <label htmlFor="address">Szállítási cím:</label>
+          <label htmlFor="address">Irányitó szám:</label>
           <img src={orderIcon} />
           <input
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
+            value={address.zip}
+            onChange={(e) => setAddress((prevAddress) => ({...prevAddress, zip: e.target.value}))}
             type="text"
             name="address"
-            placeholder="Szállítási cím"
+            placeholder="1119"
+          />
+        </div>
+        {registerError.address && <p>{registerError.address}</p>}
+        <div className="input-container">
+          <label htmlFor="address">Település:</label>
+          <img src={orderIcon} />
+          <input
+            value={address.city}
+            onChange={(e) => setAddress((prevAddress) => ({...prevAddress, city: e.target.value}))}
+            type="text"
+            name="address"
+            placeholder="Budapest"
+          />
+        </div>
+
+        <div className="input-container">
+          <label htmlFor="address">Utca:</label>
+          <img src={orderIcon} />
+          <input
+            value={address.street}
+            onChange={(e) => setAddress((prevAddress) => ({...prevAddress, street: e.target.value}))}
+            type="text"
+            name="address"
+            placeholder="Rátz László"
+          />
+        </div>
+
+        <div className="input-container">
+          <label htmlFor="address">Ház szám:</label>
+          <img src={orderIcon} />
+          <input
+            value={address.num}
+            onChange={(e) => setAddress((prevAddress) => ({...prevAddress, num: e.target.value}))}
+            type="text"
+            name="address"
+            placeholder="3"
           />
         </div>
         {registerError.address && <p>{registerError.address}</p>}

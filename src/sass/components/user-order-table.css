@@ -1,0 +1,21 @@
+.orders-container {
+    margin: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .orders-header {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr;
+    font-weight: bold;
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-bottom: 2px solid #ccc;
+  }
+  
+  .orders-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
