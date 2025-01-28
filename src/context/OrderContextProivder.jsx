@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { fetchData, updateOrderStatus } from "../api/http";
-import { OrderContext, UserContext } from "./contexts";
+import { AuthContext, OrderContext, UserContext } from "./contexts";
 
 const OrderContextProivder = ({ children }) => {
   const { isAdmin } = useContext(UserContext);
+  const { user } = useContext(AuthContext);
 
   const [orders, setOrders] = useState([]);
   const [numberOfOrders, setNumberOfOrders] = useState(0);
@@ -11,6 +12,7 @@ const OrderContextProivder = ({ children }) => {
   const [pendingOrders, setPendingOrders] = useState(0);
   const [orderError, setOrderError] = useState("");
   const [ordersLoading, setOrdersLoading] = useState(false);
+  const [userOrders, setUserOrders] = useState([]);
 
   useEffect(() => {
     const getOrdersData = async () => {
@@ -23,11 +25,13 @@ const OrderContextProivder = ({ children }) => {
         const totalOrders = await fetchData("api/number-of-orders");
         const revenue = await fetchData("api/total-revenue");
         const pending = await fetchData("api/pending-orders");
+        const userOredersResponse=await fetchData(`api/user/order/${user.id}`);
 
         setOrders(ordersResponse);
         setNumberOfOrders(totalOrders);
         setTotalRevenue(revenue);
         setPendingOrders(pending);
+        setUserOrders(userOredersResponse);
       } catch (error) {
         setOrderError(
           error.response.data.message ||
@@ -67,6 +71,7 @@ const OrderContextProivder = ({ children }) => {
     orderError,
     ordersLoading,
     handleUpdateStatus,
+    userOrders,
   };
 
   return (

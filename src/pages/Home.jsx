@@ -10,7 +10,7 @@ const Home = () => {
     <div className="home">
       <Header />
       <PopularItem />
-      <AllMenuWithCategory />
+  
     </div>
   );
 };
