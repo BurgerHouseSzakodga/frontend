@@ -2,6 +2,7 @@ import { useContext} from "react";
 import { AuthContext } from "../context/contexts";
 import "../sass/pages/user.css";
 import UserOrderTable from "../components/UserOrderTable";
+import UserProfileEdit from "../components/UserProfileEdit";
 
 
 const UserProfile = () => {
@@ -12,6 +13,7 @@ const UserProfile = () => {
   return (
     
     <div className="user">
+      <UserProfileEdit/>
       <UserOrderTable/>
       <button onClick={logout}>
         Kijelentkezés
