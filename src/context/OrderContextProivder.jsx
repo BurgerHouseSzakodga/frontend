@@ -25,7 +25,9 @@ const OrderContextProivder = ({ children }) => {
         const totalOrders = await fetchData("api/number-of-orders");
         const revenue = await fetchData("api/total-revenue");
         const pending = await fetchData("api/pending-orders");
-        const userOredersResponse=await fetchData(`api/user/order/${user.id}`);
+        const userOredersResponse = await fetchData(
+          `api/user/order/${user.id}`
+        );
 
         setOrders(ordersResponse);
         setNumberOfOrders(totalOrders);
@@ -43,7 +45,7 @@ const OrderContextProivder = ({ children }) => {
     };
 
     getOrdersData();
-  }, [isAdmin]);
+  }, [isAdmin, user]);
 
   const handleUpdateStatus = async (orderId, status) => {
     if (!isAdmin) return;
