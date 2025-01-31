@@ -1,0 +1,16 @@
+@use "../config" as *;
+
+.discounts {
+  @include flex($justify: space-between);
+
+  .droppable {
+    padding: 0;
+    border: 1px dashed black;
+    width: 400px;
+    height: 250px;
+
+    button {
+      margin: 0 4px;
+    }
+  }
+}

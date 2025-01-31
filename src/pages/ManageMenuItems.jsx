@@ -1,5 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 
+import { Alert, Snackbar } from "@mui/material";
+
 import {
   CategoryContext,
   IngredientContext,
@@ -7,12 +9,12 @@ import {
 } from "../context/contexts";
 import MenuItemsTable from "../components/MenuItemsTable";
 import ModifyPanel from "../components/ModifyPanel";
+import Discounts from "../components/Discounts";
+import ImageDropzone from "../components/ImageDropZone";
 import nameIcon from "/assets/name.svg";
 import descriptionIcon from "/assets/description.svg";
 import priceIcon from "/assets/price.svg";
 import categoryIcon from "/assets/category.svg";
-import ImageDropzone from "../components/ImageDropZone";
-import { Alert, Snackbar } from "@mui/material";
 
 const ManageMenuItems = () => {
   const { categories, categoriesLoading } = useContext(CategoryContext);
@@ -196,6 +198,7 @@ const ManageMenuItems = () => {
         )}
       </div>
       <MenuItemsTable modifiable={true} onSelectModify={handleClickEdit} />
+      <Discounts />
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert
           onClose={handleClose}
