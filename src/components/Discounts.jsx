@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { DndContext } from "@dnd-kit/core";
 
 import Draggable from "./Draggable";
@@ -6,15 +6,31 @@ import Droppable from "./Droppable";
 import { MenuItemContext } from "../context/contexts";
 
 const Discounts = () => {
-  const { menuItems } = useContext(MenuItemContext);
-  const [leftDroppableItems, setLeftDroppableItems] = useState(menuItems);
-  const [rightDroppableItems, setRightDroppableItems] = useState([]);
+  const { menuItems, discounts, handleCreateDiscount } =
+    useContext(MenuItemContext);
 
-  const handleDragEnd = ({ active, over }) => {
+  const [regularItems, setRegularItems] = useState([]);
+  const [discountedItems, setDiscountedItems] = useState([]);
+
+  useEffect(() => {
+    setRegularItems(
+      menuItems.filter(
+        (item) =>
+          !discounts.some((discount) => discount.menu_item_id === item.id)
+      )
+    );
+    setDiscountedItems(
+      menuItems.filter((item) =>
+        discounts.some((discount) => discount.menu_item_id === item.id)
+      )
+    );
+  }, [discounts, menuItems]);
+
+  const handleDragEnd = async ({ active, over }) => {
     if (over && over.id === "left-droppable") {
-      setLeftDroppableItems((prevItems) => {
+      setRegularItems((prevItems) => {
         if (!prevItems.some((item) => item.id === active.id)) {
-          const itemToAdd = rightDroppableItems.find(
+          const itemToAdd = discountedItems.find(
             (item) => item.id === active.id
           );
           return [...prevItems, itemToAdd];
@@ -22,23 +38,26 @@ const Discounts = () => {
         return prevItems;
       });
 
-      setRightDroppableItems((prevItems) =>
+      setDiscountedItems((prevItems) =>
         prevItems.filter((item) => item.id !== active.id)
       );
     } else if (over && over.id === "right-droppable") {
-      setRightDroppableItems((prevItems) => {
+      setDiscountedItems((prevItems) => {
         if (!prevItems.some((item) => item.id === active.id)) {
-          const itemToAdd = leftDroppableItems.find(
-            (item) => item.id === active.id
-          );
+          const itemToAdd = regularItems.find((item) => item.id === active.id);
           return [...prevItems, itemToAdd];
         }
         return prevItems;
       });
 
-      setLeftDroppableItems((prevItems) =>
+      setRegularItems((prevItems) =>
         prevItems.filter((item) => item.id !== active.id)
       );
+
+      const itemToAdd = regularItems.find((item) => item.id === active.id);
+      if (itemToAdd) {
+        await handleCreateDiscount(itemToAdd.id, 15);
+      }
     }
   };
 
@@ -46,25 +65,29 @@ const Discounts = () => {
     <div className="discounts">
       <DndContext onDragEnd={handleDragEnd}>
         <div className="discounts__left" id="left-droppable">
+          <h4>Termékek</h4>
           <Droppable id="left-droppable">
-            {leftDroppableItems.length > 0
-              ? leftDroppableItems.map((item) => (
-                  <Draggable key={item.id} id={item.id}>
-                    {item.name}
-                  </Draggable>
-                ))
-              : "Drop here"}
+            {regularItems.map((item) => (
+              <Draggable key={item.id} id={item.id}>
+                <div className="image-container">
+                  <img src={item.image_path} alt={item.name} loading="lazy" />
+                </div>
+                {item.name}
+              </Draggable>
+            ))}
           </Droppable>
         </div>
         <div className="discounts__right" id="right-droppable">
+          <h4>Leárazás</h4>
           <Droppable id="right-droppable">
-            {rightDroppableItems.length > 0
-              ? rightDroppableItems.map((item) => (
-                  <Draggable key={item.id} id={item.id}>
-                    {item.name}
-                  </Draggable>
-                ))
-              : "Original Position"}
+            {discountedItems.map((item) => (
+              <Draggable key={item.id} id={item.id}>
+                <div className="image-container">
+                  <img src={item.image_path} alt={item.name} loading="lazy" />
+                </div>
+                {item.name}
+              </Draggable>
+            ))}
           </Droppable>
         </div>
       </DndContext>

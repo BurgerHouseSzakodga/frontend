@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { AuthContext } from "./contexts";
-import { fetchUser, loginUser, registerUser, logoutUser } from "../api/http";
+import { fetchData, authenticateUser, logoutUser } from "../api/http";
 
 const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -15,7 +15,7 @@ const AuthContextProvider = ({ children }) => {
   const getUser = useCallback(async () => {
     setAuthLoading(true);
     try {
-      const data = await fetchUser();
+      const data = await fetchData("api/user");
       setUser(data);
     } catch (error) {
       console.error("No authenticated user:", error);
@@ -28,7 +28,7 @@ const AuthContextProvider = ({ children }) => {
     setAuthLoading(true);
     setLoginError([]);
     try {
-      await loginUser(payload);
+      await authenticateUser("/login", payload);
       await getUser();
       navigate("/");
     } catch (error) {
@@ -43,7 +43,7 @@ const AuthContextProvider = ({ children }) => {
     setAuthLoading(true);
     setLoginError([]);
     try {
-      await registerUser(payload);
+      await authenticateUser("/register", payload);
       await getUser();
       navigate("/");
     } catch (error) {

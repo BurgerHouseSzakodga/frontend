@@ -2,19 +2,17 @@ import { useEffect, useState } from "react";
 
 import { MenuItemContext } from "./contexts";
 import {
-  createMenuItem,
-  updateMenuItemCategory,
-  deleteMenuItem,
-  updateMenuItemName,
-  updateMenuItemPrice,
   fetchData,
-  updateMenuItemDescription,
-  updateMenuItemComposition,
+  updateMenuItem,
+  createMenuItem,
+  deleteMenuItem,
   updateMenuItemImage,
+  createDiscount,
 } from "../api/http";
 
 const MenuItemContextProvider = ({ children }) => {
   const [menuItems, setMenuItems] = useState([]);
+  const [discounts, setDiscounts] = useState([]);
   const [menuItemError, setMenuItemError] = useState(null);
   const [menuItemLoading, setMenuItemLoading] = useState(false);
 
@@ -23,7 +21,10 @@ const MenuItemContextProvider = ({ children }) => {
       setMenuItemLoading(true);
       try {
         const menuItemsData = await fetchData("api/menu-items");
+        const discountsData = await fetchData("api/discounts");
+
         setMenuItems(menuItemsData);
+        setDiscounts(discountsData);
       } catch (error) {
         setMenuItemError(
           error.message.data.message ||
@@ -40,7 +41,13 @@ const MenuItemContextProvider = ({ children }) => {
   const handleUpdateMenuItemName = async (menuItemId, name) => {
     setMenuItemLoading(true);
     try {
-      const updatedMenuItem = await updateMenuItemName(menuItemId, name);
+      const updateRequestData = {
+        property: "name",
+        menuItemId,
+        value: name,
+      };
+
+      const updatedMenuItem = await updateMenuItem(updateRequestData);
       setMenuItems((prevMenuItems) =>
         prevMenuItems.map((item) =>
           item.id === menuItemId ? updatedMenuItem : item
@@ -58,7 +65,13 @@ const MenuItemContextProvider = ({ children }) => {
   const handleUpdateMenuItemPrice = async (menuItemId, price) => {
     setMenuItemLoading(true);
     try {
-      const updatedMenuItem = await updateMenuItemPrice(menuItemId, price);
+      const updateRequestData = {
+        property: "price",
+        menuItemId,
+        value: price,
+      };
+
+      const updatedMenuItem = await updateMenuItem(updateRequestData);
       setMenuItems((prevMenuItems) =>
         prevMenuItems.map((item) =>
           item.id === menuItemId ? updatedMenuItem : item
@@ -76,10 +89,13 @@ const MenuItemContextProvider = ({ children }) => {
   const handleUpdateMenuItemCategory = async (menuItemId, categoryId) => {
     setMenuItemLoading(true);
     try {
-      const updatedMenuItem = await updateMenuItemCategory(
+      const updateRequestData = {
+        property: "category",
         menuItemId,
-        categoryId
-      );
+        value: categoryId,
+      };
+
+      const updatedMenuItem = await updateMenuItem(updateRequestData);
       setMenuItems((prevMenuItems) =>
         prevMenuItems.map((item) =>
           item.id === menuItemId ? updatedMenuItem : item
@@ -97,10 +113,12 @@ const MenuItemContextProvider = ({ children }) => {
   const handleUpdateMenuItemDescription = async (menuItemId, description) => {
     setMenuItemLoading(true);
     try {
-      const updatedMenuItem = await updateMenuItemDescription(
+      const updateRequestData = {
+        property: "description",
         menuItemId,
-        description
-      );
+        value: description,
+      };
+      const updatedMenuItem = await updateMenuItem(updateRequestData);
       setMenuItems((prevMenuItems) =>
         prevMenuItems.map((item) =>
           item.id === menuItemId ? updatedMenuItem : item
@@ -118,10 +136,13 @@ const MenuItemContextProvider = ({ children }) => {
   const handleUpdateMenuItemComposition = async (menuItemId, composition) => {
     setMenuItemLoading(true);
     try {
-      const updatedMenuItem = await updateMenuItemComposition(
+      const updateRequestData = {
+        property: "composition",
         menuItemId,
-        composition
-      );
+        value: composition,
+      };
+
+      const updatedMenuItem = await updateMenuItem(updateRequestData);
       setMenuItems((prevMenuItems) =>
         prevMenuItems.map((item) =>
           item.id === menuItemId ? updatedMenuItem : item
@@ -178,6 +199,7 @@ const MenuItemContextProvider = ({ children }) => {
         prevMenuItems.filter((item) => item.id !== menuItemId)
       );
     } catch (error) {
+      setMenuItems(menuItems);
       setMenuItemError(
         error.response.data.message || "Hiba történt a törlés során."
       );
@@ -186,8 +208,27 @@ const MenuItemContextProvider = ({ children }) => {
     }
   };
 
+  const handleCreateDiscount = async (menuItemId, discountAmount) => {
+    try {
+      await createDiscount(menuItemId, discountAmount);
+      setDiscounts((prevDescounts) => [
+        ...prevDescounts,
+        {
+          menu_item_id: menuItemId,
+          discount_amount: discountAmount,
+        },
+      ]);
+    } catch (error) {
+      setDiscounts(discounts);
+      setMenuItemError(
+        error.response.data.message || "Hiba történt a frissítés."
+      );
+    }
+  };
+
   const ctxValue = {
     menuItems,
+    discounts,
     menuItemError,
     menuItemLoading,
     setMenuItemError,
@@ -199,6 +240,7 @@ const MenuItemContextProvider = ({ children }) => {
     handleUpdateMenuItemDescription,
     handleUpdateMenuItemComposition,
     handleUpdateMenuItemImage,
+    handleCreateDiscount,
   };
 
   return (

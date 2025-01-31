@@ -3,14 +3,54 @@
 .discounts {
   @include flex($justify: space-between);
 
+  background-color: #fff;
+  border-radius: 4px;
+  height: 280px;
+  width: 846px;
+  padding: 1rem;
+
+  .discounts__left,
+  .discounts__right {
+    @include flex($direction: column);
+
+    gap: 1rem;
+    height: 100%;
+    width: 100%;
+  }
+
   .droppable {
-    padding: 0;
-    border: 1px dashed black;
-    width: 400px;
-    height: 250px;
+    @include flex($align: flex-start, $justify: flex-start);
+
+    align-content: flex-start;
+    border-radius: 4px;
+    flex-wrap: wrap;
+    height: 100%;
+    width: 95%;
 
     button {
-      margin: 0 4px;
+      @include flex;
+
+      background-color: #fff;
+      border: 1px solid $font-color-light;
+      border-radius: 4px;
+      gap: 1rem;
+      margin: 4px;
+      padding: 4px 8px;
+
+      .image-container {
+        @include flex;
+
+        border-radius: 100%;
+        height: 24px;
+        overflow: hidden;
+        width: 24px;
+
+        img {
+          height: 100%;
+          object-fit: cover;
+          width: 100%;
+        }
+      }
     }
   }
 }

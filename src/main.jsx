@@ -7,9 +7,9 @@ import AuthContextProvider from "./context/AuthContextProvider.jsx";
 import UserContextProvider from "./context/UserContextProvider.jsx";
 import CategoryContextProvider from "./context/CategoryContextProvider.jsx";
 import MenuItemContextProvider from "./context/MenuItemContextProvider.jsx";
-import "./sass/index.scss";
 import OrderContextProivder from "./context/OrderContextProivder.jsx";
 import IngredientContextProvider from "./context/IngredientContextProvider.jsx";
+import "./sass/index.scss";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

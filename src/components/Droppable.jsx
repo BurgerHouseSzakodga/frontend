@@ -5,8 +5,8 @@ const Droppable = ({ id, children }) => {
     id,
   });
   const style = {
-    opacity: isOver ? 0.5 : 1,
-    transition: "opacity 0.2s ease",
+    border: isOver ? "2px solid green" : "2px dashed #757575",
+    transition: "150ms ease-in-out",
   };
 
   return (

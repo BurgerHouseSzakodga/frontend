@@ -11,19 +11,9 @@ export const fetchData = async (path) => {
 
 const csrf = () => apiClient.get("/sanctum/csrf-cookie");
 
-export const fetchUser = async () => {
-  const { data } = await apiClient.get("api/user");
-  return data;
-};
-
-export const loginUser = async (payload) => {
+export const authenticateUser = async (path, payload) => {
   await csrf();
-  await apiClient.post("/login", payload);
-};
-
-export const registerUser = async (payload) => {
-  await csrf();
-  await apiClient.post("/register", payload);
+  await apiClient.post(path, payload);
 };
 
 export const logoutUser = async () => {
@@ -48,37 +38,19 @@ export const deleteUser = async (userId) => {
   await apiClient.delete(`api/users/${userId}`);
 };
 
-export const updateMenuItemName = async (menuItemId, name) => {
-  const response = await apiClient.put(`api/menu-items/${menuItemId}/name`, {
-    name,
-  });
-  return response.data.menuItem;
-};
+export const updateMenuItem = async ({ property, menuItemId, value }) => {
+  const propertyMap = {
+    name: "name",
+    price: "price",
+    category: "category_id",
+    description: "description",
+    composition: "composition",
+  };
 
-export const updateMenuItemPrice = async (menuItemId, price) => {
-  const response = await apiClient.put(`api/menu-items/${menuItemId}/price`, {
-    price,
-  });
-  return response.data.menuItem;
-};
+  const url = `api/menu-items/${menuItemId}/${property}`;
+  const payload = { [propertyMap[property]]: value };
 
-export const updateMenuItemCategory = async (menuItemId, categoryId) => {
-  const response = await apiClient.put(
-    `api/menu-items/${menuItemId}/category`,
-    {
-      category_id: categoryId,
-    }
-  );
-  return response.data.menuItem;
-};
-
-export const updateMenuItemDescription = async (menuItemId, description) => {
-  const response = await apiClient.put(
-    `api/menu-items/${menuItemId}/description`,
-    {
-      description,
-    }
-  );
+  const response = await apiClient.put(url, payload);
   return response.data.menuItem;
 };
 
@@ -93,16 +65,6 @@ export const updateMenuItemImage = async (menuItemId, image) => {
       headers: {
         "Content-Type": "multipart/form-data",
       },
-    }
-  );
-  return response.data.menuItem;
-};
-
-export const updateMenuItemComposition = async (menuItemId, composition) => {
-  const response = await apiClient.put(
-    `api/menu-items/${menuItemId}/composition`,
-    {
-      composition,
     }
   );
   return response.data.menuItem;
@@ -126,4 +88,16 @@ export const createMenuItem = async (payload) => {
 
 export const deleteMenuItem = async (menuItemId) => {
   await apiClient.delete(`api/menu-items/${menuItemId}`);
+};
+
+export const deleteDiscount = async (discountId) => {
+  await apiClient.delete(`api/discounts/${discountId}`);
+};
+
+export const createDiscount = async (id, discountAmount) => {
+  const response = await apiClient.post(`api/discounts/${id}`, {
+    discount_amount: discountAmount,
+  });
+
+  return response.data.discount;
 };
