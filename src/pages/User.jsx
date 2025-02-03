@@ -3,6 +3,7 @@ import { AuthContext } from "../context/contexts";
 import "../sass/pages/user.css";
 import UserOrderTable from "../components/UserOrderTable";
 import UserProfileEdit from "../components/UserProfileEdit";
+import ChangePassword from "../components/ChangePassword";
 
 
 const UserProfile = () => {
@@ -14,6 +15,7 @@ const UserProfile = () => {
     
     <div className="user">
       <UserProfileEdit/>
+      <ChangePassword/>
       <UserOrderTable/>
       <button onClick={logout}>
         Kijelentkezés
