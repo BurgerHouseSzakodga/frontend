@@ -1,8 +1,7 @@
 import Header from "../components/Header";
 
 import "swiper/css";
-import PopularItem from "../components/PopularItem";
-import AllMenuWithCategory from "../components/AllItems";
+import PopularItem from "../components/PopularItem";;
 import DiscountItems from "../components/DiscountItems";
 
 

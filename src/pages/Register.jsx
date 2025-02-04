@@ -5,13 +5,15 @@ import emailIcon from "/assets/email.svg";
 import userIcon from "/assets/users.svg";
 import passwordIcon from "/assets/password.svg";
 import orderIcon from "/assets/orders.svg";
+import '../sass/pages/register.css'; 
+import { Link } from "react-router-dom";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const [address, setAddress] = useState({zip: "", city:"",  street: ""+" utca",num: ""+"."});
+  const [address, setAddress] = useState({zip: "", city:"",  street: "",num: ""});
 
   const { register, registerError } = useContext(AuthContext);
 
@@ -133,8 +135,9 @@ const Register = () => {
           />
         </div>
         {registerError.address && <p>{registerError.address}</p>}
-
+       
         <div>
+        <Link to="/bejelentkezes">Bejelentkezés</Link>
           <input type="submit" value="Regisztráció" />
         </div>
       </form>
