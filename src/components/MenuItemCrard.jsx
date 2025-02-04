@@ -1,6 +1,8 @@
 import "../sass/components/menu-item-card.css";
+import { Link } from "react-router-dom";
 
 function MenuItemCard(props) {
+
   return (
     <div>
       <div>
@@ -15,7 +17,9 @@ function MenuItemCard(props) {
           <p className="card-name">{props.name}</p>
           <p className="card-price"></p>
           <p> {props.price} Ft</p>
-          <button className="basket-button">Rendelés</button>
+          <Link to={`/item/${props.id}`} className="basket-button">
+            Rendelés
+          </Link>
         </div>
       </div>
     </div>

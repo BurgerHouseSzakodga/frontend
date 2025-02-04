@@ -41,6 +41,7 @@ function PopularItem() {
                 {menuItems.map((item) => (
                     <SwiperSlide key={item.id}>
                         <MenuItemCard
+                        id={item.id}
                             image={item.image_path}
                             name={item.name}
                             description={item.description}

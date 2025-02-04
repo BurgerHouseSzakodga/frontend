@@ -13,13 +13,20 @@
   object-fit: cover;
 }
 
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+
 .card-name {
   padding-top: 10px;
   padding-bottom: 5px;
 }
 
 card-price {
-  padding-bottom: 20px;
+  padding-bottom: 1rem;
 }
 
 .card-price {
@@ -30,9 +37,11 @@ card-price {
   background-color: #ff6600;
   color: white;
   border: none;
+  margin: auto;
   padding: 10px;
   border-radius: 10px;
   width: 200px;
+  text-decoration: none;
 }
 
 .basket-button:hover {

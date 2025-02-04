@@ -15,6 +15,7 @@ import Dashboard from "../pages/Dashboard";
 import ManageMenuItems from "../pages/ManageMenuItems";
 import ManageOrders from "../pages/ManageOrders";
 import Statistics from "../pages/Statistics";
+import Item from "../pages/Item";
 
 const AppRouter = () => {
   return (
@@ -24,11 +25,13 @@ const AppRouter = () => {
         <Route path="/rendeles" element={<Order />} />
         <Route path="/felhasznalo" element={<User />} />
         <Route path="/kosar" element={<Cart />} />
+        <Route path="/item/:id" element={<Item />} />
         <Route element={<AdminLayout />}>
           <Route path="/admin/kezelofelulet" element={<Dashboard />} />
           <Route path="/admin/etelek-kezelese" element={<ManageMenuItems />} />
           <Route path="/admin/rendelesek-kezelese" element={<ManageOrders />} />
           <Route path="/admin/statisztikak" element={<Statistics />} />
+
         </Route>
       </Route>
       <Route element={<GuestLayout />}>

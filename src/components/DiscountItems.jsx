@@ -12,12 +12,11 @@ function DiscountItems() {
     const { menuItems = [] } = useContext(MenuItemContext);
     const swiperRef = useRef(null);
 
-    // Filter items with discounts
     const discountedItems = menuItems.filter(item => item.discount_amount > 0);
 
     const handleImage = (direction) => {
         if (!swiperRef.current?.swiper) return;
-        
+
         if (direction === 'next') {
             swiperRef.current.swiper.slideNext();
         } else if (direction === 'prev') {
