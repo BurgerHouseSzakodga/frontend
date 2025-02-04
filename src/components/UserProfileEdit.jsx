@@ -1,11 +1,12 @@
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/contexts";
-
+import { apiClient } from "../api/axios";
 
 export default function UserProfileEdit() {
-  const { user } = useContext(AuthContext);
+  const { user, refreshUser } = useContext(AuthContext);
   const [name, setName] = useState(user?.name || '');
   const [email, setEmail] = useState(user?.email || '');
+  const [isLoading, setIsLoading] = useState(false);
   const [addressData, setAddressData] = useState({
     zip: '',
     city: '',
@@ -25,12 +26,6 @@ export default function UserProfileEdit() {
     }
   }, [user]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const fullAddress = `${addressData.zip}, ${addressData.city}, ${addressData.street}, ${addressData.num}`;
-    // Handle form submission with formatted address
-  };
-
   const handleAddressChange = (field) => (e) => {
     setAddressData(prev => ({
       ...prev,
@@ -38,93 +33,121 @@ export default function UserProfileEdit() {
     }));
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    
+    try {
+      if (name !== user.name) {
+        await apiClient.patch('/api/user/name', { name });
+      }
+      
+      if (email !== user.email) {
+        await apiClient.patch('/api/user/email', { email });
+      }
+
+      const [currentZip, currentCity, currentStreet, currentNum] = user.address?.split(', ') || [];
+      if (addressData.zip !== currentZip || 
+          addressData.city !== currentCity ||
+          addressData.street !== currentStreet ||
+          addressData.num !== currentNum) {
+        await apiClient.patch('/api/user/address', addressData);
+      }
+
+      await refreshUser();
+      alert("Profil sikeresen frissítve!");
+    } catch (error) {
+      console.error("Hiba:", error.response?.data);
+      alert(error.response?.data?.message || "Hiba történt a mentés során!");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <div>
+    <div className="profile-edit">
       <form onSubmit={handleSubmit}>
         <h3>Profil szerkesztése</h3>
         
-        <div>
+        <div className="form-group">
           <label htmlFor="name">Név:</label>
-          <div>
-            <input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              type="text"
-              name="name"
-              placeholder="Add meg a neved..."
-            />
-          </div>
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            type="text"
+            name="name"
+            placeholder="Add meg a neved..."
+            required
+          />
         </div>
         
-        <div>
+        <div className="form-group">
           <label htmlFor="email">Email cím:</label>
-          <div>
-            
-            <input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              type="email"
-              name="email"
-              placeholder="Add meg az email címed..."
-            />
-          </div>
+          <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            name="email"
+            placeholder="Add meg az email címed..."
+            required
+          />
         </div>
 
-        <div>
+        <div className="form-group">
           <label htmlFor="zip">Irányítószám:</label>
-          <div>
-            <input
-              value={addressData.zip}
-              onChange={handleAddressChange('zip')}
-              type="text"
-              name="zip"
-              placeholder="1119"
-            />
-          </div>
+          <input
+            value={addressData.zip}
+            onChange={handleAddressChange('zip')}
+            type="text"
+            name="zip"
+            placeholder="1234"
+            required
+          />
         </div>
 
-        <div>
+        <div className="form-group">
           <label htmlFor="city">Város:</label>
-          <div>
-            <input
-              value={addressData.city}
-              onChange={handleAddressChange('city')}
-              type="text"
-              name="city"
-              placeholder="Budapest"
-            />
-          </div>
+          <input
+            value={addressData.city}
+            onChange={handleAddressChange('city')}
+            type="text"
+            name="city"
+            placeholder="Budapest"
+            required
+          />
         </div>
 
-        <div>
+        <div className="form-group">
           <label htmlFor="street">Utca:</label>
-          <div>
-            <input
-              value={addressData.street}
-              onChange={handleAddressChange('street')}
-              type="text"
-              name="street"
-              placeholder="Példa utca"
-            />
-          </div>
+          <input
+            value={addressData.street}
+            onChange={handleAddressChange('street')}
+            type="text"
+            name="street"
+            placeholder="Példa utca"
+            required
+          />
         </div>
 
-        <div>
+        <div className="form-group">
           <label htmlFor="num">Házszám:</label>
-          <div>
-            <input
-              value={addressData.num}
-              onChange={handleAddressChange('num')}
-              type="text"
-              name="num"
-              placeholder="42"
-            />
-          </div>
+          <input
+            value={addressData.num}
+            onChange={handleAddressChange('num')}
+            type="text"
+            name="num"
+            placeholder="42"
+            required
+          />
         </div>
 
-        <div>
-          <button type="submit">Mentés</button>
-        </div>
+        <button 
+          type="submit" 
+          disabled={isLoading}
+          className="submit-button"
+        >
+          {isLoading ? 'Mentés...' : 'Mentés'}
+        </button>
       </form>
     </div>
   );
