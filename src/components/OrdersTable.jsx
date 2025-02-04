@@ -108,7 +108,7 @@ const OrdersTable = () => {
           initialState={{
             pagination: {
               paginationModel: {
-                pageSize: 13,
+                pageSize: 5,
               },
             },
             sorting: { sortModel: [{ field: "status", sort: "asc" }] },

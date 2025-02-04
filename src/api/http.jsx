@@ -90,12 +90,21 @@ export const deleteMenuItem = async (menuItemId) => {
   await apiClient.delete(`api/menu-items/${menuItemId}`);
 };
 
-export const deleteDiscount = async (discountId) => {
-  await apiClient.delete(`api/discounts/${discountId}`);
+export const deleteDiscount = async (id) => {
+  await apiClient.delete(`api/discounts/${id}`);
 };
 
 export const createDiscount = async (id, discountAmount) => {
   const response = await apiClient.post(`api/discounts/${id}`, {
+    discount_amount: discountAmount,
+  });
+
+  return response.data.discount;
+};
+export const updateDiscountAmount = async (id, discountAmount) => {
+  console.log(discountAmount);
+
+  const response = await apiClient.put(`api/discounts/${id}`, {
     discount_amount: discountAmount,
   });
 

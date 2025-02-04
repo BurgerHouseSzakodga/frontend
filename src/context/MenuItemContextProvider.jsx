@@ -8,11 +8,14 @@ import {
   deleteMenuItem,
   updateMenuItemImage,
   createDiscount,
+  deleteDiscount,
+  updateDiscountAmount,
 } from "../api/http";
 
 const MenuItemContextProvider = ({ children }) => {
   const [menuItems, setMenuItems] = useState([]);
-  const [discounts, setDiscounts] = useState([]);
+  const [discountedItems, setDiscountedItems] = useState([]);
+  const [regularItems, setRegularItems] = useState([]);
   const [menuItemError, setMenuItemError] = useState(null);
   const [menuItemLoading, setMenuItemLoading] = useState(false);
 
@@ -22,9 +25,11 @@ const MenuItemContextProvider = ({ children }) => {
       try {
         const menuItemsData = await fetchData("api/menu-items");
         const discountsData = await fetchData("api/discounts");
+        const regularData = await fetchData("api/not-in-discounts");
 
         setMenuItems(menuItemsData);
-        setDiscounts(discountsData);
+        setDiscountedItems(discountsData);
+        setRegularItems(regularData);
       } catch (error) {
         setMenuItemError(
           error.message.data.message ||
@@ -211,27 +216,48 @@ const MenuItemContextProvider = ({ children }) => {
   const handleCreateDiscount = async (menuItemId, discountAmount) => {
     try {
       await createDiscount(menuItemId, discountAmount);
-      setDiscounts((prevDescounts) => [
-        ...prevDescounts,
-        {
-          menu_item_id: menuItemId,
-          discount_amount: discountAmount,
-        },
-      ]);
+      const newItem = menuItems.find((item) => item.id === menuItemId);
+
+      setDiscountedItems((prevDiscounts) => [newItem, ...prevDiscounts]);
     } catch (error) {
-      setDiscounts(discounts);
+      setDiscountedItems(discountedItems);
       setMenuItemError(
         error.response.data.message || "Hiba történt a frissítés."
       );
     }
   };
 
+  const handleDeleteDiscount = async (id) => {
+    try {
+      await deleteDiscount(id);
+      setDiscountedItems((prevDiscounts) =>
+        prevDiscounts.filter((item) => item.id !== id)
+      );
+    } catch (error) {
+      setDiscountedItems(discountedItems);
+      setMenuItemError(error.response.data.message || "Hiba történt a törlés.");
+    }
+  };
+
+  const handleUpdateDiscount = async (id, discountAmount) => {
+    try {
+      await updateDiscountAmount(id, discountAmount);
+    } catch (error) {
+      setMenuItemError(
+        error.response.data.message || "Hiba történt a frissítés során."
+      );
+    }
+  };
+
   const ctxValue = {
     menuItems,
-    discounts,
+    regularItems,
+    discountedItems,
     menuItemError,
     menuItemLoading,
     setMenuItemError,
+    setDiscountedItems,
+    setRegularItems,
     handleCreateMenuItem,
     handleUpdateMenuItemCategory,
     handleDeleteMenuItem,
@@ -241,6 +267,8 @@ const MenuItemContextProvider = ({ children }) => {
     handleUpdateMenuItemComposition,
     handleUpdateMenuItemImage,
     handleCreateDiscount,
+    handleDeleteDiscount,
+    handleUpdateDiscount,
   };
 
   return (
