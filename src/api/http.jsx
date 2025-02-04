@@ -102,8 +102,6 @@ export const createDiscount = async (id, discountAmount) => {
   return response.data.discount;
 };
 export const updateDiscountAmount = async (id, discountAmount) => {
-  console.log(discountAmount);
-
   const response = await apiClient.put(`api/discounts/${id}`, {
     discount_amount: discountAmount,
   });

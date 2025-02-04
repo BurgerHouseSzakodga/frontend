@@ -6,9 +6,9 @@ import { useState } from "react";
 import { useContext } from "react";
 import { MenuItemContext } from "../context/contexts";
 
-const Draggable = ({ id, children, isClickable }) => {
+const Draggable = ({ id, children, isClickable, itemDiscount }) => {
   const [open, setOpen] = useState(false);
-  const [discountAmount, setDiscounAmount] = useState(15);
+  const [discountAmount, setDiscounAmount] = useState(itemDiscount);
 
   const { handleUpdateDiscount } = useContext(MenuItemContext);
   const { attributes, listeners, setNodeRef, transform } = useDraggable({

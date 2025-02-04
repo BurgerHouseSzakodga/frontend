@@ -27,13 +27,17 @@ const Discounts = () => {
         await handleDeleteDiscount(active.id);
       }
     } else if (over && over.id === "right-droppable") {
+      const baseDiscount = 15;
       const itemToAdd = regularItems.find((item) => item.id === active.id);
       if (itemToAdd) {
-        setDiscountedItems((prevItems) => [...prevItems, itemToAdd]);
+        setDiscountedItems((prevItems) => [
+          ...prevItems,
+          { ...itemToAdd, discount_amount: baseDiscount },
+        ]);
         setRegularItems((prevItems) =>
           prevItems.filter((item) => item.id !== active.id)
         );
-        await handleCreateDiscount(itemToAdd.id, 15);
+        await handleCreateDiscount(itemToAdd.id, baseDiscount);
       }
     }
   };
@@ -45,7 +49,7 @@ const Discounts = () => {
           <h4>Termékek</h4>
           <Droppable id="left-droppable">
             {regularItems.map((item) => (
-              <Draggable key={item.id} id={item.id}>
+              <Draggable key={item.id} id={item.id} itemDiscount={0}>
                 <div className="image-container">
                   <img src={item.image_path} alt={item.name} loading="lazy" />
                 </div>
@@ -58,7 +62,12 @@ const Discounts = () => {
           <h4>Leárazás</h4>
           <Droppable id="right-droppable">
             {discountedItems.map((item) => (
-              <Draggable key={item.id} id={item.id} isClickable={true}>
+              <Draggable
+                key={item.id}
+                id={item.id}
+                isClickable={true}
+                itemDiscount={item.discount_amount}
+              >
                 <div className="image-container">
                   <img src={item.image_path} alt={item.name} loading="lazy" />
                 </div>
