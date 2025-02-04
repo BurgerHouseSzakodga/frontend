@@ -47,12 +47,12 @@ export default function UserProfileEdit() {
       }
 
       const [currentZip, currentCity, currentStreet, currentNum] = user.address?.split(', ') || [];
-      if (addressData.zip !== currentZip || 
-          addressData.city !== currentCity ||
-          addressData.street !== currentStreet ||
-          addressData.num !== currentNum) {
+      // if (addressData.zip !== currentZip || 
+      //     addressData.city !== currentCity ||
+      //     addressData.street !== currentStreet ||
+      //     addressData.num !== currentNum) {
         await apiClient.patch('/api/user/address', addressData);
-      }
+      //}
 
       await refreshUser();
       alert("Profil sikeresen frissítve!");
