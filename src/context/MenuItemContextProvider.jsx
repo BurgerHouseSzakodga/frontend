@@ -32,7 +32,7 @@ const MenuItemContextProvider = ({ children }) => {
         setRegularItems(regularData);
       } catch (error) {
         setMenuItemError(
-          error.message.data.message ||
+          error.response.data.message ||
             "Hiba történt az ételek betöltése során."
         );
       } finally {
@@ -60,7 +60,7 @@ const MenuItemContextProvider = ({ children }) => {
       );
     } catch (error) {
       setMenuItemError(
-        error.message.data.message || "Hiba történt a frissítés során."
+        error.response.data.message || "Hiba történt a frissítés során."
       );
     } finally {
       setMenuItemLoading(false);
