@@ -1,6 +1,7 @@
 @use "../config" as *;
 
 .address-card {
+  @include fade-in;
   @include card;
   @include flex($direction: column);
   gap: 32px;

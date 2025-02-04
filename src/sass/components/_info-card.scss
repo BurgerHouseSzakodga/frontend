@@ -2,6 +2,7 @@
 
 .info-card {
   @include default-trasition;
+  @include fade-in;
   @include flex(
     $direction: column,
     $align: flex-start,
