@@ -17,7 +17,7 @@ const UserProfile = () => {
       <UserProfileEdit/>
       <ChangePassword/>
       <UserOrderTable/>
-      <button onClick={logout}>
+      <button className="logoutButton" onClick={logout}>
         Kijelentkezés
       </button>
     </div>

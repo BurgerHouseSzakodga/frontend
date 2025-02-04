@@ -1,0 +1,25 @@
+.logoutButton{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    background-color: #ff5419;
+    border: none;
+    border-radius: 0.25rem;
+    color: white;
+    cursor: pointer;
+    padding: 0.75rem 1.5rem;
+    width: 10rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user button:hover {
+    background-color: #ff6b35;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+    .user button {
+        width: 90%;
+    }
+}

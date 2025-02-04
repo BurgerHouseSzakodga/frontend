@@ -44,7 +44,7 @@
   top: 70%;
   transform: translateY(-50%);
   width: 1.2rem;
-  filter: invert(56%) sepia(95%) saturate(1680%) hue-rotate(338deg) brightness(99%) contrast(97%);
+  filter: invert(56%) sepia(100%) saturate(1680%) hue-rotate(338deg) brightness(99%) contrast(100%);
 }
 
 .input-container input {
@@ -74,7 +74,7 @@
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
   font-size: 1rem;
-  background-color: #ff6b35;
+  background-color: #ff5419;
   border: none;
   border-radius: 0.25rem;
   color: white;
@@ -87,7 +87,7 @@
 }
 
 .register form input[type="submit"]:hover {
-  background-color: #ff5419;
+  background-color: #ff6b35;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -96,4 +96,22 @@
       width: 90%;
       margin: 0 auto;
   }
+
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.register-link {
+    text-decoration: none;
+    color: #ff6b35;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.register-link:hover {
+    color: #ff5419;
+}
 }

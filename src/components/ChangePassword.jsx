@@ -1,6 +1,8 @@
 import { useState, useContext } from 'react';
 import { AuthContext } from '../context/contexts';
 import { apiClient } from '../api/axios';
+import passwordIcon from "/assets/password.svg";
+import '../sass/components/change-password.css';
 
 
 function ChangePassword() {
@@ -40,13 +42,15 @@ function ChangePassword() {
 
     return (
         <div className="change-password">
+           
+            
+            <form onSubmit={handleSubmit}>
             <h3>Jelszó módosítása</h3>
             {status && <div className="alert success">{status}</div>}
             {error && <div className="alert error">{error}</div>}
-            
-            <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="current_password">Jelenlegi jelszó:</label>
+                     <img src={passwordIcon} />
                     <input
                         type="password"
                         id="current_password"
@@ -59,6 +63,7 @@ function ChangePassword() {
 
                 <div>
                     <label htmlFor="new_password">Új jelszó:</label>
+                     <img src={passwordIcon} />
                     <input
                         type="password"
                         id="new_password"
@@ -71,6 +76,7 @@ function ChangePassword() {
 
                 <div>
                     <label htmlFor="new_password_confirmation">Új jelszó megerősítése:</label>
+                     <img src={passwordIcon} />
                     <input
                         type="password"
                         id="new_password_confirmation"
@@ -80,7 +86,6 @@ function ChangePassword() {
                         required
                     />
                 </div>
-
                 <button type="submit">Jelszó módosítása</button>
             </form>
         </div>
