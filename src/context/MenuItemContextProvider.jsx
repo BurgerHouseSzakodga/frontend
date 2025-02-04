@@ -42,6 +42,7 @@ const MenuItemContextProvider = ({ children }) => {
 
     getMenuItems();
   }, []);
+  console.log(discountedItems)
 
   const handleUpdateMenuItemName = async (menuItemId, name) => {
     setMenuItemLoading(true);

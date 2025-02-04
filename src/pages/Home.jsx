@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import "swiper/css";
 import PopularItem from "../components/PopularItem";
 import AllMenuWithCategory from "../components/AllItems";
+import DiscountItems from "../components/DiscountItems";
 
 
 const Home = () => {
@@ -10,7 +11,7 @@ const Home = () => {
     <div className="home">
       <Header />
       <PopularItem />
-  
+      <DiscountItems/>
     </div>
   );
 };
