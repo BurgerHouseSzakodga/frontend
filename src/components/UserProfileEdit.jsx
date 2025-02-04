@@ -3,7 +3,7 @@ import { AuthContext } from "../context/contexts";
 import { apiClient } from "../api/axios";
 
 export default function UserProfileEdit() {
-  const { user, refreshUser } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [name, setName] = useState(user?.name || '');
   const [email, setEmail] = useState(user?.email || '');
   const [isLoading, setIsLoading] = useState(false);
@@ -48,13 +48,12 @@ export default function UserProfileEdit() {
 
       const [currentZip, currentCity, currentStreet, currentNum] = user.address?.split(', ') || [];
       if (addressData.zip !== currentZip || 
-          addressData.city !== currentCity ||
-          addressData.street !== currentStreet ||
-          addressData.num !== currentNum) {
+         addressData.city !== currentCity ||
+         addressData.street !== currentStreet ||
+         addressData.num !== currentNum) {
         await apiClient.patch('/api/user/address', addressData);
       }
 
-      await refreshUser();
       alert("Profil sikeresen frissítve!");
     } catch (error) {
       console.error("Hiba:", error.response?.data);
