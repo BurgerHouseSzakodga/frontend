@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import { MenuItemContext } from '../context/contexts';
 import MenuItemCard from './MenuItemCrard';
-import '../sass/components/popular-items.css';
+import '../sass/components/swiper.css';
 import "swiper/css";
 import "swiper/modules";
 import rightIcon from "/assets/right.svg";

@@ -1,12 +1,17 @@
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/contexts";
 import { apiClient } from "../api/axios";
+import emailIcon from "/assets/email.svg";
+import userIcon from "/assets/users.svg";
+import orderIcon from "/assets/orders.svg";
+import '../sass/components/user-profile-edit.css';
 
 export default function UserProfileEdit() {
   const { user } = useContext(AuthContext);
   const [name, setName] = useState(user?.name || '');
   const [email, setEmail] = useState(user?.email || '');
   const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState('');
   const [addressData, setAddressData] = useState({
     zip: '',
     city: '',
@@ -33,9 +38,26 @@ export default function UserProfileEdit() {
     }));
   };
 
+  const hasChanges = () => {
+    const [currentZip, currentCity, currentStreet, currentNum] = user.address?.split(', ') || [];
+    return name !== user.name || 
+           email !== user.email ||
+           addressData.zip !== currentZip || 
+           addressData.city !== currentCity ||
+           addressData.street !== currentStreet ||
+           addressData.num !== currentNum;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (!hasChanges()) {
+      setMessage('Nem történt módosítás');
+      return;
+    }
+
     setIsLoading(true);
+    setMessage('');
     
     try {
       if (name !== user.name) {
@@ -54,10 +76,10 @@ export default function UserProfileEdit() {
         await apiClient.patch('/api/user/address', addressData);
       }
 
-      alert("Profil sikeresen frissítve!");
+      setMessage('Profil sikeresen frissítve!');
     } catch (error) {
       console.error("Hiba:", error.response?.data);
-      alert(error.response?.data?.message || "Hiba történt a mentés során!");
+      setMessage(error.response?.data?.message || "Hiba történt a mentés során!");
     } finally {
       setIsLoading(false);
     }
@@ -67,9 +89,11 @@ export default function UserProfileEdit() {
     <div className="profile-edit">
       <form onSubmit={handleSubmit}>
         <h3>Profil szerkesztése</h3>
+        {message && <div className="message">{message}</div>}
         
         <div className="form-group">
           <label htmlFor="name">Név:</label>
+          <img src={userIcon} alt="User icon" />
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -82,6 +106,7 @@ export default function UserProfileEdit() {
         
         <div className="form-group">
           <label htmlFor="email">Email cím:</label>
+          <img src={emailIcon} alt="Email icon" />
           <input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -94,6 +119,7 @@ export default function UserProfileEdit() {
 
         <div className="form-group">
           <label htmlFor="zip">Irányítószám:</label>
+          <img src={orderIcon} alt="Address icon" />
           <input
             value={addressData.zip}
             onChange={handleAddressChange('zip')}
@@ -106,6 +132,7 @@ export default function UserProfileEdit() {
 
         <div className="form-group">
           <label htmlFor="city">Város:</label>
+          <img src={orderIcon} alt="Address icon" />
           <input
             value={addressData.city}
             onChange={handleAddressChange('city')}
@@ -118,6 +145,7 @@ export default function UserProfileEdit() {
 
         <div className="form-group">
           <label htmlFor="street">Utca:</label>
+          <img src={orderIcon} alt="Address icon" />
           <input
             value={addressData.street}
             onChange={handleAddressChange('street')}
@@ -130,6 +158,7 @@ export default function UserProfileEdit() {
 
         <div className="form-group">
           <label htmlFor="num">Házszám:</label>
+          <img src={orderIcon} alt="Address icon" />
           <input
             value={addressData.num}
             onChange={handleAddressChange('num')}

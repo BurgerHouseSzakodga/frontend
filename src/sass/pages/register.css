@@ -1,106 +1,117 @@
-/* Alapértelmezett stílusok */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  color: #424242;
-  font-family: "Poppins", sans-serif;
-  font-size: 18px;
-}
-
-/* Regisztrációs űrlap központozása */
 .register {
   display: flex;
+  align-items: flex-start;
   justify-content: center;
   margin-top: 4rem;
+  font-family: 'Poppins', sans-serif;
 }
 
-/* Formázás */
 .register form {
-  background-color: #fff;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  gap: 0.5rem;
+  gap: 1rem;
   padding: 1.5rem;
   width: 32rem;
-  box-shadow: 0 50px 100px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
 }
 
-.register form div {
+.register form h1 {
+  text-align: left;
+  color: #333;
+  margin-bottom: 0rem;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.input-container {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  position: relative;
   gap: 0.5rem;
 }
 
-/* Input mezők formázása */
-.register form .input-container {
-  display: flex;
-  align-items: center;
-  position: relative;
-  width: 100%;
-}
-
-.register form input {
-  width: 100%;
-  padding: 0.8rem;
-  padding-left: 3rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+.input-container label {
+  color: #555;
   font-size: 1rem;
-  transition: border-color 0.3s ease;
+  font-weight: 500;
 }
 
-.register form input:focus {
-  border-color: #f17228;
+.input-container img {
+  position: absolute;
+  left: 12px;
+  top: 70%;
+  transform: translateY(-50%);
+  width: 1.2rem;
+  filter: invert(56%) sepia(100%) saturate(1680%) hue-rotate(338deg) brightness(99%) contrast(100%);
+}
+
+.input-container input {
+  font-family: 'Poppins', sans-serif;
+  border: 1px solid #ddd;
+  border-radius: 0.25rem;
+  padding: 0.75rem 0.75rem 0.75rem 2.5rem;
+  width: 100%;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.input-container input:focus {
   outline: none;
+  border-color: #ff6b35;
+  box-shadow: 0 0 5px rgba(255, 107, 53, 0.2);
 }
 
-/* Gomb stílusok */
+.register form p {
+  color: #ff5419;
+  font-size: 0.8rem;
+  font-weight: 400;
+  margin-top: -0.5rem;
+}
+
 .register form input[type="submit"] {
-  background-color: #f17228;
-  font-weight: bolder;
-  color: white;
-  padding: 1rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+  background-color: #ff5419;
   border: none;
-  border-radius: 4px;
+  border-radius: 0.25rem;
+  color: white;
   cursor: pointer;
-  font-size: 18px;
-  transition: background-color 0.3s ease;
+  padding: 0.75rem 1.5rem;
+  width: 100%;
+  margin-top: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .register form input[type="submit"]:hover {
-  background-color: #e65d1e;
+  background-color: #ff6b35;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Ikonok elhelyezése */
-.register form .input-container img {
-  position: absolute;
-  left: 1rem;
-  top: 50%;
-  transform: translateY(60%);
-  width: 1.2rem;
-  pointer-events: none;
+@media (max-width: 768px) {
+  .register form {
+      width: 90%;
+      margin: 0 auto;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
 }
 
-/* Label formázás */
-.register form .input-container label {
-  margin-bottom: 0.25rem;
-  text-align: left;
-  width: 100%;
+.register-link {
+    text-decoration: none;
+    color: #ff6b35;
+    font-weight: 500;
+    transition: all 0.3s ease;
 }
 
-/* Az ikon színének beállítása */
-.input-container img {
-  filter: invert(39%) sepia(94%) saturate(4907%) hue-rotate(3deg);
+.register-link:hover {
+    color: #ff5419;
 }
-
-/* Placeholder stílusok */
-.register form input::placeholder {
-  padding-left: 0rem;
 }

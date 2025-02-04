@@ -1,21 +1,92 @@
-.orders-container {
-    margin: 20px;
-    font-family: Arial, sans-serif;
-  }
+
+
   
-  .orders-header {
+  .orders-container {
+    font-family: 'Poppins', sans-serif;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 4rem auto;
+    width: 80%;
+    max-width: 1200px;
+    padding: 1.5rem;
+}
+
+.orders-header {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr 1fr;
-    font-weight: bold;
-    background-color: #f4f4f4;
-    padding: 10px;
-    border-bottom: 2px solid #ccc;
-  }
-  
-  .orders-row {
+    grid-template-columns: 1fr 2fr 2fr 1fr 1fr;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: #ff5419;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    color: white;
+}
+
+.orders-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.orders-row {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr 1fr;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-  }
-  
+    grid-template-columns: 1fr 2fr 2fr 1fr 1fr;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    align-items: center;
+    border: 1px solid #ddd;
+    transition: all 0.3s ease;
+}
+
+.orders-row:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.orders-row details {
+    cursor: pointer;
+}
+
+.orders-row summary {
+    color: #ff6b35;
+    font-weight: 500;
+    padding: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.orders-row summary:hover {
+    color: #ff5419;
+}
+
+.orders-row details > div {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.orders-row details p {
+    margin: 0.5rem 0;
+    color: #555;
+}
+
+@media (max-width: 768px) {
+    .orders-container {
+        width: 95%;
+        padding: 1rem;
+    }
+
+    .orders-header, .orders-row {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .orders-header div:not(:first-child) {
+        display: none;
+    }
+
+    .orders-row {
+        gap: 0.5rem;
+    }
+}
