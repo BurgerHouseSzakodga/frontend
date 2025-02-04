@@ -4,6 +4,7 @@ import { DndContext } from "@dnd-kit/core";
 import Draggable from "./Draggable";
 import Droppable from "./Droppable";
 import { MenuItemContext } from "../context/contexts";
+import doubleTapIcon from "/assets/double-tap.gif";
 
 const Discounts = () => {
   const {
@@ -17,36 +18,21 @@ const Discounts = () => {
 
   const handleDragEnd = async ({ active, over }) => {
     if (over && over.id === "left-droppable") {
-      setRegularItems((prevItems) => {
-        if (!prevItems.some((item) => item.id === active.id)) {
-          const itemToAdd = discountedItems.find(
-            (item) => item.id === active.id
-          );
-          return [...prevItems, itemToAdd];
-        }
-        return prevItems;
-      });
-
-      setDiscountedItems((prevItems) =>
-        prevItems.filter((item) => item.id !== active.id)
-      );
-
-      await handleDeleteDiscount(active.id);
+      const itemToAdd = discountedItems.find((item) => item.id === active.id);
+      if (itemToAdd) {
+        setRegularItems((prevItems) => [...prevItems, itemToAdd]);
+        setDiscountedItems((prevItems) =>
+          prevItems.filter((item) => item.id !== active.id)
+        );
+        await handleDeleteDiscount(active.id);
+      }
     } else if (over && over.id === "right-droppable") {
-      setDiscountedItems((prevItems) => {
-        if (!prevItems.some((item) => item.id === active.id)) {
-          const itemToAdd = regularItems.find((item) => item.id === active.id);
-          return [...prevItems, itemToAdd];
-        }
-        return prevItems;
-      });
-
-      setRegularItems((prevItems) =>
-        prevItems.filter((item) => item.id !== active.id)
-      );
-
       const itemToAdd = regularItems.find((item) => item.id === active.id);
       if (itemToAdd) {
+        setDiscountedItems((prevItems) => [...prevItems, itemToAdd]);
+        setRegularItems((prevItems) =>
+          prevItems.filter((item) => item.id !== active.id)
+        );
         await handleCreateDiscount(itemToAdd.id, 15);
       }
     }
@@ -77,6 +63,9 @@ const Discounts = () => {
                   <img src={item.image_path} alt={item.name} loading="lazy" />
                 </div>
                 {item.name}
+                <div className="image-container">
+                  <img src={doubleTapIcon} loading="lazy" />
+                </div>
               </Draggable>
             ))}
           </Droppable>

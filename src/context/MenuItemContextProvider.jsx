@@ -217,11 +217,7 @@ const MenuItemContextProvider = ({ children }) => {
   const handleCreateDiscount = async (menuItemId, discountAmount) => {
     try {
       await createDiscount(menuItemId, discountAmount);
-      const newItem = menuItems.find((item) => item.id === menuItemId);
-
-      setDiscountedItems((prevDiscounts) => [newItem, ...prevDiscounts]);
     } catch (error) {
-      setDiscountedItems(discountedItems);
       setMenuItemError(
         error.response.data.message || "Hiba történt a frissítés."
       );
@@ -231,11 +227,7 @@ const MenuItemContextProvider = ({ children }) => {
   const handleDeleteDiscount = async (id) => {
     try {
       await deleteDiscount(id);
-      setDiscountedItems((prevDiscounts) =>
-        prevDiscounts.filter((item) => item.id !== id)
-      );
     } catch (error) {
-      setDiscountedItems(discountedItems);
       setMenuItemError(error.response.data.message || "Hiba történt a törlés.");
     }
   };
