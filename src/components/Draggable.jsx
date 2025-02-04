@@ -41,16 +41,24 @@ const Draggable = ({ id, children, isClickable, itemDiscount }) => {
       >
         {children}
       </button>
-      <Modal className="modal" open={open} onCloseModal={() => setOpen(false)}>
+      <Modal
+        className="modal modal-column"
+        open={open}
+        onCloseModal={() => setOpen(false)}
+      >
         <form method="dialog" onSubmit={handleSubmitForm}>
           <label>Hány százalékos legyen a leárazás?</label>
-          <input
-            type="number"
-            value={discountAmount}
-            onChange={(e) => setDiscounAmount(e.target.value)}
-            min="1"
-            max="100"
-          />
+          <div>
+            <input
+              type="number"
+              value={discountAmount}
+              onChange={(e) => setDiscounAmount(e.target.value)}
+              min="1"
+              max="100"
+            />
+            <p>%</p>
+          </div>
+
           <input type="submit" value="Rendben" />
         </form>
       </Modal>

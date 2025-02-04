@@ -102,3 +102,16 @@ $box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 @mixin swim-in {
   animation: swimIn 0.5s forwards;
 }
+
+@keyframes fadeInAnimation {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@mixin fade-in {
+  opacity: 0;
+  transform: translateY(-10px);
+  animation: fadeInAnimation 0.5s ease-in-out forwards;
+}
