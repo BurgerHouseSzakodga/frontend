@@ -60,7 +60,7 @@
   &__button-group {
     @include flex($justify: space-around);
 
-    button {
+    input {
       @include default-trasition;
       border-radius: calc($border-radius / 2);
       background-color: #fff;

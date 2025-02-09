@@ -59,10 +59,12 @@ const MenuItemContextProvider = ({ children }) => {
           item.id === menuItemId ? updatedMenuItem : item
         )
       );
+      return true;
     } catch (error) {
       setMenuItemError(
         error.response.data.message || "Hiba történt a frissítés során."
       );
+      return false;
     } finally {
       setMenuItemLoading(false);
     }
@@ -83,10 +85,12 @@ const MenuItemContextProvider = ({ children }) => {
           item.id === menuItemId ? updatedMenuItem : item
         )
       );
+      return true;
     } catch (error) {
       setMenuItemError(
         error.response.data.message || "Hiba történt a frissítés során."
       );
+      return false;
     } finally {
       setMenuItemLoading(false);
     }
@@ -107,10 +111,12 @@ const MenuItemContextProvider = ({ children }) => {
           item.id === menuItemId ? updatedMenuItem : item
         )
       );
+      return true;
     } catch (error) {
       setMenuItemError(
         error.response.data.message || "Hiba történt a frissítés során."
       );
+      return false;
     } finally {
       setMenuItemLoading(false);
     }
@@ -130,10 +136,12 @@ const MenuItemContextProvider = ({ children }) => {
           item.id === menuItemId ? updatedMenuItem : item
         )
       );
+      return true;
     } catch (error) {
       setMenuItemError(
         error.response.data.message || "Hiba történt a frissítés során."
       );
+      return false;
     } finally {
       setMenuItemLoading(false);
     }
@@ -154,10 +162,12 @@ const MenuItemContextProvider = ({ children }) => {
           item.id === menuItemId ? updatedMenuItem : item
         )
       );
+      return true;
     } catch (error) {
       setMenuItemError(
         error.response.data.message || "Hiba történt a frissítés során."
       );
+      return false;
     } finally {
       setMenuItemLoading(false);
     }
@@ -172,10 +182,12 @@ const MenuItemContextProvider = ({ children }) => {
           item.id === menuItemId ? updatedMenuItem : item
         )
       );
+      return true;
     } catch (error) {
       setMenuItemError(
         error.response.data.message || "Hiba történt a frissítés során."
       );
+      return false;
     } finally {
       setMenuItemLoading(false);
     }
@@ -213,6 +225,7 @@ const MenuItemContextProvider = ({ children }) => {
       setDiscountedItems((prevMenuItems) =>
         prevMenuItems.filter((item) => item.id !== menuItemId)
       );
+      return true;
     } catch (error) {
       setMenuItems(menuItems);
       setRegularItems(regularItems);
@@ -220,6 +233,7 @@ const MenuItemContextProvider = ({ children }) => {
       setMenuItemError(
         error.response.data.message || "Hiba történt a törlés során."
       );
+      return false;
     } finally {
       setMenuItemLoading(false);
     }

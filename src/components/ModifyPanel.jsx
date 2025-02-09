@@ -54,9 +54,11 @@ const ModifyPanel = ({ onCloseModifyPanel, selectedItemId }) => {
     setConfirmDeleteModalOpen(true);
   };
 
-  const onConfirmDelete = () => {
+  const onConfirmDelete = async () => {
     onCloseModifyPanel(false, null);
-    handleDeleteMenuItem(selectedItem.id);
+    if (await handleDeleteMenuItem(selectedItem.id)) {
+      setOpen(true);
+    }
   };
 
   const handleClose = (reason) => {
@@ -68,18 +70,21 @@ const ModifyPanel = ({ onCloseModifyPanel, selectedItemId }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    await handleUpdateMenuItemName(selectedItem.id, name);
-    await handleUpdateMenuItemPrice(selectedItem.id, price);
-    await handleUpdateMenuItemCategory(selectedItem.id, category);
-    await handleUpdateMenuItemDescription(selectedItem.id, description);
-    await handleUpdateMenuItemComposition(selectedItem.id, composition);
-
-    if (image) {
-      await handleUpdateMenuItemImage(selectedItem.id, image);
+    if (
+      (await handleUpdateMenuItemName(selectedItem.id, name)) &&
+      (await handleUpdateMenuItemPrice(selectedItem.id, price)) &&
+      (await handleUpdateMenuItemCategory(selectedItem.id, category)) &&
+      (await handleUpdateMenuItemDescription(selectedItem.id, description)) &&
+      (await handleUpdateMenuItemComposition(selectedItem.id, composition))
+    ) {
+      if (image) {
+        if (await handleUpdateMenuItemImage(selectedItem.id, image)) {
+          setOpen(true);
+        }
+      } else {
+        setOpen(true);
+      }
     }
-
-    setOpen(true);
   };
 
   return (
@@ -152,7 +157,7 @@ const ModifyPanel = ({ onCloseModifyPanel, selectedItemId }) => {
           </div>
           <div>
             <div className="modify-panel__button-group">
-              <button onClick={onDeleteMenuItem}>törlés</button>
+              <input type="button" value="törlésm" onClick={onDeleteMenuItem} />
               <input type="submit" value="mentés" />
             </div>
           </div>
