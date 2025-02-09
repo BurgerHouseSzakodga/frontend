@@ -46,7 +46,7 @@ const Dashboard = () => {
       </div>
       <RevenueChart />
       <UsersTable />
-      <MenuItemsTable modifiable={false} />
+      <MenuItemsTable modifiable={false} isEditing={false} />
     </div>
   );
 };

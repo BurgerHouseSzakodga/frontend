@@ -182,7 +182,7 @@ const ModifyPanel = ({ onCloseModifyPanel, selectedItemId }) => {
           </div>
           <div>
             <div className="modify-panel__button-group">
-              <input type="button" value="törlésm" onClick={onDeleteMenuItem} />
+              <input type="button" value="törlés" onClick={onDeleteMenuItem} />
               <input type="submit" value="mentés" />
             </div>
           </div>

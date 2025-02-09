@@ -1,6 +1,11 @@
 import { Button, MenuItem, Select } from "@mui/material";
 
-export const createMenuItemColumns = (modifiable, categories, handleModify) => {
+export const createMenuItemColumns = (
+  modifiable,
+  categories,
+  handleModify,
+  isEditing
+) => {
   const width = modifiable ? 180 : 225;
 
   const columns = [
@@ -33,13 +38,13 @@ export const createMenuItemColumns = (modifiable, categories, handleModify) => {
       field: "name",
       headerName: "Név",
       width,
-      editable: true,
+      editable: !isEditing,
     },
     {
       field: "category_name",
       headerName: "Kategória",
       width,
-      editable: true,
+      editable: !isEditing,
       renderEditCell: (params) => (
         <Select
           value={params.value}
@@ -65,7 +70,7 @@ export const createMenuItemColumns = (modifiable, categories, handleModify) => {
       headerName: "Ár",
       width,
       type: "number",
-      editable: true,
+      editable: !isEditing,
       renderCell: (params) => params.value + " Ft",
     },
   ];
