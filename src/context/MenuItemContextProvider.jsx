@@ -42,7 +42,7 @@ const MenuItemContextProvider = ({ children }) => {
 
     getMenuItems();
   }, []);
-  console.log(discountedItems)
+  console.log(discountedItems);
 
   const handleUpdateMenuItemName = async (menuItemId, name) => {
     setMenuItemLoading(true);
@@ -186,8 +186,11 @@ const MenuItemContextProvider = ({ children }) => {
     try {
       const newMenuItem = await createMenuItem(payload);
       setMenuItems((prevMenuItems) => [...prevMenuItems, newMenuItem]);
+      setRegularItems((prevRegularItems) => [...prevRegularItems, newMenuItem]);
       return true;
     } catch (error) {
+      setMenuItems(menuItems);
+      setRegularItems(regularItems);
       setMenuItemError(
         error.response.data.message || "Hiba történt a létrehozás során."
       );
@@ -204,8 +207,16 @@ const MenuItemContextProvider = ({ children }) => {
       setMenuItems((prevMenuItems) =>
         prevMenuItems.filter((item) => item.id !== menuItemId)
       );
+      setRegularItems((prevMenuItems) =>
+        prevMenuItems.filter((item) => item.id !== menuItemId)
+      );
+      setDiscountedItems((prevMenuItems) =>
+        prevMenuItems.filter((item) => item.id !== menuItemId)
+      );
     } catch (error) {
       setMenuItems(menuItems);
+      setRegularItems(regularItems);
+      setDiscountedItems(discountedItems);
       setMenuItemError(
         error.response.data.message || "Hiba történt a törlés során."
       );
