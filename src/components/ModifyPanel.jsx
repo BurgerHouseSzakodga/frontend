@@ -70,6 +70,31 @@ const ModifyPanel = ({ onCloseModifyPanel, selectedItemId }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const arraysEqual = (firstArr, secondArr) => {
+      if (firstArr.length !== secondArr.length) return false;
+
+      const firstSorted = firstArr.slice().sort();
+      const secondSorted = secondArr.slice().sort();
+
+      firstSorted.forEach((element, i) => {
+        if (element !== secondSorted[i]) return false;
+      });
+
+      return true;
+    };
+
+    if (
+      selectedItem.name === name &&
+      selectedItem.price === price &&
+      selectedItem.category_id === category &&
+      selectedItem.description === description &&
+      arraysEqual(selectedItem.compositions, composition) &&
+      !image
+    ) {
+      return;
+    }
+
     if (
       (await handleUpdateMenuItemName(selectedItem.id, name)) &&
       (await handleUpdateMenuItemPrice(selectedItem.id, price)) &&
