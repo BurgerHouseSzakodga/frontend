@@ -197,7 +197,11 @@ const ManageMenuItems = () => {
           </form>
         )}
       </div>
-      <MenuItemsTable modifiable={true} onSelectModify={handleClickEdit} />
+      <MenuItemsTable
+        modifiable={true}
+        onSelectModify={handleClickEdit}
+        isEditing={isEditing}
+      />
       <Discounts />
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert

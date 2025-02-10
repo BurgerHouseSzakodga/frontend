@@ -60,12 +60,13 @@
   &__button-group {
     @include flex($justify: space-around);
 
-    button {
+    input {
       @include default-trasition;
       border-radius: calc($border-radius / 2);
       background-color: #fff;
       border: 1px solid rgb(255, 0, 0);
       color: rgb(255, 0, 0);
+      cursor: pointer;
       height: 60px;
       width: 120px;
 

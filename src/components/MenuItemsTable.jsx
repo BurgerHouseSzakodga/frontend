@@ -7,7 +7,7 @@ import { CategoryContext, MenuItemContext } from "../context/contexts";
 import { localeText } from "../utils/locale-text";
 import { createMenuItemColumns } from "../utils/table-columns";
 
-const MenuItemsTable = ({ modifiable, onSelectModify }) => {
+const MenuItemsTable = ({ modifiable, onSelectModify, isEditing }) => {
   const { categories } = useContext(CategoryContext);
   const {
     menuItems,
@@ -38,7 +38,12 @@ const MenuItemsTable = ({ modifiable, onSelectModify }) => {
     window.scrollTo({ top: 100, behavior: "smooth" });
   };
 
-  const data = createMenuItemColumns(modifiable, categories, handleModify);
+  const data = createMenuItemColumns(
+    modifiable,
+    categories,
+    handleModify,
+    isEditing
+  );
 
   if (menuItemLoading) {
     return <div className="loader"></div>;

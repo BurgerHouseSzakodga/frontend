@@ -54,9 +54,11 @@ const ModifyPanel = ({ onCloseModifyPanel, selectedItemId }) => {
     setConfirmDeleteModalOpen(true);
   };
 
-  const onConfirmDelete = () => {
+  const onConfirmDelete = async () => {
     onCloseModifyPanel(false, null);
-    handleDeleteMenuItem(selectedItem.id);
+    if (await handleDeleteMenuItem(selectedItem.id)) {
+      setOpen(true);
+    }
   };
 
   const handleClose = (reason) => {
@@ -69,17 +71,45 @@ const ModifyPanel = ({ onCloseModifyPanel, selectedItemId }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    await handleUpdateMenuItemName(selectedItem.id, name);
-    await handleUpdateMenuItemPrice(selectedItem.id, price);
-    await handleUpdateMenuItemCategory(selectedItem.id, category);
-    await handleUpdateMenuItemDescription(selectedItem.id, description);
-    await handleUpdateMenuItemComposition(selectedItem.id, composition);
+    const arraysEqual = (firstArr, secondArr) => {
+      if (firstArr.length !== secondArr.length) return false;
 
-    if (image) {
-      await handleUpdateMenuItemImage(selectedItem.id, image);
+      const firstSorted = firstArr.slice().sort();
+      const secondSorted = secondArr.slice().sort();
+
+      firstSorted.forEach((element, i) => {
+        if (element !== secondSorted[i]) return false;
+      });
+
+      return true;
+    };
+
+    if (
+      selectedItem.name === name &&
+      selectedItem.price === price &&
+      selectedItem.category_id === category &&
+      selectedItem.description === description &&
+      arraysEqual(selectedItem.compositions, composition) &&
+      !image
+    ) {
+      return;
     }
 
-    setOpen(true);
+    if (
+      (await handleUpdateMenuItemName(selectedItem.id, name)) &&
+      (await handleUpdateMenuItemPrice(selectedItem.id, price)) &&
+      (await handleUpdateMenuItemCategory(selectedItem.id, category)) &&
+      (await handleUpdateMenuItemDescription(selectedItem.id, description)) &&
+      (await handleUpdateMenuItemComposition(selectedItem.id, composition))
+    ) {
+      if (image) {
+        if (await handleUpdateMenuItemImage(selectedItem.id, image)) {
+          setOpen(true);
+        }
+      } else {
+        setOpen(true);
+      }
+    }
   };
 
   return (
@@ -152,7 +182,7 @@ const ModifyPanel = ({ onCloseModifyPanel, selectedItemId }) => {
           </div>
           <div>
             <div className="modify-panel__button-group">
-              <button onClick={onDeleteMenuItem}>törlés</button>
+              <input type="button" value="törlés" onClick={onDeleteMenuItem} />
               <input type="submit" value="mentés" />
             </div>
           </div>
