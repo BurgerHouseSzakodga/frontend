@@ -1,7 +1,8 @@
 import "../sass/components/menu-item-card.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function MenuItemCard(props) {
+
 
   return (
     <div>

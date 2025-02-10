@@ -27,6 +27,10 @@ function PopularItem() {
         navigate(`/order/${id}`);
     };
 
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+      };
+
     return (
         <div className="popular-item-container">
             <h1 className='cim'>Népszerűek</h1>
@@ -52,7 +56,7 @@ function PopularItem() {
                     <SwiperSlide key={item.id}>
                         <div className="item-card">
                             <img src={item.image_path} alt={item.name} />
-                            <h3>{item.name}</h3>
+                            <h3>{capitalizeFirstLetter(item.name)}</h3>
                             <p>{item.price} Ft</p>
                             <Link to={`/item/${item.id}`} className="basket-button">
                                 Rendelés

@@ -5,6 +5,7 @@ import PopularItem from "../components/PopularItem";;
 import DiscountItems from "../components/DiscountItems";
 import AboutYouCard from "../components/AboutYou";
 import AddresAbout from "../components/AddresAbout";
+import Foot from "../components/Footer";
 
 
 const Home = () => {
@@ -15,7 +16,7 @@ const Home = () => {
       <AboutYouCard/>
       <DiscountItems/>
       <AddresAbout/>
-     
+     <Foot/>
     </div>
   );
 };

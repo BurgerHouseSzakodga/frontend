@@ -39,13 +39,16 @@ function Item() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Here you can handle the order submission
         console.log('Order submitted:', {
             itemId: item.id,
             itemName: item.name,
             ingredients: quantities,
             totalPrice: totalPrice
         });
+    };
+
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
     };
 
     useEffect(() => {
@@ -70,7 +73,7 @@ function Item() {
             <div className="item-header">
                 <img src={item.image_path} alt={item.name} />
                 <div className="item-info">
-                    <h1>{item.name}</h1>
+                    <h1>{capitalizeFirstLetter(item.name)}</h1>
                     <p className="description">{item.description}</p>
                     <p className="price">{item.price} Ft</p>
                 </div>
@@ -92,7 +95,7 @@ function Item() {
                                         min="0"
                                         max="3"
                                     />
-                                    {ingredient.name} 
+                                    {capitalizeFirstLetter(ingredient.name)} 
                                     {ingredient.extra_price > 0 && ` (+${ingredient.extra_price} Ft)`}
                                 </span>
                             ))}

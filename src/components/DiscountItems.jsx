@@ -27,6 +27,10 @@ function DiscountItems() {
     }
   };
 
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
   return (
     <div className="popular-item-container">
       <h1 className='cim'>Akciós termékek</h1>
@@ -52,7 +56,7 @@ function DiscountItems() {
           <SwiperSlide key={item.id}>
             <div className="item-card">
               <img src={item.image_path} alt={item.name} />
-              <h3>{item.name}</h3>
+              <h3>{capitalizeFirstLetter(item.name)}</h3>
               <p className="original-price">{item.price} Ft</p>
               <p className="discounted-price">{item.price - item.discount_amount} Ft</p>
               <Link to={`/item/${item.id}`} className="basket-button">
