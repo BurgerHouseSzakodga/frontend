@@ -3,7 +3,9 @@
   background-color: #f9f9f9;
   position: relative;
 }
-
+.cim{
+  text-align: center;
+}
 .item-card {
   text-align: center;
   padding: 10px;

@@ -29,7 +29,7 @@ function PopularItem() {
 
     return (
         <div className="popular-item-container">
-            <h1>Népszerűek</h1>
+            <h1 className='cim'>Népszerűek</h1>
             <button className="swiper-button prev" onClick={() => handleImage('prev')}>
                 <img src={leftIcon} alt="Previous" />
             </button>

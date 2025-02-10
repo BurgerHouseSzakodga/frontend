@@ -1,0 +1,26 @@
+.addres-about-container {
+    background-color: #fff7e6;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 24px 32px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .feature-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .icon {
+    font-size: 2rem; /* Nagyobb ikon méret */
+    color: #e67e22; /* Narancssárga szín */
+  }
+  
+  .feature-title {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #333;
+  }

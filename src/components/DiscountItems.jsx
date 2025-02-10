@@ -29,7 +29,7 @@ function DiscountItems() {
 
   return (
     <div className="popular-item-container">
-      <h1>Akciós termékek</h1>
+      <h1 className='cim'>Akciós termékek</h1>
       <button className="swiper-button prev" onClick={() => handleImage('prev')}>
         <img src={leftIcon} alt="Previous" />
       </button>
