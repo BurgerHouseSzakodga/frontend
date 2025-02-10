@@ -1,83 +1,73 @@
-import { useContext, useRef } from 'react';
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation } from "swiper/modules";
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Autoplay } from 'swiper/modules';
+import { Link, useNavigate } from 'react-router-dom';
 import { MenuItemContext } from '../context/contexts';
-import MenuItemCard from './MenuItemCrard';
-import "swiper/css";
-import "swiper/css/navigation";
 import rightIcon from "/assets/right.svg";
 import leftIcon from "/assets/left.svg";
+import 'swiper/css';
+import 'swiper/css/navigation';
+
 
 function DiscountItems() {
-    const { menuItems = [] } = useContext(MenuItemContext);
-    const swiperRef = useRef(null);
+  const { discountedItems } = useContext(MenuItemContext);
+  const [items, setItems] = useState([]);
+  const swiperRef = useRef(null);
+  const navigate = useNavigate();
 
-    const discountedItems = menuItems.filter(item => item.discount_amount > 0);
+  useEffect(() => {
+    setItems(discountedItems);
+  }, [discountedItems]);
 
-    const handleImage = (direction) => {
-        if (!swiperRef.current?.swiper) return;
+  const handleImage = (direction) => {
+    if (direction === 'next') {
+      swiperRef.current.swiper.slideNext();
+    } else if (direction === 'prev') {
+      swiperRef.current.swiper.slidePrev();
+    }
+  };
 
-        if (direction === 'next') {
-            swiperRef.current.swiper.slideNext();
-        } else if (direction === 'prev') {
-            swiperRef.current.swiper.slidePrev();
-        }
-    };
+  return (
+    <div className="popular-item-container">
+      <h1>Akciós termékek</h1>
+      <button className="swiper-button prev" onClick={() => handleImage('prev')}>
+        <img src={leftIcon} alt="Previous" />
+      </button>
 
-    return (
-        <div className="popular-items">
-            <div className="popular-items-title">
-                <h2>Akciós termékek</h2>
+      <Swiper
+        ref={swiperRef}
+        modules={[Navigation, Autoplay]}
+        slidesPerView={5}
+        spaceBetween={10}
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
+        }}
+        navigation={{
+          nextEl: '.swiper-button.next',
+          prevEl: '.swiper-button.prev',
+        }}
+      >
+        {items.map((item) => (
+          <SwiperSlide key={item.id}>
+            <div className="item-card">
+              <img src={item.image_path} alt={item.name} />
+              <h3>{item.name}</h3>
+              <p className="original-price">{item.price} Ft</p>
+              <p className="discounted-price">{item.price - item.discount_amount} Ft</p>
+              <Link to={`/item/${item.id}`} className="basket-button">
+                Rendelés
+              </Link>
             </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
 
-            <div className="popular-items-slider">
-                <button className="swiper-button prev" onClick={() => handleImage('prev')}>
-                    <img src={leftIcon} alt="Previous" />
-                </button>
-
-                <Swiper
-                    ref={swiperRef}
-                    modules={[Autoplay, Navigation]}
-                    breakpoints={{
-                        320: { slidesPerView: 1 },
-                        640: { slidesPerView: 2 },
-                        768: { slidesPerView: 3 },
-                        1024: { slidesPerView: 4 },
-                    }}
-                    spaceBetween={10}
-                    autoplay={{
-                        delay: 2500,
-                        disableOnInteraction: false,
-                    }}
-                >
-                    {discountedItems.length > 0 ? (
-                        discountedItems.map((item) => (
-                            <SwiperSlide key={item.id}>
-                                <MenuItemCard
-                                    image={item.image_path}
-                                    name={item.name}
-                                    description={item.description}
-                                    category_id={item.category_id}
-                                    price={item.price}
-                                    discountAmount={item.discount_amount}
-                                />
-                            </SwiperSlide>
-                        ))
-                    ) : (
-                        <SwiperSlide>
-                            <div className="no-items">
-                                Jelenleg nincsenek akciós termékek
-                            </div>
-                        </SwiperSlide>
-                    )}
-                </Swiper>
-
-                <button className="swiper-button next" onClick={() => handleImage('next')}>
-                    <img src={rightIcon} alt="Next" />
-                </button>
-            </div>
-        </div>
-    );
+      <button className="swiper-button next" onClick={() => handleImage('next')}>
+        <img src={rightIcon} alt="Next" />
+      </button>
+    </div>
+  );
 }
 
 export default DiscountItems;

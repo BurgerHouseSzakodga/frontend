@@ -17,9 +17,7 @@ function MenuItemCard(props) {
           <p className="card-name">{props.name}</p>
           <p className="card-price"></p>
           <p> {props.price} Ft</p>
-          <Link to={`/item/${props.id}`} className="basket-button">
-            Rendelés
-          </Link>
+         
         </div>
       </div>
     </div>
