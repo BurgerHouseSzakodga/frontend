@@ -1,14 +1,15 @@
 import { useContext, useState } from "react";
 
+import { Alert, Snackbar } from "@mui/material";
+
 import {
   CategoryContext,
   IngredientContext,
   MenuItemContext,
 } from "../context/contexts";
 import Modal from "./Modal";
-import exitIcon from "/assets/exit.svg";
-import { Alert, Snackbar } from "@mui/material";
 import ImageDropzone from "./ImageDropZone";
+import exitIcon from "/assets/exit.svg";
 import waringIcon from "/assets/warning.svg";
 
 const ModifyPanel = ({ onCloseModifyPanel, selectedItemId }) => {
