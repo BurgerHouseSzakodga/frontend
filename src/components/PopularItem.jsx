@@ -1,17 +1,19 @@
 import { useContext, useRef } from 'react';
 import { Swiper, SwiperSlide } from "swiper/react";
-
+import { Navigation, Autoplay } from "swiper/modules";
+import { Link, useNavigate } from 'react-router-dom';
 import { MenuItemContext } from '../context/contexts';
 import MenuItemCard from './MenuItemCrard';
-import '../sass/components/swiper.css';
+import '../sass/components/popular-item.css';
 import "swiper/css";
-import "swiper/modules";
+import "swiper/css/navigation";
 import rightIcon from "/assets/right.svg";
 import leftIcon from "/assets/left.svg";
 
 function PopularItem() {
     const { menuItems } = useContext(MenuItemContext);
     const swiperRef = useRef(null);
+    const navigate = useNavigate();
 
     const handleImage = (direction) => {
         if (direction === 'next') {
@@ -21,39 +23,51 @@ function PopularItem() {
         }
     };
 
+    const handleOrder = (id) => {
+        navigate(`/order/${id}`);
+    };
+
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+      };
+
     return (
-        
         <div className="popular-item-container">
-            <h1>Népszerűek</h1>
+            <h1 className='cim'>Népszerűek</h1>
             <button className="swiper-button prev" onClick={() => handleImage('prev')}>
                 <img src={leftIcon} alt="Previous" />
             </button>
 
             <Swiper
                 ref={swiperRef}
+                modules={[Navigation, Autoplay]}
                 slidesPerView={5}
                 spaceBetween={10}
                 autoplay={{
                     delay: 2500,
                     disableOnInteraction: false,
                 }}
+                navigation={{
+                    nextEl: '.swiper-button.next',
+                    prevEl: '.swiper-button.prev',
+                }}
             >
                 {menuItems.map((item) => (
                     <SwiperSlide key={item.id}>
-                        <MenuItemCard
-                        id={item.id}
-                            image={item.image_path}
-                            name={item.name}
-                            description={item.description}
-                            category_id={item.category_id}
-                            price={item.price}
-                        />
+                        <div className="item-card">
+                            <img src={item.image_path} alt={item.name} />
+                            <h3>{capitalizeFirstLetter(item.name)}</h3>
+                            <p>{item.price} Ft</p>
+                            <Link to={`/item/${item.id}`} className="basket-button">
+                                Rendelés
+                            </Link>
+                        </div>
                     </SwiperSlide>
                 ))}
             </Swiper>
 
             <button className="swiper-button next" onClick={() => handleImage('next')}>
-                <img src={rightIcon}  />
+                <img src={rightIcon} alt="Next" />
             </button>
         </div>
     );

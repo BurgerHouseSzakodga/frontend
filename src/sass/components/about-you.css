@@ -1,0 +1,51 @@
+.about-you-container {
+    background-color: #fff7e6;
+    padding: 40px 20px;
+  }
+  
+  .about-you-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    color: #e67e22;
+    margin-bottom: 40px;
+  }
+  
+  .steps-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 0 20px;
+  }
+  
+  @media (min-width: 768px) {
+    .steps-container {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  
+  .step-card {
+    text-align: center;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    padding: 20px;
+  }
+  
+  .icon {
+    font-size: 3rem;
+    color: #e67e22;
+  }
+  
+  .step-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 20px;
+    color: #333;
+  }
+  
+  .step-description {
+    font-size: 1rem;
+    color: #666;
+    margin-top: 10px;
+  }

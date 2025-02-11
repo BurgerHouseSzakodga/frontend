@@ -1,14 +1,18 @@
 import { useState, useContext } from 'react';
 import MenuItemCard from './MenuItemCrard';
 import { MenuItemContext } from '../context/contexts';
-import '../sass/components/all-items.css'
-
+import '../sass/components/all-items.css';
+import { Link, useNavigate } from 'react-router-dom';
 
 function AllItems() {
-
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState('name-asc');  // Changed default to name-asc
   const { menuItems } = useContext(MenuItemContext);
+  const navigate = useNavigate();
+
+  const handleOrder = (id) => {
+    navigate(`/order/${id}`);
+  };
 
   // Szűrt és rendezett elemek
   const filteredAndSortedItems = menuItems
@@ -25,6 +29,10 @@ function AllItems() {
       }
       return 0;
     });
+
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
 
   return (
     <div>
@@ -52,14 +60,18 @@ function AllItems() {
 
       <div className="menu-items">
         {filteredAndSortedItems.map((item) => (
-          <MenuItemCard
-            key={item.id}
-            image={item.image_path}
-            name={item.name}
-            description={item.description}
-            category_id={item.category_id}
-            price={item.price}
-          />
+          <div key={item.id} className="menu-item">
+            <MenuItemCard
+              image={item.image_path}
+              name={capitalizeFirstLetter(item.name)}
+              description={item.description}
+              category_id={item.category_id}
+              price={item.price}
+            />
+            <Link to={`/item/${item.id}`} className="basket-button">
+              Rendelés
+            </Link>
+          </div>
         ))}
       </div>
     </div>
