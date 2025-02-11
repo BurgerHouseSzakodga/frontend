@@ -7,6 +7,7 @@ import rightIcon from "/assets/right.svg";
 import leftIcon from "/assets/left.svg";
 import 'swiper/css';
 import 'swiper/css/navigation';
+import '../sass/components/discounts-item.css';
 
 
 function DiscountItems() {
@@ -31,8 +32,12 @@ function DiscountItems() {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
+  const calculateDiscountPercentage = (originalPrice, discountedPrice) => {
+    return Math.round(((originalPrice - discountedPrice) / originalPrice) * 100);
+  };
+
   return (
-    <div className="popular-item-container">
+    <div className="discount-item-container">
       <h1 className='cim'>Akciós termékek</h1>
       <button className="swiper-button prev" onClick={() => handleImage('prev')}>
         <img src={leftIcon} alt="Previous" />
@@ -55,6 +60,9 @@ function DiscountItems() {
         {items.map((item) => (
           <SwiperSlide key={item.id}>
             <div className="item-card">
+              <div className="discount-badge">
+                -{calculateDiscountPercentage(item.price, item.price - item.discount_amount)}%
+              </div>
               <img src={item.image_path} alt={item.name} />
               <h3>{capitalizeFirstLetter(item.name)}</h3>
               <p className="original-price">{item.price} Ft</p>

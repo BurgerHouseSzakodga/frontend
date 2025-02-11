@@ -3,9 +3,11 @@
   background-color: #f9f9f9;
   position: relative;
 }
-.cim{
+
+.cim {
   text-align: center;
 }
+
 .item-card {
   text-align: center;
   padding: 10px;
@@ -33,6 +35,12 @@
   color: #666;
 }
 
+.item-card .price {
+  font-size: 1.2rem;
+  color: #e67e22; /* Narancssárga szín */
+  font-weight: bold;
+}
+
 .item-card .basket-button {
   display: inline-block;
   margin-top: 20px; /* Picit lentebb helyezés */
@@ -48,7 +56,7 @@
 }
 
 .item-card .basket-button:hover {
-  background-color: darken(#e67e22, 10%);
+  background-color: #d35400; /* A regisztrálásnál használt narancssárga szín */
 }
 
 .swiper-button {

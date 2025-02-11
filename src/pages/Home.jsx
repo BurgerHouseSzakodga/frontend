@@ -6,6 +6,7 @@ import DiscountItems from "../components/DiscountItems";
 import AboutYouCard from "../components/AboutYou";
 import AddresAbout from "../components/AddresAbout";
 import Foot from "../components/Footer";
+import Discounts from "../components/Discounts";
 
 
 const Home = () => {
@@ -16,6 +17,7 @@ const Home = () => {
       <AboutYouCard/>
       <DiscountItems/>
       <AddresAbout/>
+
      <Foot/>
     </div>
   );

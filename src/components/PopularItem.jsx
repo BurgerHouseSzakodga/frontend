@@ -3,12 +3,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import { Link, useNavigate } from 'react-router-dom';
 import { MenuItemContext } from '../context/contexts';
-import MenuItemCard from './MenuItemCrard';
 import '../sass/components/popular-item.css';
 import "swiper/css";
 import "swiper/css/navigation";
 import rightIcon from "/assets/right.svg";
 import leftIcon from "/assets/left.svg";
+
 
 function PopularItem() {
     const { menuItems } = useContext(MenuItemContext);
@@ -57,7 +57,7 @@ function PopularItem() {
                         <div className="item-card">
                             <img src={item.image_path} alt={item.name} />
                             <h3>{capitalizeFirstLetter(item.name)}</h3>
-                            <p>{item.price} Ft</p>
+                            <p className='price'>{item.price} Ft</p>
                             <Link to={`/item/${item.id}`} className="basket-button">
                                 Rendelés
                             </Link>
