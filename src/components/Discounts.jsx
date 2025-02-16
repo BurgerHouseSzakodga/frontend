@@ -12,8 +12,7 @@ const Discounts = () => {
     regularItems,
     setDiscountedItems,
     setRegularItems,
-    handleCreateDiscount,
-    handleDeleteDiscount,
+    handleUpdateDiscount,
   } = useContext(MenuItemContext);
 
   const handleDragEnd = async ({ active, over }) => {
@@ -24,7 +23,7 @@ const Discounts = () => {
         setDiscountedItems((prevItems) =>
           prevItems.filter((item) => item.id !== active.id)
         );
-        await handleDeleteDiscount(active.id);
+        await handleUpdateDiscount(itemToAdd.id, 0);
       }
     } else if (over && over.id === "right-droppable") {
       const baseDiscount = 15;
@@ -37,7 +36,7 @@ const Discounts = () => {
         setRegularItems((prevItems) =>
           prevItems.filter((item) => item.id !== active.id)
         );
-        await handleCreateDiscount(itemToAdd.id, baseDiscount);
+        await handleUpdateDiscount(itemToAdd.id, baseDiscount);
       }
     }
   };

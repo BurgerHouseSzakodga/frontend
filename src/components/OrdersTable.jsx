@@ -14,15 +14,11 @@ const OrdersTable = () => {
     useContext(OrderContext);
   const [open, setOpen] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
-  const [selectedUser, setSelectedUser] = useState("");
-  const [selectedAddress, setSelectedAddress] = useState("");
+  const [selectedOrder, setSelectedOrder] = useState({});
 
   const handleOpenModal = (id, items) => {
-    const selectedOrder = orders.find((order) => order.id === id);
-
     setSelectedItems(items);
-    setSelectedUser(selectedOrder?.user);
-    setSelectedAddress(selectedOrder?.address);
+    setSelectedOrder(orders.find((order) => order.id === id));
     setOpen(true);
   };
 
@@ -97,7 +93,7 @@ const OrdersTable = () => {
     <>
       <Box
         sx={{
-          height: 785,
+          height: "100%",
           width: "100%",
           bgcolor: "background.paper",
         }}
@@ -108,22 +104,26 @@ const OrdersTable = () => {
           initialState={{
             pagination: {
               paginationModel: {
-                pageSize: 5,
+                pageSize: 25,
               },
             },
             sorting: { sortModel: [{ field: "status", sort: "asc" }] },
           }}
-          pageSizeOptions={[5]}
+          pageSizeOptions={[25]}
           disableRowSelectionOnClick
         />
       </Box>
       <Modal className="modal" open={open} onCloseModal={handleCloseModal}>
-        {selectedUser + ", " + selectedAddress}
+        {selectedOrder.user_name +
+          ", " +
+          (selectedOrder.delivery_address || "Átvétel az étteremben")}
         {selectedItems.map((item, i) => (
           <div key={i}>
             {item.name} x {item.quantity}
           </div>
         ))}
+        <hr />
+        {selectedOrder.total} Ft
         <form method="dialog">
           <input type="submit" value="ok" />
         </form>

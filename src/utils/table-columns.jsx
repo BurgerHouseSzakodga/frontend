@@ -1,4 +1,4 @@
-import { Button, MenuItem, Select } from "@mui/material";
+import { Button, Chip, MenuItem, Select } from "@mui/material";
 
 export const createMenuItemColumns = (
   modifiable,
@@ -67,11 +67,24 @@ export const createMenuItemColumns = (
     },
     {
       field: "price",
-      headerName: "Ár",
-      width,
+      headerName: "Alapár",
+      width: width / 2,
       type: "number",
       editable: !isEditing,
       renderCell: (params) => params.value + " Ft",
+    },
+
+    {
+      field: "actual_price",
+      headerName: "Valós ár",
+      width: width / 2,
+      type: "number",
+      renderCell: (params) =>
+        params.value === params.row.price ? (
+          <Chip label={params.value + " Ft"} />
+        ) : (
+          <Chip label={params.value + " Ft"} color="warning" />
+        ),
     },
   ];
 
