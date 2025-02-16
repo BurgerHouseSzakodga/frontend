@@ -1,4 +1,3 @@
-import React from "react";
 import { FaTag, FaMapMarkerAlt, FaClock } from "react-icons/fa";
 import "../sass/components/addres-about.css";
 

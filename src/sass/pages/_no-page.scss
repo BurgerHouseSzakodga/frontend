@@ -1,0 +1,12 @@
+@use "../config" as *;
+
+.no-page {
+  @include flex($justify: flex-start, $direction: column);
+
+  text-align: justify;
+  padding: 2rem 4rem;
+
+  .img-container {
+    width: 10%;
+  }
+}
