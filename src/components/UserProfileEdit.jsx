@@ -21,12 +21,12 @@ export default function UserProfileEdit() {
 
   useEffect(() => {
     if (user?.address) {
-      const [zip, city, street, num] = user.address.split(', ');
+      const addressParts= user.address.split(',');
       setAddressData({
-        zip: zip || '',
-        city: city || '',
-        street: street || '',
-        num: num || ''
+        zip: addressParts[0] || '',
+        city: addressParts[1] || '',
+        street: addressParts[2] || '',
+        num: addressParts[3]|| ''
       });
     }
   }, [user]);
