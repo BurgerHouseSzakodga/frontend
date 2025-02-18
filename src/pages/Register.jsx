@@ -25,7 +25,7 @@ const Register = () => {
       email,
       password,
       password_confirmation: passwordConfirmation,
-      address: address.zip + ", " +address.city+""+ address.street + " " + address.num,
+      address: address.zip + ", " +address.city+","+ address.street +" utca" +"," + address.num,
     };
 
     register(payload);

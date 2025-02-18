@@ -25,17 +25,17 @@ function ChangePassword() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await apiClient.put('/api/user/password', passwords);
+         await apiClient.put('/api/user/password', passwords);
             setStatus('Jelszó sikeresen módosítva!');
             setError(null);
-            // Reset form
             setPasswords({
                 current_password: '',
                 new_password: '',
                 new_password_confirmation: ''
             });
         } catch (error) {
-            setError(error.response?.data?.message || 'Hiba történt a jelszó módosítása során');
+            const errorMessage= error.response?.data?.message || 'Hiba történt a jelszó módosítása során';
+            setError(errorMessage);
             setStatus(null);
         }
     };
@@ -86,7 +86,7 @@ function ChangePassword() {
                         required
                     />
                 </div>
-                <button type="submit">Jelszó módosítása</button>
+                <button type="submit">Módositás</button>
             </form>
         </div>
     );

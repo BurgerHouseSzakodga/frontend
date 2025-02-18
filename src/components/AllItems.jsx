@@ -45,6 +45,7 @@ function AllItems() {
           <option value="1">Burgerek</option>
           <option value="2">Deszertek</option>
           <option value="3">Italok</option>
+          <option value="4">Köretek</option>
         </select>
 
         <select 

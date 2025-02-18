@@ -37,16 +37,7 @@ function Item() {
         return item.price + ingredientsPrice;
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('Order submitted:', {
-            itemId: item.id,
-            itemName: item.name,
-            ingredients: quantities,
-            totalPrice: totalPrice
-        });
-    };
-
+    
     const capitalizeFirstLetter = (string) => {
         return string.charAt(0).toUpperCase() + string.slice(1);
     };
@@ -82,7 +73,7 @@ function Item() {
             <div className="ingredients-section">
                 <h2>Összetevők:</h2>
 
-                <form onSubmit={handleSubmit}>
+                <form>
                     {itemIngredients && itemIngredients.length > 0 ? (
                         <div className="ingredients-list">
                             {itemIngredients.map(ingredient => (
@@ -108,7 +99,7 @@ function Item() {
                         <h3>Teljes ár: {totalPrice} Ft</h3>
                     </div>
 
-                    <button type="submit">Rendelés</button>
+                    <button type="submit">Kosárba</button>
                 </form>
             </div>
         </div>

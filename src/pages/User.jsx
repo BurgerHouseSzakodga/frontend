@@ -8,7 +8,9 @@ import ChangePassword from "../components/ChangePassword";
 
 const UserProfile = () => {
   const { logout } = useContext(AuthContext);
-
+const scroolToTop=()=>{
+  window.scrollTo({top:0, behavior: 'smooth'});
+}
   
 
   return (
@@ -20,6 +22,7 @@ const UserProfile = () => {
       <button className="logoutButton" onClick={logout}>
         Kijelentkezés
       </button>
+      <button  className="scrollButton" onClick={scroolToTop}>Lap tetejére</button>
     </div>
 
   );
