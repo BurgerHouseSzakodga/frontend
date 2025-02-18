@@ -1,118 +1,116 @@
-import { useContext, useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { MenuItemContext, IngredientContext } from '../context/contexts';
-import '../sass/pages/item.css';
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
+import Loader from "../components/Loader";
+import { fetchData } from "../api/http";
+import "../sass/pages/item.css";
 
 function Item() {
-    const { id } = useParams();
-    const navigate = useNavigate();
-    const { menuItems } = useContext(MenuItemContext);
-    const { ingredients } = useContext(IngredientContext);
-    const [loading, setLoading] = useState(true);
-    const [quantities, setQuantities] = useState({});
-    const [totalPrice, setTotalPrice] = useState(0);
+  const { id } = useParams();
 
-    const item = menuItems.find(item => item.id === parseInt(id));
+  const [item, setItem] = useState({});
+  const [loading, setLoading] = useState(false);
 
-    const itemIngredients = item?.compositions?.map(compositionId =>
-        ingredients?.find(ing => ing.id === compositionId)
-    ).filter(Boolean);
-
-    const handleQuantityChange = (ingredientId, value) => {
-        const newValue = Math.max(0, Math.min(3, parseInt(value) || 0));
-        setQuantities(prev => ({
-            ...prev,
-            [ingredientId]: newValue
-        }));
+  useEffect(() => {
+    const getItem = async () => {
+      setLoading(true);
+      try {
+        const menuItem = await fetchData(`api/menu-item/${id}`);
+        setItem(menuItem);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    const calculateTotalPrice = () => {
-        if (!item || !itemIngredients) return 0;
-        
-        const ingredientsPrice = itemIngredients.reduce((sum, ingredient) => {
-            const quantity = quantities[ingredient.id] || 0;
-            return sum + (ingredient.extra_price * quantity);
-        }, 0);
+    getItem();
+  }, [id]);
 
-        return item.price + ingredientsPrice;
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('Order submitted:', {
-            itemId: item.id,
-            itemName: item.name,
-            ingredients: quantities,
-            totalPrice: totalPrice
-        });
-    };
-
-    const capitalizeFirstLetter = (string) => {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    };
-
-    useEffect(() => {
-        if (item && ingredients) {
-            const initialQuantities = {};
-            itemIngredients?.forEach(ingredient => {
-                initialQuantities[ingredient.id] = 1;
-            });
-            setQuantities(initialQuantities);
-            setLoading(false);
-        }
-    }, [item, ingredients]);
-
-    useEffect(() => {
-        setTotalPrice(calculateTotalPrice());
-    }, [quantities, item]);
-
-    if (loading) return <div className="loading">Betöltés...</div>;
-
-    return (
-        <div className="item-details">
-            <div className="item-header">
-                <img src={item.image_path} alt={item.name} />
-                <div className="item-info">
-                    <h1>{capitalizeFirstLetter(item.name)}</h1>
-                    <p className="description">{item.description}</p>
-                    <p className="price">{item.price} Ft</p>
-                </div>
-            </div>
-
-            <div className="ingredients-section">
-                <h2>Összetevők:</h2>
-
-                <form onSubmit={handleSubmit}>
-                    {itemIngredients && itemIngredients.length > 0 ? (
-                        <div className="ingredients-list">
-                            {itemIngredients.map(ingredient => (
-                                <span key={ingredient.id} className="ingredient">
-                                    <input 
-                                        type="number"
-                                        value={quantities[ingredient.id] || 0}
-                                        onChange={(e) => handleQuantityChange(ingredient.id, e.target.value)}
-                                        name={`ingredient-${ingredient.id}`}
-                                        min="0"
-                                        max="3"
-                                    />
-                                    {capitalizeFirstLetter(ingredient.name)} 
-                                    {ingredient.extra_price > 0 && ` (+${ingredient.extra_price} Ft)`}
-                                </span>
-                            ))}
-                        </div>
-                    ) : (
-                        <p>Nincsenek elérhető összetevők</p>
-                    )}
-
-                    <div className="total-price">
-                        <h3>Teljes ár: {totalPrice} Ft</h3>
-                    </div>
-
-                    <button type="submit">Rendelés</button>
-                </form>
-            </div>
-        </div>
+  const handleChangeQuantity = (id, value) => {
+    const newCompositions = [...item.compositions];
+    const ingredient = newCompositions.find(
+      (comp) => comp.ingredient_id === id
     );
+
+    let actual_price = item.actual_price;
+
+    if (ingredient.quantity < value && value > 1) {
+      actual_price += ingredient.extra_price;
+    } else if (ingredient.quantity > value && ingredient.quantity > 1) {
+      actual_price -= ingredient.extra_price;
+    }
+
+    ingredient.quantity = value;
+
+    setItem((prevItem) => ({
+      ...prevItem,
+      actual_price,
+      compositions: [...newCompositions],
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  console.log(item);
+
+  return (
+    <div className="item-details">
+      <div className="item-header">
+        <img src={item.image_path} alt={item.name} />
+        <div className="item-info">
+          <h1>{item.name}</h1>
+          <p className="description">{item.description}</p>
+          <p className="price">{item.price} Ft</p>
+        </div>
+      </div>
+
+      <div className="ingredients-section">
+        <h2>Összetevők:</h2>
+
+        <form onSubmit={handleSubmit}>
+          {item.compositions ? (
+            <div className="ingredients-list">
+              {item.compositions.map((ingredient) => (
+                <span key={ingredient.ingredient_id} className="ingredient">
+                  <input
+                    type="number"
+                    value={ingredient.quantity}
+                    name={ingredient.ingredient_name}
+                    onChange={(e) =>
+                      handleChangeQuantity(
+                        ingredient.ingredient_id,
+                        e.target.value
+                      )
+                    }
+                    min="0"
+                    max="3"
+                  />
+                  {ingredient.ingredient_name}
+                  {ingredient.extra_price > 0 &&
+                    ` (+${ingredient.extra_price} Ft)`}
+                </span>
+              ))}
+            </div>
+          ) : (
+            <p>Nincsenek elérhető összetevők</p>
+          )}
+
+          <div className="total-price">
+            <h3>Teljes ár: {item.actual_price} Ft</h3>
+          </div>
+
+          <button type="submit">Rendelés</button>
+        </form>
+      </div>
+    </div>
+  );
 }
 
 export default Item;

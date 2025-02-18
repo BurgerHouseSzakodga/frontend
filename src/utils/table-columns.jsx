@@ -76,7 +76,7 @@ export const createMenuItemColumns = (
 
     {
       field: "actual_price",
-      headerName: "Valós ár",
+      headerName: "Akciós ár",
       width: width / 2,
       type: "number",
       renderCell: (params) =>

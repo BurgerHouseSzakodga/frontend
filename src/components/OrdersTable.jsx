@@ -114,9 +114,6 @@ const OrdersTable = () => {
         />
       </Box>
       <Modal className="modal" open={open} onCloseModal={handleCloseModal}>
-        {selectedOrder.user_name +
-          ", " +
-          (selectedOrder.delivery_address || "Átvétel az étteremben")}
         {selectedItems.map((item, i) => (
           <div key={i}>
             {item.name} x {item.quantity}
