@@ -1,54 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from "react";
+
+import { apiClient } from "../api/axios";
+import Loader from "../components/Loader";
 
 const Cart = () => {
-  const [cart, setCart] = useState(null);
+  const [cart, setCart] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchCart = async () => {
+      setLoading(true);
       try {
-        const response = await axios.get('/api/cart');
+        const response = await apiClient.get("/api/basket");
         setCart(response.data);
       } catch (error) {
-        console.error('Error fetching cart:', error);
+        setError(error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchCart();
   }, []);
 
-  const handleClearCart = async () => {
-    try {
-      await axios.post('/api/cart/clear');
-      setCart(null);
-    } catch (error) {
-      console.error('Error clearing cart:', error);
-    }
-  };
+  if (loading) {
+    return <Loader />;
+  }
 
   if (!cart || !cart.items) {
-    return <div>Your cart is empty</div>;
+    return <div>A kosarad üres</div>;
   }
 
   return (
     <div className="cart">
-      <h1>Your Cart</h1>
       {cart.items.map((item) => (
-        <div key={item.id} className="cart-item">
-          <img src={item.menu_item.image_path} alt={item.menu_item.name} />
-          <div>
-            <h3>{item.menu_item.name}</h3>
-            <p>Price: {item.menu_item.price} Ft</p>
-            <p>Quantity: {item.quantity}</p>
-            {item.extras.map((extra) => (
-              <div key={extra.id}>
-                <p>{extra.ingredient.name}: {extra.quantity}</p>
-              </div>
-            ))}
-          </div>
+        <div key={item.id}>
+          <h3>{item.menu_item.name}</h3>
+          <p>Ár: {item.menu_item.price} Ft</p>
+          {item.extras.length > 0 && (
+            <div>
+              <h4>Összetevők:</h4>
+              {item.extras.map((extra) => (
+                <div key={extra.id}>
+                  {extra.ingredient.name} (Mennyiség: {extra.quantity})
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       ))}
-      <button onClick={handleClearCart}>Clear Cart</button>
     </div>
   );
 };
