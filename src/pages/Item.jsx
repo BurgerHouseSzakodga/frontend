@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import Loader from "../components/Loader";
-import { fetchData } from "../api/http";
+import { addToBasket, fetchData } from "../api/http";
 import "../sass/pages/item.css";
+import { AuthContext } from "../context/contexts";
 
 function Item() {
   const { id } = useParams();
+  const { navigate, user } = useContext(AuthContext);
 
   const [item, setItem] = useState({});
   const [loading, setLoading] = useState(false);
@@ -19,13 +21,14 @@ function Item() {
         setItem(menuItem);
       } catch (error) {
         console.log(error);
+        navigate("/");
       } finally {
         setLoading(false);
       }
     };
 
     getItem();
-  }, [id]);
+  }, [id, navigate]);
 
   const handleChangeQuantity = (id, value) => {
     const newCompositions = [...item.compositions];
@@ -50,15 +53,19 @@ function Item() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      await addToBasket(user.id, item);
+      console.log("Item added to basket successfully");
+    } catch (error) {
+      console.error("Error adding item to basket:", error);
+    }
   };
 
   if (loading) {
     return <Loader />;
   }
-
-  console.log(item);
 
   return (
     <div className="item-details">

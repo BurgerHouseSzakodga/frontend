@@ -109,3 +109,27 @@ export const updateDiscountAmount = async (id, discountAmount) => {
 
   return response.data.menuItem;
 };
+
+export const addToBasket = async (userId, menuItem) => {
+  console.log(menuItem);
+  const response = await apiClient.post(`api/add-to-basket`, {
+    user_id: userId,
+    item_id: menuItem.id,
+    name: menuItem.name,
+    description: menuItem.description,
+    image_path: menuItem.image_path,
+    price: menuItem.price,
+    actual_price: menuItem.actual_price,
+    discount_amount: menuItem.discount_amount,
+    category_id: menuItem.category_id,
+    category_name: menuItem.category_name,
+    compositions: menuItem.compositions.map((composition) => ({
+      ingredient_id: composition.ingredient_id,
+      ingredient_name: composition.ingredient_name,
+      extra_price: composition.extra_price,
+      quantity: composition.quantity,
+    })),
+  });
+
+  return response.data;
+};
