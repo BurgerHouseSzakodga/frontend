@@ -46,7 +46,7 @@ const ModifyPanel = ({ onCloseModifyPanel, selectedItemId }) => {
       setComposition((prevComposition) => [...prevComposition, ingredientId]);
     } else {
       setComposition((prevComposition) =>
-        prevComposition.filter((comp) => comp.ingredient_id !== ingredientId)
+        prevComposition.filter((id) => id !== ingredientId)
       );
     }
   };
