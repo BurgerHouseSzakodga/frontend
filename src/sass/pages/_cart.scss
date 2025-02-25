@@ -1,0 +1,7 @@
+@use "../config" as *;
+
+.cart {
+  &__extras {
+    @include flex($justify: flex-start);
+  }
+}

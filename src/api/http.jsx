@@ -111,7 +111,6 @@ export const updateDiscountAmount = async (id, discountAmount) => {
 };
 
 export const addToBasket = async (userId, menuItem) => {
-  console.log(menuItem);
   const response = await apiClient.post(`api/add-to-basket`, {
     user_id: userId,
     item_id: menuItem.id,
@@ -132,4 +131,8 @@ export const addToBasket = async (userId, menuItem) => {
   });
 
   return response.data;
+};
+
+export const deleteBasketItem = async (id) => {
+  await apiClient.delete(`api/delete-basket-item/${id}`);
 };

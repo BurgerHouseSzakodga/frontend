@@ -47,8 +47,6 @@ const MenuItemContextProvider = ({ children }) => {
     getMenuItems();
   }, []);
 
-  console.log(menuItems);
-
   const setItems = (menuItemId, updatedMenuItem) => {
     setMenuItems((prevMenuItems) =>
       prevMenuItems.map((item) =>

@@ -109,7 +109,7 @@ function Item() {
                         )
                       }
                       min="0"
-                      max="3"
+                      max="2"
                     />
                     {ingredient.ingredient_name}
                     {ingredient.extra_price > 0 &&

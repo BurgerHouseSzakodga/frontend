@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { apiClient } from "../api/axios";
 import Loader from "../components/Loader";
+import { deleteBasketItem } from "../api/http";
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
@@ -15,7 +16,7 @@ const Cart = () => {
         const response = await apiClient.get("/api/basket");
         setCart(response.data);
       } catch (error) {
-        setError(error);
+        setError(error.message || "Hiba történt a kosár betöltése során");
       } finally {
         setLoading(false);
       }
@@ -24,32 +25,62 @@ const Cart = () => {
     fetchCart();
   }, []);
 
+  console.log(cart);
+
+  const handldeDeleteExtra = (extraQuantity, extraPrice) => {
+    console.log(extraQuantity, extraPrice);
+  };
+
+  const handleDeleteCartItem = async (id) => {
+    try {
+      await deleteBasketItem(id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if (loading) {
     return <Loader />;
   }
 
-  if (!cart || !cart.items) {
+  if (!cart || !cart.items || error) {
     return <div>A kosarad üres</div>;
   }
 
   return (
     <div className="cart">
       {cart.items.map((item) => (
-        <div key={item.id}>
-          <h3>{item.menu_item.name}</h3>
-          <p>Ár: {item.menu_item.price} Ft</p>
-          {item.extras.length > 0 && (
-            <div>
-              <h4>Összetevők:</h4>
-              {item.extras.map((extra) => (
-                <div key={extra.id}>
-                  {extra.ingredient.name} (Mennyiség: {extra.quantity})
-                </div>
-              ))}
+        <details key={item.id}>
+          <summary>
+            {item.menu_item.name + " - " + item.buying_price + " Ft"}
+          </summary>
+          <button onClick={() => handleDeleteCartItem(item.id)}>
+            Tétel törlése
+          </button>
+          {item.extras.map((extra) => (
+            <div className="cart__extras" key={extra.id}>
+              <div>
+                {extra.ingredient.name} (+ {extra.ingredient.extra_price}
+                Ft)
+              </div>
+              <button
+                onClick={() =>
+                  handldeDeleteExtra(
+                    extra.quantity,
+                    extra.ingredient.extra_price
+                  )
+                }
+              >
+                x
+              </button>
             </div>
-          )}
-        </div>
+          ))}
+        </details>
       ))}
+      <div>
+        <h2>Teljes összeg:</h2>
+        <strong>{cart.total_amount} Ft</strong>
+      </div>
     </div>
   );
 };
