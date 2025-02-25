@@ -1,7 +1,7 @@
 import { useContext, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { MenuItemContext } from "../context/contexts";
 import "../sass/components/popular-item.css";
 import "swiper/css";
@@ -12,7 +12,6 @@ import leftIcon from "/assets/left.svg";
 function PopularItem() {
   const { popularItems } = useContext(MenuItemContext);
   const swiperRef = useRef(null);
-  const navigate = useNavigate();
 
   const handleImage = (direction) => {
     if (direction === "next") {
@@ -20,10 +19,6 @@ function PopularItem() {
     } else if (direction === "prev") {
       swiperRef.current.swiper.slidePrev();
     }
-  };
-
-  const handleOrder = (id) => {
-    navigate(`/order/${id}`);
   };
 
   const capitalizeFirstLetter = (string) => {
