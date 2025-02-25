@@ -1,12 +1,12 @@
 import { useState, useContext } from 'react';
 import MenuItemCard from './MenuItemCrard';
 import { MenuItemContext } from '../context/contexts';
-import '../sass/components/all-items.css';
 import { Link, useNavigate } from 'react-router-dom';
+import '../sass/components/all-items.css';
 
 function AllItems() {
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [sortBy, setSortBy] = useState('name-asc');  // Changed default to name-asc
+  const [sortBy, setSortBy] = useState('name-asc'); 
   const { menuItems } = useContext(MenuItemContext);
   const navigate = useNavigate();
 
@@ -23,9 +23,9 @@ function AllItems() {
       } else if (sortBy === 'name-desc') {
         return b.name.localeCompare(a.name);
       } else if (sortBy === 'price-asc') {
-        return a.price - b.price;
+        return a.actual_price - b.actual_price;
       } else if (sortBy === 'price-desc') {
-        return b.price - a.price;
+        return b.actual_price - a.actual_price;
       }
       return 0;
     });
@@ -67,7 +67,9 @@ function AllItems() {
               name={capitalizeFirstLetter(item.name)}
               description={item.description}
               category_id={item.category_id}
-              price={item.price}
+              price={Math.round(item.price)}  
+              actual_price={Math.round(item.actual_price)} 
+              discount_amount={item.discount_amount}
             />
             <Link to={`/item/${item.id}`} className="basket-button">
               Rendelés

@@ -13,7 +13,7 @@ function ChangePassword() {
     });
     const [status, setStatus] = useState(null);
     const [error, setError] = useState(null);
-    const { user } = useContext(AuthContext);
+    //const { user } = useContext(AuthContext);
 
     const handleChange = (e) => {
         setPasswords({
