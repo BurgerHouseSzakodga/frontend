@@ -134,5 +134,6 @@ export const addToBasket = async (userId, menuItem) => {
 };
 
 export const deleteBasketItem = async (id) => {
-  await apiClient.delete(`api/delete-basket-item/${id}`);
+  const response = await apiClient.delete(`api/delete-basket-item/${id}`);
+  return response.data;
 };

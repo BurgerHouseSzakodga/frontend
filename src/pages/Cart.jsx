@@ -33,7 +33,8 @@ const Cart = () => {
 
   const handleDeleteCartItem = async (id) => {
     try {
-      await deleteBasketItem(id);
+      const response = await deleteBasketItem(id);
+      setCart(response);
     } catch (error) {
       console.log(error);
     }
