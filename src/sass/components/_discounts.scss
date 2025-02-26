@@ -20,6 +20,7 @@
     @include flex($align: flex-start, $justify: flex-start);
 
     align-content: flex-start;
+    background-color: $light-grey;
     border-radius: 4px;
     flex-wrap: wrap;
     height: 100%;
@@ -29,8 +30,9 @@
       @include flex;
 
       background-color: #fff;
-      border: 1px solid $font-color-light;
+      border: none;
       border-radius: 4px;
+      box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
       gap: 1rem;
       margin: 4px;
       padding: 4px 8px;

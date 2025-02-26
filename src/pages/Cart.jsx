@@ -25,8 +25,6 @@ const Cart = () => {
     fetchCart();
   }, []);
 
-  console.log(cart);
-
   const handldeDeleteExtra = (extraQuantity, extraPrice) => {
     console.log(extraQuantity, extraPrice);
   };
@@ -40,11 +38,20 @@ const Cart = () => {
     }
   };
 
+  const handleOrderCart = async () => {
+    try {
+      await apiClient.post("/api/order-basket");
+      setCart([]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if (loading) {
     return <Loader />;
   }
 
-  if (!cart || !cart.items || error) {
+  if (!cart || !cart.items || !cart.items?.length) {
     return <div>A kosarad üres</div>;
   }
 
@@ -81,6 +88,7 @@ const Cart = () => {
       <div>
         <h2>Teljes összeg:</h2>
         <strong>{cart.total_amount} Ft</strong>
+        <button onClick={handleOrderCart}>Megrendelés</button>
       </div>
     </div>
   );

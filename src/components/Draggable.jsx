@@ -17,6 +17,8 @@ const Draggable = ({ id, children, isClickable, itemDiscount }) => {
   const style = {
     transform: CSS.Translate.toString(transform),
     transition: "transform 0.1s ease",
+    fontSize: "1rem",
+    padding: "4px 8px",
   };
 
   const handleClick = (e) => {
