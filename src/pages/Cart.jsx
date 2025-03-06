@@ -1,12 +1,16 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
+
 import { apiClient } from "../api/axios";
+import { deleteBasketItem, incrementBasket } from "../api/http";
+import { AuthContext } from "../context/contexts";
 import Loader from "../components/Loader";
-import { deleteBasketItem } from "../api/http";
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+
+  const { user } = useContext(AuthContext);
 
   const arraysEqual = (a, b) => {
     if (a.length !== b.length) return false;
@@ -22,6 +26,13 @@ const Cart = () => {
   };
 
   const groupCartItems = useCallback((items) => {
+    items.sort((a, b) => {
+      if (a.item_id !== b.item_id) {
+        return a.item_id - b.item_id;
+      }
+      return JSON.stringify(a.extras).localeCompare(JSON.stringify(b.extras));
+    });
+
     const grouped = items.reduce((acc, item) => {
       const existingItem = acc.find(
         (i) => i.item_id === item.item_id && arraysEqual(i.extras, item.extras)
@@ -54,10 +65,6 @@ const Cart = () => {
     fetchCart();
   }, [groupCartItems]);
 
-  const handldeDeleteExtra = (extraQuantity, extraPrice) => {
-    console.log(extraQuantity, extraPrice);
-  };
-
   const handleDeleteCartItem = async (id) => {
     try {
       const response = await deleteBasketItem(id);
@@ -77,6 +84,16 @@ const Cart = () => {
     }
   };
 
+  const handleIncrementItem = async (item) => {
+    try {
+      const response = await incrementBasket(user.id, item);
+      const groupedCart = groupCartItems(response.items);
+      setCart({ ...response, items: groupedCart });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if (loading) {
     return <Loader />;
   }
@@ -88,31 +105,27 @@ const Cart = () => {
   return (
     <div className="cart">
       {cart.items.map((item) => (
-        <details key={item.id}>
-          <summary>
+        <div key={item.id}>
+          <h4>
             {item.menu_item.name} - {item.buying_price} Ft x {item.quantity}
-          </summary>
+          </h4>
           <button onClick={() => handleDeleteCartItem(item.id)}>
             Tétel törlése
           </button>
+          <button onClick={() => handleIncrementItem(item)}>+</button>
           {item.extras.map((extra) => (
             <div className="cart__extras" key={extra.id}>
-              <div>
-                {extra.ingredient.name} (+ {extra.ingredient.extra_price} Ft)
-              </div>
-              <button
-                onClick={() =>
-                  handldeDeleteExtra(
-                    extra.quantity,
-                    extra.ingredient.extra_price
-                  )
-                }
-              >
-                x
-              </button>
+              {extra.quantity > 1 ? (
+                <small>
+                  + {extra.ingredient.name} (+ {extra.ingredient.extra_price}
+                  Ft)
+                </small>
+              ) : (
+                <small> - {extra.ingredient.name}</small>
+              )}
             </div>
           ))}
-        </details>
+        </div>
       ))}
       <div>
         <h2>Teljes összeg:</h2>

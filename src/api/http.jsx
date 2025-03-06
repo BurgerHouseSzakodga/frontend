@@ -133,6 +133,42 @@ export const addToBasket = async (userId, menuItem) => {
   return response.data;
 };
 
+export const incrementBasket = async (userId, basketItem) => {
+  const menuItem = await fetchData(`api/menu-item/${basketItem.item_id}`);
+
+  const compositions =
+    basketItem.extras.length > 0
+      ? basketItem.extras.map((extra) => ({
+          ingredient_id: extra.ingredient.id,
+          ingredient_name: extra.ingredient.name,
+          extra_price: extra.ingredient.extra_price,
+          quantity: extra.quantity,
+        }))
+      : menuItem.compositions.map((composition) => ({
+          ingredient_id: composition.ingredient_id,
+          ingredient_name: composition.ingredient_name,
+          extra_price: composition.extra_price,
+          quantity: composition.quantity,
+        }));
+
+  const response = await apiClient.post(`api/add-to-basket`, {
+    user_id: userId,
+    basket_id: basketItem.basket_id,
+    item_id: basketItem.item_id,
+    name: basketItem.menu_item.name,
+    description: basketItem.menu_item.description,
+    image_path: basketItem.menu_item.image_path,
+    price: basketItem.menu_item.price,
+    actual_price: basketItem.buying_price,
+    discount_amount: basketItem.menu_item.discount_amount,
+    category_id: basketItem.menu_item.category_id,
+    category_name: basketItem.menu_item.category_name,
+    compositions: compositions,
+  });
+
+  return response.data;
+};
+
 export const deleteBasketItem = async (id) => {
   const response = await apiClient.delete(`api/delete-basket-item/${id}`);
   return response.data;
