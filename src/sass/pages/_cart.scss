@@ -1,7 +1,31 @@
 @use "../config" as *;
 
 .cart {
+  &__item {
+    @include flex($justify: flex-start);
+    gap: 16px;
+  }
+
   &__extras {
     @include flex($justify: flex-start);
+  }
+
+  .item-quantity {
+    @include flex($justify: flex-start);
+
+    span {
+      @include flex;
+      width: 2rem;
+    }
+    button {
+      height: 24px;
+      width: 24px;
+
+      img {
+        filter: $orange-filter;
+        height: 12px;
+        width: 12px;
+      }
+    }
   }
 }

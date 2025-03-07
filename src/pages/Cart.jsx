@@ -4,6 +4,8 @@ import { apiClient } from "../api/axios";
 import { deleteBasketItem, incrementBasket } from "../api/http";
 import { AuthContext } from "../context/contexts";
 import Loader from "../components/Loader";
+import deleteIcon from "/assets/delete.svg";
+import { Alert, Snackbar } from "@mui/material";
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
@@ -71,7 +73,7 @@ const Cart = () => {
       const groupedCart = groupCartItems(response.items);
       setCart({ ...response, items: groupedCart });
     } catch (error) {
-      console.log(error);
+      setError(error.message || "Hiba történt a kosár betöltése során");
     }
   };
 
@@ -80,7 +82,7 @@ const Cart = () => {
       await apiClient.post("/api/order-basket");
       setCart([]);
     } catch (error) {
-      console.log(error);
+      setError(error.message || "Hiba történt a kosár betöltése során");
     }
   };
 
@@ -90,8 +92,15 @@ const Cart = () => {
       const groupedCart = groupCartItems(response.items);
       setCart({ ...response, items: groupedCart });
     } catch (error) {
-      console.log(error);
+      setError(error.message || "Hiba történt a kosár betöltése során");
     }
+  };
+
+  const handleClose = (reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setError(false);
   };
 
   if (loading) {
@@ -103,36 +112,58 @@ const Cart = () => {
   }
 
   return (
-    <div className="cart">
-      {cart.items.map((item) => (
-        <div key={item.id}>
-          <h4>
-            {item.menu_item.name} - {item.buying_price} Ft x {item.quantity}
-          </h4>
-          <button onClick={() => handleDeleteCartItem(item.id)}>
-            Tétel törlése
-          </button>
-          <button onClick={() => handleIncrementItem(item)}>+</button>
-          {item.extras.map((extra) => (
-            <div className="cart__extras" key={extra.id}>
-              {extra.quantity > 1 ? (
-                <small>
-                  + {extra.ingredient.name} (+ {extra.ingredient.extra_price}
-                  Ft)
-                </small>
-              ) : (
-                <small> - {extra.ingredient.name}</small>
-              )}
+    <>
+      <div className="cart">
+        {cart.items.map((item) => (
+          <div key={item.id}>
+            <div className="cart__item">
+              <h4>
+                {item.menu_item.name} - {item.buying_price} Ft
+              </h4>
+              <div className="item-quantity">
+                <button onClick={() => handleDeleteCartItem(item.id)}>
+                  {item.quantity === 1 ? <img src={deleteIcon} /> : "-"}
+                </button>
+                <span> {item.quantity}</span>
+                <button
+                  disabled={item.quantity === 5}
+                  onClick={() => handleIncrementItem(item)}
+                >
+                  +
+                </button>
+              </div>
             </div>
-          ))}
+            {item.extras.map((extra) => (
+              <div className="cart__extras" key={extra.id}>
+                {extra.quantity > 1 ? (
+                  <small>
+                    + {extra.ingredient.name} (+ {extra.ingredient.extra_price}
+                    Ft)
+                  </small>
+                ) : (
+                  <small> - {extra.ingredient.name}</small>
+                )}
+              </div>
+            ))}
+          </div>
+        ))}
+        <div>
+          <h2>Teljes összeg:</h2>
+          <strong>{cart.total_amount} Ft</strong>
+          <button onClick={handleOrderCart}>Megrendelés</button>
         </div>
-      ))}
-      <div>
-        <h2>Teljes összeg:</h2>
-        <strong>{cart.total_amount} Ft</strong>
-        <button onClick={handleOrderCart}>Megrendelés</button>
       </div>
-    </div>
+      <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
+        <Alert
+          onClose={handleClose}
+          severity="error"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Hiba a kosárhoz adás során.
+        </Alert>
+      </Snackbar>
+    </>
   );
 };
 
