@@ -1,5 +1,4 @@
 import "../sass/components/menu-item-card.css";
-import { Link, useNavigate } from "react-router-dom";
 
 function MenuItemCard(props) {
   const discountedPrice = props.price - (props.price * props.discount_amount / 100);
@@ -17,15 +16,19 @@ function MenuItemCard(props) {
             <div className="discount-badge">-{props.discount_amount}%</div>
           )}
         </div>
-        <div className="card-body">
-          <p className="card-name">{props.name}</p>
+        <div className="item-body">
+          <p className="item-name">{props.name}</p>
           {props.discount_amount > 0 ? (
-            <div className="price">
+            <div className="price-container">
               <span className="original-price">{props.price} Ft</span>
               <span className="discounted-price">{Math.round(discountedPrice)} Ft</span>
             </div>
           ) : (
-            <p className="card-price">{props.price} Ft</p>
+            <>
+            <br/>
+             <span className="price">{props.price} Ft</span>
+            </>
+           
           )}
         </div>
       </div>
