@@ -51,7 +51,7 @@ const Login = () => {
           {loginError.password && <p>{loginError.password}</p>}
         </div>
         <div>
-          <Link to="/regisztracio">Regsiztráció</Link>
+          <Link to="/regisztracio">Nincs még fiókja? Csináljon egyet most!</Link>
           <input type="submit" value="Bejelentkezés" />
         </div>
       </form>

@@ -44,6 +44,13 @@ function AllItems() {
     return acc;
   }, {});
 
+  const categoryNames = {
+    1: 'Burgerek',
+    2: 'Deszertek',
+    3: 'Italok',
+    4: 'Köretek'
+  };
+
   return (
     <div>
       <div className="filters">
@@ -72,7 +79,7 @@ function AllItems() {
       <div className="menu-items">
         {Object.keys(groupedItems).map((category) => (
           <div key={category} className="category-section">
-            <h2>{category}</h2>
+            <h2>{categoryNames[category]}</h2>
             <div className="category-items">
               {groupedItems[category].map((item) => (
                 <div key={item.id} className="menu-item">

@@ -11,7 +11,7 @@
     padding: 1.5rem;
     width: 32rem;
 
-    & > div {
+    &>div {
       @include flex($direction: column, $align: flex-start);
       gap: 1rem;
 
@@ -22,6 +22,11 @@
       input[type="submit"] {
         @include submit-button;
         align-self: center;
+        background-color: #ff5419;
+
+        &:hover {
+          background-color: #ff6b35;
+        }
       }
 
       div {
@@ -36,8 +41,17 @@
       }
 
       p {
-        color: $orange-dark;
+        color: #ff5419;
         font-size: 0.8rem;
+      }
+
+      a {
+        color: black;
+        text-decoration: none;
+
+        &:hover {
+          color: $orange-dark;
+        }
       }
     }
   }

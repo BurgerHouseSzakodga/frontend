@@ -91,6 +91,15 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.register form a {
+  color: #333;
+  text-decoration: none;
+}
+
+.register form a:hover {
+  color: #ff6b35;
+}
+
 @media (max-width: 768px) {
   .register form {
       width: 90%;
@@ -104,14 +113,5 @@
     margin-top: 1rem;
 }
 
-.register-link {
-    text-decoration: none;
-    color: #ff6b35;
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
 
-.register-link:hover {
-    color: #ff5419;
-}
 }

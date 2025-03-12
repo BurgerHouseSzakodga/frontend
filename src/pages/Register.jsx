@@ -137,7 +137,7 @@ const Register = () => {
         {registerError.address && <p>{registerError.address}</p>}
        
         <div>
-        <Link to="/bejelentkezes">Bejelentkezés</Link>
+        <Link className="bejelentekezesLink" to="/bejelentkezes">Van már fiókom. Bejelentkezek!</Link>
           <input type="submit" value="Regisztráció" />
         </div>
       </form>

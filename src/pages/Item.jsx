@@ -88,7 +88,7 @@ function Item() {
           <div className="item-info">
             <h1>{item.name}</h1>
             <p className="description">{item.description}</p>
-            <p className="price">{item.price} Ft</p>
+            <p className="price">{item.actual_price} Ft</p>
           </div>
         </div>
         <div className="ingredients-section">
