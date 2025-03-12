@@ -34,6 +34,16 @@ function AllItems() {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
+  // Csoportosítás kategóriák szerint
+  const groupedItems = filteredAndSortedItems.reduce((acc, item) => {
+    const category = item.category_id;
+    if (!acc[category]) {
+      acc[category] = [];
+    }
+    acc[category].push(item);
+    return acc;
+  }, {});
+
   return (
     <div>
       <div className="filters">
@@ -60,20 +70,27 @@ function AllItems() {
       </div>
 
       <div className="menu-items">
-        {filteredAndSortedItems.map((item) => (
-          <div key={item.id} className="menu-item">
-            <MenuItemCard
-              image={item.image_path}
-              name={capitalizeFirstLetter(item.name)}
-              description={item.description}
-              category_id={item.category_id}
-              price={Math.round(item.price)}  
-              actual_price={Math.round(item.actual_price)} 
-              discount_amount={item.discount_amount}
-            />
-            <Link to={`/item/${item.id}`} className="basket-button">
-              Rendelés
-            </Link>
+        {Object.keys(groupedItems).map((category) => (
+          <div key={category} className="category-section">
+            <h2>{category}</h2>
+            <div className="category-items">
+              {groupedItems[category].map((item) => (
+                <div key={item.id} className="menu-item">
+                  <MenuItemCard
+                    image={item.image_path}
+                    name={capitalizeFirstLetter(item.name)}
+                    description={item.description}
+                    category_id={item.category_id}
+                    price={Math.round(item.price)}  
+                    actual_price={Math.round(item.actual_price)} 
+                    discount_amount={item.discount_amount}
+                  />
+                  <Link to={`/item/${item.id}`} className="basket-button">
+                    Rendelés
+                  </Link>
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       </div>
