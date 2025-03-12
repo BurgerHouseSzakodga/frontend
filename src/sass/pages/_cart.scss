@@ -16,10 +16,33 @@
     span {
       @include flex;
       width: 2rem;
+      position: relative;
+      z-index: 10;
     }
+
     button {
+      @include glow($yellow-light);
+      @include default-trasition;
       height: 24px;
+      background-color: #fff;
+      border: none;
       width: 24px;
+
+      &:hover {
+        @include glow($orange-light);
+        color: $orange;
+        transform: scale(1.1);
+      }
+
+      &:first-child {
+        border-bottom-left-radius: 10px;
+        border-top-left-radius: 10px;
+      }
+
+      &:last-child {
+        border-bottom-right-radius: 10px;
+        border-top-right-radius: 10px;
+      }
 
       img {
         filter: $orange-filter;
