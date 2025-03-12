@@ -6,7 +6,7 @@ import { AuthContext } from "../context/contexts";
 import Loader from "../components/Loader";
 import deleteIcon from "/assets/delete.svg";
 import { Alert, Snackbar } from "@mui/material";
-import "../sass/pages/cart.css";
+
 const Cart = () => {
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(false);
