@@ -6,7 +6,6 @@ import { Alert, Snackbar } from "@mui/material";
 import Loader from "../components/Loader";
 import { AuthContext } from "../context/contexts";
 import { addToBasket, fetchData } from "../api/http";
-import "../sass/pages/item.css";
 
 function Item() {
   const { id } = useParams();
