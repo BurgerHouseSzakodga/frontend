@@ -21,13 +21,6 @@ const AboutYou = () => {
                     <li>Frissesség: Minden nap frissen készítjük ételeinket.</li>
                     <li>Ügyfélközpontúság: Vendégeink elégedettsége a legfontosabb számunkra.</li>
                 </ul>
-                <h2>Kapcsolat</h2>
-                <p>
-                    Ha bármilyen kérdése van, vagy szeretne többet megtudni rólunk, ne habozzon kapcsolatba lépni velünk!
-                </p>
-                <p>Email: info@hamburgeretterem.hu</p>
-                <p>Telefon: +36 1 234 5678</p>
-
             </div>
             <Foot />
         </div >

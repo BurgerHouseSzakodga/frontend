@@ -3,6 +3,7 @@ import MenuItemCard from './MenuItemCrard';
 import { MenuItemContext } from '../context/contexts';
 import { Link, useNavigate } from 'react-router-dom';
 import '../sass/components/all-items.css';
+import Foot from './Footer';
 
 function AllItems() {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -101,6 +102,7 @@ function AllItems() {
           </div>
         ))}
       </div>
+      <Foot/>
     </div>
   );
 }
