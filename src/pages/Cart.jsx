@@ -16,11 +16,10 @@ const Cart = () => {
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [isDelviery, setIsDelivery] = useState("");
 
   const { user } = useContext(AuthContext);
 
-  console.log(user.address);
+  const [isDelviery, setIsDelivery] = useState(user.address);
 
   const handleChange = (event) => {
     setIsDelivery(event.target.value);
@@ -179,8 +178,17 @@ const Cart = () => {
             <div className="delivery">
               <label htmlFor="delivery">Átvétel módja:</label>
               <select name="delivery" onChange={handleChange}>
-                <option value={""}>Étteremben</option>
-                <option value={"true"}>Házhozszállítás</option>
+                {user.address ? (
+                  <>
+                    <option value={"true"}>Házhozszállítás</option>
+                    <option value={""}>Étteremben</option>
+                  </>
+                ) : (
+                  <>
+                    <option value={""}>Étteremben</option>
+                    <option value={"true"}>Házhozszállítás</option>
+                  </>
+                )}
               </select>
             </div>
             {isDelviery && (
