@@ -16,8 +16,15 @@ const Cart = () => {
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [isDelviery, setIsDelivery] = useState("");
 
   const { user } = useContext(AuthContext);
+
+  console.log(user.address);
+
+  const handleChange = (event) => {
+    setIsDelivery(event.target.value);
+  };
 
   const arraysEqual = (a, b) => {
     if (a.length !== b.length) return false;
@@ -118,46 +125,78 @@ const Cart = () => {
   return (
     <>
       <div className="cart">
-        {cart.items.map((item) => (
-          <div key={item.id}>
-            <div className="cart__item">
-              <div className="cart__img-container">
-                <img src={item.menu_item.image_path} />
-              </div>
-              <h4>
-                {item.menu_item.name} - {item.buying_price} Ft
-              </h4>
-              <div className="item-quantity">
-                <button onClick={() => handleDeleteCartItem(item.id)}>
-                  {item.quantity === 1 ? <img src={deleteIcon} /> : "-"}
-                </button>
-                <span> {item.quantity}</span>
-                <button
-                  disabled={item.quantity === 5}
-                  onClick={() => handleIncrementItem(item)}
-                >
-                  +
-                </button>
+        <div className="cart__body">
+          <div className="cart__header">
+            <h2>Kosár</h2>
+            <h4>{cart.items.length} Termék</h4>
+          </div>
+          {cart.items.map((item) => (
+            <div key={item.id}>
+              <div className="cart__item">
+                <div className="cart__img-container">
+                  <img src={item.menu_item.image_path} />
+                </div>
+                <h4>
+                  {item.menu_item.name} - {item.buying_price} Ft
+                </h4>
+                <div className="extras">
+                  {item.extras.length > 0 &&
+                    item.extras.map((extra) => (
+                      <div className="cart__extras" key={extra.id}>
+                        {extra.quantity > 1 ? (
+                          <small className="plus">
+                            + {extra.ingredient.name} (+{" "}
+                            {extra.ingredient.extra_price}
+                            Ft)
+                          </small>
+                        ) : (
+                          <small className="minus">
+                            - {extra.ingredient.name}
+                          </small>
+                        )}
+                      </div>
+                    ))}
+                </div>
+                <div className="item-quantity">
+                  <button onClick={() => handleDeleteCartItem(item.id)}>
+                    {item.quantity === 1 ? <img src={deleteIcon} /> : "-"}
+                  </button>
+                  <span> {item.quantity}</span>
+                  <button
+                    disabled={item.quantity === 5}
+                    onClick={() => handleIncrementItem(item)}
+                  >
+                    +
+                  </button>
+                </div>
               </div>
             </div>
-            {item.extras.map((extra) => (
-              <div className="cart__extras" key={extra.id}>
-                {extra.quantity > 1 ? (
-                  <small className="plus">
-                    + {extra.ingredient.name} (+ {extra.ingredient.extra_price}
-                    Ft)
-                  </small>
-                ) : (
-                  <small className="minus"> - {extra.ingredient.name}</small>
-                )}
+          ))}
+        </div>
+        <div className="cart__summary">
+          <h2>Összegzés</h2>
+          <div className="summary__body">
+            <div className="delivery">
+              <label htmlFor="delivery">Átvétel módja:</label>
+              <select name="delivery" onChange={handleChange}>
+                <option value={""}>Étteremben</option>
+                <option value={"true"}>Házhozszállítás</option>
+              </select>
+            </div>
+            {isDelviery && (
+              <div className="delivery">
+                <label htmlFor="address">Szállítás ide:</label>
+                <input type="text" name="address" value={user.address || ""} />
               </div>
-            ))}
+            )}
           </div>
-        ))}
-        <div>
-          <h2>Teljes összeg:</h2>
-          <strong>{cart.total_amount} Ft</strong>
-          <button onClick={handleOrderCart}>Megrendelés</button>
+          <div className="total">
+            <div className="total__amount">
+              <h3>Teljes összeg:</h3>
+              <strong>{cart.total_amount} Ft</strong>
+            </div>
+            <button onClick={handleOrderCart}>Megrendelés</button>
+          </div>
         </div>
       </div>
       <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
