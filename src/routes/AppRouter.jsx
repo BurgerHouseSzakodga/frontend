@@ -16,6 +16,9 @@ import ManageMenuItems from "../pages/ManageMenuItems";
 import ManageOrders from "../pages/ManageOrders";
 import Statistics from "../pages/Statistics";
 import Item from "../pages/Item";
+import AboutYou from "../pages/AboutYou";
+import ContactUs from "../pages/ContactUs";
+import Service from "../pages/Service";
 
 const AppRouter = () => {
   return (
@@ -26,19 +29,25 @@ const AppRouter = () => {
         <Route path="/felhasznalo" element={<User />} />
         <Route path="/kosar" element={<Cart />} />
         <Route path="/item/:id" element={<Item />} />
+
         <Route element={<AdminLayout />}>
           <Route path="/admin/kezelofelulet" element={<Dashboard />} />
           <Route path="/admin/etelek-kezelese" element={<ManageMenuItems />} />
           <Route path="/admin/rendelesek-kezelese" element={<ManageOrders />} />
           <Route path="/admin/statisztikak" element={<Statistics />} />
+          
 
         </Route>
       </Route>
       <Route element={<GuestLayout />}>
         <Route path="/bejelentkezes" element={<Login />} />
         <Route path="/regisztracio" element={<Register />} />
+        
       </Route>
       <Route path="*" element={<NoPage />} />
+      <Route path="/rolunk" element={<AboutYou />} />
+      <Route path="/kapcsolat" element={<ContactUs />} />
+      <Route path="/szolgaltatas" element={<Service/>} />
     </Routes>
   );
 };

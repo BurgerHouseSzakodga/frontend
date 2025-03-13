@@ -16,8 +16,8 @@ export default function AboutYouCard() {
     },
     {
       icon: <FaDollarSign className="icon" />,
-      title: "Fizess előre",
-      description: "Gyors, megbízható, biztonságos, és a legfontosabb: kényelmes.",
+      title: "Fizetés",
+      description: "Gyors, megbízható, biztonságos, fizess kézpénzel vagy kártyával.",
     },
     {
       icon: <FaSmile className="icon" />,

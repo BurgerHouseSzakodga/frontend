@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../sass/components/footer.css";
 
 export default function Foot() {
@@ -18,44 +19,29 @@ export default function Foot() {
           <h2 className="footer-title">Hasznos linkek</h2>
           <ul className="footer-links">
             <li>
-              <a href="#" className="footer-link">Rólunk</a>
+              <Link to="/rolunk" className="footer-link">Rólunk</Link>
             </li>
             <li>
-              <a href="#" className="footer-link">Szolgáltatásaink</a>
+              <Link to="/szolgaltatas" className="footer-link">Szolgáltatásaink</Link>
+            
             </li>
+           
             <li>
-              <a href="#" className="footer-link">GYIK</a>
-            </li>
-            <li>
-              <a href="#" className="footer-link">Kapcsolat</a>
+              <Link to="/kapcsolat" className="footer-link">Kapcsolat</Link>
             </li>
           </ul>
         </div>
 
         {/* Harmadik oszlop */}
         <div className="footer-column">
-          <h2 className="footer-title">Hírlevél</h2>
-          <p className="footer-text">Iratkozz fel, hogy ne maradj le az újdonságokról!</p>
-          <form className="footer-form">
-            <input
-              type="email"
-              placeholder="E-mail címed"
-              className="footer-input"
-            />
-            <button
-              type="submit"
-              className="footer-button"
-            >
-              Feliratkozás
-            </button>
-          </form>
+          <img src="../public/assets/logo.png" alt="Logo"  />
         </div>
       </div>
 
       {/* Alsó szekció */}
       <div className="footer-bottom">
         <p className="footer-bottom-text">
-          © {new Date().getFullYear()} Példa Kft. Minden jog fenntartva.
+          © {new Date().getFullYear()} Burger House. Minden jog fenntartva.va.
         </p>
       </div>
     </footer>

@@ -7,7 +7,7 @@ import { deleteBasketItem, incrementBasket } from "../api/http";
 import { AuthContext } from "../context/contexts";
 import Loader from "../components/Loader";
 import deleteIcon from "/assets/delete.svg";
-
+//import { Alert, Snackbar } from "@mui/material";
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
