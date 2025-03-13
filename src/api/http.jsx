@@ -173,3 +173,7 @@ export const deleteBasketItem = async (id) => {
   const response = await apiClient.delete(`api/delete-basket-item/${id}`);
   return response.data;
 };
+
+export const orderCart = async () => {
+  await apiClient.post("/api/order-basket");
+};
