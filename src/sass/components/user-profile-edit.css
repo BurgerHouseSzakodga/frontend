@@ -89,6 +89,34 @@
     cursor: not-allowed;
 }
 
+
+
+@media (max-width: 480px) {
+    .profile-edit form {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .profile-edit form h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.0rem;  
+    }
+   
+    .profile-edit .message {
+        text-align: left;
+        padding: 0.0rem;
+        color: #ff5419;
+        font-size: 0.8rem;
+    }
+
+    .profile-edit .form-group label {
+        font-size: 1rem;
+    }
+    .profile-edit .submit-button{
+        width: 10rem;
+        font-size: 1rem;
+    }}
+
 @media (max-width: 768px) {
     .profile-edit form {
         width: 90%;

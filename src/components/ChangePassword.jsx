@@ -48,7 +48,7 @@ function ChangePassword() {
             <h3>Jelszó módosítása</h3>
             {status && <div className="alert success">{status}</div>}
             {error && <div className="alert error">{error}</div>}
-                <div>
+                <div className='password_group'>
                     <label htmlFor="current_password">Jelenlegi jelszó:</label>
                      <img src={passwordIcon} />
                     <input

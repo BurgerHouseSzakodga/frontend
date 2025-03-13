@@ -26,7 +26,7 @@ function UserOrderTable() {
         {orders.map((order) => (
           <div key={order.id} className="orders-row">
             <div>{order.id}</div>
-            {order.delivery_address ? <div>{order.delivery_address}</div> : <div>Átvétel az étteremben</div>}
+            {<div className="delivery-address">order.delivery_address </div>? <div className="delivery-address">{order.delivery_address}</div> : <div >Átvétel az étteremben</div>}
             <details>
               <summary>Rendelés megtekintés</summary>
               <div>

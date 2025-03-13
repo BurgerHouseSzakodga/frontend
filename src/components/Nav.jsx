@@ -8,6 +8,7 @@ import searchIcon from "/assets/search.svg";
 import accountIcon from "/assets/account.svg";
 import cartIcon from "/assets/cart.svg";
 import gearIcon from "/assets/gear.svg";
+import "../sass/components/nav.css";
 
 const Nav = () => {
   const { user, isAdmin } = useContext(AuthContext);
@@ -21,12 +22,12 @@ const Nav = () => {
       <div className="nav__address">
         <img src={locationIcon} />
         <p>Kiszállítás ide:</p>
-        <strong>{user ? user.address : "2040, Budaörs, Lévai utca 29."}</strong>
+        <strong className="address_name">{user ? user.address : "2040, Budaörs, Lévai utca 29."}</strong>
       </div>
       <div className="nav__buttons">
         <Link to="/rendeles" className="find-food-button">
           <img src={searchIcon} />
-          Feldedezés
+          <p> Felfedezés</p>
         </Link>
         {user ? (
           <>
@@ -45,7 +46,7 @@ const Nav = () => {
         ) : (
           <Link to="/bejelentkezes" className="action-button">
             <img src={accountIcon} />
-            Bejelentkezés
+            <p>Bejelentkezés</p>
           </Link>
         )}
       </div>

@@ -90,3 +90,47 @@
   width: 30px;
   height: 30px;
 }
+
+@media screen and (max-width: 480px) {
+  .cim{
+    font-size: 1.3rem;
+  }
+  cim{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+
+
+  .popular-item-container {
+    padding: 5px;
+  }
+
+  .item-card {
+    padding: 5px;
+  }
+
+  
+  .item-card h3 {
+    font-size: 1.2rem;
+  }
+
+  .item-card p {
+    font-size: 0.8rem;
+  }
+
+  
+  .item-card .discounted-price {
+    font-size: 1.280rem;
+  }
+
+  .item-card .original-price {
+    font-size: 0.7rem;
+  }
+
+  .item-card .basket-button {
+    padding: 12px 15px;
+    font-size: 0.9rem;
+  }
+}
+  

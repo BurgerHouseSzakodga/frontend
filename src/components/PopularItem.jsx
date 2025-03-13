@@ -47,6 +47,28 @@ function PopularItem() {
           nextEl: ".swiper-button.next",
           prevEl: ".swiper-button.prev",
         }}
+        breakpoints={{
+          320: {
+            slidesPerView: 1,
+            spaceBetween: 10,
+          },
+          480: {
+            slidesPerView: 2,
+            spaceBetween: 10,
+          },
+          768: {
+            slidesPerView: 3,
+            spaceBetween: 10,
+          },
+          1024: {
+            slidesPerView: 4,
+            spaceBetween: 10,
+          },
+          1200: {
+            slidesPerView: 5,
+            spaceBetween: 10,
+          },
+        }}
       >
         {popularItems.map((item) => (
           <SwiperSlide key={item.id}>
@@ -57,7 +79,7 @@ function PopularItem() {
                 )
               }
               <img src={item.image_path} alt={item.name} />
-              <h3>{capitalizeFirstLetter(item.name)}</h3>
+              <h3 className="itemName">{capitalizeFirstLetter(item.name)}</h3>
               {item.discount_amount > 0 ? (
                 <>
                   <p className="order-price">{item.price} Ft</p>

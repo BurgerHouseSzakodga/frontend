@@ -1,6 +1,4 @@
-
-
-  
+ 
   .orders-container {
     font-family: 'Poppins', sans-serif;
     background-color: white;
@@ -89,4 +87,24 @@
     .orders-row {
         gap: 0.5rem;
     }
+}
+
+@media (max-width: 480px) {
+    .orders-container {
+        width: 100%;
+    }
+
+    .orders-container .orders-header {
+       font-size: 1rem;
+    }
+
+    .orders-body {
+        gap: 0.5rem;
+    }
+
+    .orders-body .orders-row .delivery-address {
+        font-size: 1rem;
+        
+    }
+   
 }

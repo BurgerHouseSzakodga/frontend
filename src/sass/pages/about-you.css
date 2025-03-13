@@ -35,3 +35,27 @@
   line-height: 1.6;
   margin-bottom: 0.5rem;
 }
+
+@media screen and (max-width: 480px) {
+
+  .about-you-title {
+    font-size: 1.5rem;
+  }
+  .step-title {
+    font-size: 1rem;
+  }
+  .step-description {
+    font-size: 0.9rem;
+  }
+
+  @media screen and (min-width: 768px) {
+    .about-you-title {
+      font-size: 0rem;
+    }
+    .step-title {
+      font-size: 1rem;
+    }
+    .step-description {
+      font-size: 0.9rem;
+    }
+}}

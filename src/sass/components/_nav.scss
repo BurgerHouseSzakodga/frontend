@@ -73,3 +73,44 @@
     }
   }
 }
+
+/*
+  @media (max-width: 768px) {
+    padding: 0 16px;
+
+    &__logo {
+      img {
+        width: 80px;
+      }
+    }
+
+    &__address {
+      gap: 8px;
+
+      p,
+      .address_name {
+        font-size: 10px;
+
+      }
+
+      .address_name {
+        font-size: 10px;
+
+      }
+
+      &__buttons {
+        .find-food-button{
+          font-size: 10px;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    &__logo {
+      img {
+        width: 60px;
+      }
+    }
+  }
+}*/

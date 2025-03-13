@@ -1,4 +1,3 @@
-import React from "react";
 import { FaMapMarkerAlt, FaUtensils, FaDollarSign, FaSmile } from "react-icons/fa";
 import "../sass/components/about-you.css";
 

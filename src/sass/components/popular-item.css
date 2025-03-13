@@ -25,7 +25,7 @@
   margin: 0 auto;
 }
 
-.item-card h3 {
+.itemName {
   font-size: 1.2rem;
   margin: 10px 0;
   color: #333;
@@ -60,16 +60,13 @@
   font-weight: bold;
 }
 
-
 .item-card .order-price {
   font-size: 1rem;
   color: #999;
   text-decoration: line-through;
-
 }
 
 .item-card .basket-button {
-
   margin-top: 20px;
   padding: 10px 20px;
   background-color: #e67e22;
@@ -83,11 +80,10 @@
 }
 
 .item-card .basket-button:hover {
-  background-color: #ff5419
+  background-color: #ff5419;
 }
 
 .item-card .basket-button-discount {
-
   margin-top: 20px;
   padding: 10px 20px;
   background-color: #e67e22;
@@ -101,7 +97,7 @@
 }
 
 .item-card .basket-button-discount:hover {
-  background-color: #ff5419
+  background-color: #ff5419;
 }
 
 .swiper-button {
@@ -124,4 +120,49 @@
 .swiper-button img {
   width: 30px;
   height: 30px;
+}
+
+
+@media (max-width: 480px) {
+  .cim{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+  }
+
+  .itemName{
+    font-size: 0.0rem ;
+  }
+
+  .popular-item-container {
+    padding: 5px;
+  }
+
+  .item-card {
+    padding: 5px;
+  }
+
+
+
+  .item-card h3 {
+    font-size: 1.3rem;
+  }
+
+  .item-card p {
+    font-size: 0.8rem;
+  }
+
+  .item-card .price,
+  .item-card .actual-price {
+    font-size: 1.2rem;
+  }
+
+  .item-card .order-price {
+    font-size: 0.7rem;
+  }
+
+  .item-card .basket-button {
+    padding: 12px 15px;
+    font-size: 0.9rem;
+  }
 }

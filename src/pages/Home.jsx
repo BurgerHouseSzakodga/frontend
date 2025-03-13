@@ -6,18 +6,16 @@ import DiscountItems from "../components/DiscountItems";
 import AboutYouCard from "../components/AboutYou";
 import AddresAbout from "../components/AddresAbout";
 import Foot from "../components/Footer";
-import Discounts from "../components/Discounts";
 
 
 const Home = () => {
   return (
     <div className="home">
-      <Header />
+      <Header/>
       <PopularItem />
       <AboutYouCard/>
       <DiscountItems/>
       <AddresAbout/>
-
      <Foot/>
     </div>
   );
