@@ -5,7 +5,12 @@ import { Alert, Snackbar } from "@mui/material";
 import { AuthContext } from "../context/contexts";
 import Loader from "../components/Loader";
 import deleteIcon from "/assets/delete.svg";
-import { Alert, Snackbar } from "@mui/material";
+import {
+  deleteBasketItem,
+  fetchData,
+  incrementBasket,
+  orderCart,
+} from "../api/http";
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
