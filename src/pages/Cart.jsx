@@ -2,11 +2,15 @@ import { useCallback, useContext, useEffect, useState } from "react";
 
 import { Alert, Snackbar } from "@mui/material";
 
-import { apiClient } from "../api/axios";
-import { deleteBasketItem, incrementBasket } from "../api/http";
 import { AuthContext } from "../context/contexts";
 import Loader from "../components/Loader";
 import deleteIcon from "/assets/delete.svg";
+import {
+  deleteBasketItem,
+  fetchData,
+  incrementBasket,
+  orderCart,
+} from "../api/http";
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
@@ -54,10 +58,9 @@ const Cart = () => {
     const fetchCart = async () => {
       setLoading(true);
       try {
-        const response = await apiClient.get("/api/basket");
-        console.log(response.data);
-        const groupedCart = groupCartItems(response.data.items);
-        setCart({ ...response.data, items: groupedCart });
+        const userCart = await fetchData("/api/basket");
+        const groupedCart = groupCartItems(userCart.items);
+        setCart({ ...userCart, items: groupedCart });
       } catch (error) {
         setError(error.message || "Hiba történt a kosár betöltése során");
       } finally {
@@ -80,7 +83,7 @@ const Cart = () => {
 
   const handleOrderCart = async () => {
     try {
-      await apiClient.post("/api/order-basket");
+      await orderCart();
       setCart([]);
     } catch (error) {
       setError(error.message || "Hiba történt a kosár betöltése során");
@@ -89,9 +92,9 @@ const Cart = () => {
 
   const handleIncrementItem = async (item) => {
     try {
-      const response = await incrementBasket(user.id, item);
-      const groupedCart = groupCartItems(response.items);
-      setCart({ ...response, items: groupedCart });
+      const userCart = await incrementBasket(user.id, item);
+      const groupedCart = groupCartItems(userCart.items);
+      setCart({ ...userCart, items: groupedCart });
     } catch (error) {
       setError(error.message || "Hiba történt a kosár betöltése során");
     }
@@ -118,6 +121,9 @@ const Cart = () => {
         {cart.items.map((item) => (
           <div key={item.id}>
             <div className="cart__item">
+              <div className="cart__img-container">
+                <img src={item.menu_item.image_path} />
+              </div>
               <h4>
                 {item.menu_item.name} - {item.buying_price} Ft
               </h4>
@@ -137,16 +143,15 @@ const Cart = () => {
             {item.extras.map((extra) => (
               <div className="cart__extras" key={extra.id}>
                 {extra.quantity > 1 ? (
-                  <small>
+                  <small className="plus">
                     + {extra.ingredient.name} (+ {extra.ingredient.extra_price}
                     Ft)
                   </small>
                 ) : (
-                  <small> - {extra.ingredient.name}</small>
+                  <small className="minus"> - {extra.ingredient.name}</small>
                 )}
               </div>
             ))}
-            <hr />
           </div>
         ))}
         <div>
