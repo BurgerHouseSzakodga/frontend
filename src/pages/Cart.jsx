@@ -1,11 +1,13 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 
+import { Alert, Snackbar } from "@mui/material";
+
 import { apiClient } from "../api/axios";
 import { deleteBasketItem, incrementBasket } from "../api/http";
 import { AuthContext } from "../context/contexts";
 import Loader from "../components/Loader";
 import deleteIcon from "/assets/delete.svg";
-import { Alert, Snackbar } from "@mui/material";
+
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
@@ -145,6 +147,7 @@ const Cart = () => {
                 )}
               </div>
             ))}
+            <hr />
           </div>
         ))}
         <div>
