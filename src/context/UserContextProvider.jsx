@@ -8,6 +8,7 @@ const UserContextProvider = ({ children }) => {
   const [numberOfUsers, setNumberOfUsers] = useState(0);
   const [userError, setUserError] = useState(null);
   const [userLoading, setUserLoading] = useState(false);
+  const [hasActiveOrder, setHasActiveOrder] = useState(false);
 
   const { user } = useContext(AuthContext);
 
@@ -22,11 +23,18 @@ const UserContextProvider = ({ children }) => {
       try {
         const usersData = await fetchData("api/users");
         const numberOfUsersData = await fetchData("api/number-of-users");
+        const activeUserOrder = await fetchData("api/active-orders");
+
+        console.log(activeUserOrder);
 
         setUsers(usersData);
         setNumberOfUsers(numberOfUsersData);
+        setHasActiveOrder(!!activeUserOrder.length);
       } catch (error) {
-        console.error("Error fetching admin data:", error);
+        setUserError(
+          error.message.data.message ||
+            "Hiba történt az adatok betöltése során."
+        );
       } finally {
         setUserLoading(false);
       }
@@ -73,6 +81,8 @@ const UserContextProvider = ({ children }) => {
     userError,
     userLoading,
     isAdmin,
+    hasActiveOrder,
+    setHasActiveOrder,
     setUserError,
     updateIsAdmin: handleUpdateIsAdmin,
     deleteUser: handleDeleteUser,

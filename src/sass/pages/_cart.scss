@@ -2,9 +2,11 @@
 
 .cart {
   @include flex($align: stretch);
+  height: 90%;
 
   &__body {
     width: 60%;
+    overflow: scroll;
 
     & > div {
       padding: 16px 32px;

@@ -2,7 +2,7 @@ import { useCallback, useContext, useEffect, useState } from "react";
 
 import { Alert, Snackbar } from "@mui/material";
 
-import { AuthContext } from "../context/contexts";
+import { AuthContext, UserContext } from "../context/contexts";
 import Loader from "../components/Loader";
 import deleteIcon from "/assets/delete.svg";
 import {
@@ -11,6 +11,7 @@ import {
   incrementBasket,
   orderCart,
 } from "../api/http";
+import deliveryGif from "/assets/delivery.gif";
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
@@ -18,6 +19,7 @@ const Cart = () => {
   const [error, setError] = useState(false);
 
   const { user } = useContext(AuthContext);
+  const { hasActiveOrder, setHasActiveOrder } = useContext(UserContext);
 
   const [isDelviery, setIsDelivery] = useState(user.address);
 
@@ -91,6 +93,7 @@ const Cart = () => {
     try {
       await orderCart();
       setCart([]);
+      setHasActiveOrder(true);
     } catch (error) {
       setError(error.message || "Hiba történt a kosár betöltése során");
     }
@@ -117,7 +120,14 @@ const Cart = () => {
     return <Loader />;
   }
 
-  if (!cart || !cart.items || !cart.items.length) {
+  if (hasActiveOrder) {
+    return (
+      <div className="acitve-order">
+        <img src={deliveryGif} />
+        <h2>Rendelésed kiszállítás alatt</h2>
+      </div>
+    );
+  } else if (!cart || !cart.items || !cart.items.length) {
     return <div>A kosarad üres</div>;
   }
 
