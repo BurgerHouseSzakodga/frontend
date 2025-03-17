@@ -12,6 +12,7 @@ import leftIcon from "/assets/left.svg";
 function PopularItem() {
   const { popularItems } = useContext(MenuItemContext);
   const swiperRef = useRef(null);
+
   const handleImage = (direction) => {
     if (direction === "next") {
       swiperRef.current.swiper.slideNext();
@@ -73,25 +74,23 @@ function PopularItem() {
         {popularItems.map((item) => (
           <SwiperSlide key={item.id}>
             <div className="item-card">
-              {
-                item.discount_amount > 0 && (
-                  <div className="discount-badge">-{item.discount_amount}%</div>
-                )
-              }
+              {item.discount_amount > 0 && (
+                <div className="discount-badge">-{item.discount_amount}%</div>
+              )}
               <img src={item.image_path} alt={item.name} />
               <h3 className="itemName">{capitalizeFirstLetter(item.name)}</h3>
               {item.discount_amount > 0 ? (
                 <>
                   <p className="order-price">{item.price} Ft</p>
-                  <p className="actual-price">{item.actual_price}  Ft</p>
+                  <p className="actual-price">{item.actual_price} Ft</p>
                 </>
               ) : (
                 <>
                   <br />
                   <p className="price">{item.price} Ft</p>
                 </>
-              )
-              }
+              )}
+
               <Link to={`/item/${item.id}`} className="basket-button">
                 Rendelés
               </Link>

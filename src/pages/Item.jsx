@@ -4,12 +4,13 @@ import { useParams } from "react-router-dom";
 import { Alert, Snackbar } from "@mui/material";
 
 import Loader from "../components/Loader";
-import { AuthContext } from "../context/contexts";
+import { AuthContext, UserContext } from "../context/contexts";
 import { addToBasket, fetchData } from "../api/http";
 
 function Item() {
   const { id } = useParams();
   const { navigate, user } = useContext(AuthContext);
+  const { hasActiveOrder } = useContext(UserContext);
 
   const [item, setItem] = useState({});
   const [loading, setLoading] = useState(false);
@@ -77,6 +78,10 @@ function Item() {
 
   if (loading) {
     return <Loader />;
+  }
+
+  if (hasActiveOrder) {
+    navigate("/kosar");
   }
 
   return (
