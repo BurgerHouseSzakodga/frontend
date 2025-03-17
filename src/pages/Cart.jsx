@@ -21,7 +21,12 @@ const Cart = () => {
   const { user } = useContext(AuthContext);
   const { hasActiveOrder, setHasActiveOrder } = useContext(UserContext);
 
-  const [isDelviery, setIsDelivery] = useState(user.address);
+  const [isDelivery, setIsDelivery] = useState(user.address);
+  const [userAddress, setUserAddress] = useState(user.address);
+
+  const handleChangeAddress = (event) => {
+    setUserAddress(event.target.value);
+  };
 
   const handleChange = (event) => {
     setIsDelivery(event.target.value);
@@ -90,6 +95,11 @@ const Cart = () => {
   };
 
   const handleOrderCart = async () => {
+    if (!userAddress.trim()) {
+      setError(true);
+      return;
+    }
+
     try {
       await orderCart();
       setCart([]);
@@ -122,9 +132,9 @@ const Cart = () => {
 
   if (hasActiveOrder) {
     return (
-      <div className="acitve-order">
+      <div className="active-order">
         <img src={deliveryGif} />
-        <h2>Rendelésed kiszállítás alatt</h2>
+        <h2>Rendelésed kiszállítás alatt...</h2>
       </div>
     );
   } else if (!cart || !cart.items || !cart.items.length) {
@@ -201,10 +211,15 @@ const Cart = () => {
                 )}
               </select>
             </div>
-            {isDelviery && (
+            {isDelivery && (
               <div className="delivery">
                 <label htmlFor="address">Szállítás ide:</label>
-                <input type="text" name="address" value={user.address || ""} />
+                <input
+                  type="text"
+                  name="address"
+                  value={userAddress}
+                  onChange={(e) => handleChangeAddress(e)}
+                />
               </div>
             )}
           </div>
@@ -224,7 +239,7 @@ const Cart = () => {
           variant="filled"
           sx={{ width: "100%" }}
         >
-          Hiba a kosárhoz adás során.
+          Hiba a kosárművelet során.
         </Alert>
       </Snackbar>
     </>
