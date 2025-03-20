@@ -7,7 +7,7 @@ import orderIcon from "/assets/orders.svg";
 import '../sass/components/user-profile-edit.css';
 
 export default function UserProfileEdit() {
-  const {user} = useContext(AuthContext);
+  const {user, patchUser} = useContext(AuthContext);
   const [name, setName] = useState(user?.name || '');
   const [email, setEmail] = useState(user?.email || '');
   const [isLoading, setIsLoading] = useState(false);
@@ -32,61 +32,40 @@ export default function UserProfileEdit() {
   }, [user]);
 
   const handleAddressChange = (field) => (e) => {
-    setAddressData(prev => ({
-      ...prev,
-      [field]: e.target.value
+    setAddressData((prev) => ({
+        ...prev,
+        [field]: e.target.value,
     }));
-
-    user.name=name;
-    user.email=email;
-    user.address=addressData.zip + ', ' + addressData.city + ', ' + addressData.street + ', ' + addressData.num;
-
-  };
-
-  const hasChanges = () => {
-    const [currentZip, currentCity, currentStreet, currentNum] = user.address?.split(', ') || [];
-    return name !== user.name || 
-           email !== user.email ||
-           addressData.zip !== currentZip || 
-           addressData.city !== currentCity ||
-           addressData.street !== currentStreet ||
-           addressData.num !== currentNum;
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    if (!hasChanges()) {
-      setMessage('Nem történt módosítás');
-      return;
-    }
+    e.preventDefault(); // Megakadályozzuk az oldal újratöltését
 
     setIsLoading(true);
-    setMessage('');
-    
+    setMessage("");
+
     try {
-      if (name !== user.name) {
-        await apiClient.patch('/api/user/name', { name });
-      }
-      
-      if (email !== user.email) {
-        await apiClient.patch('/api/user/email', { email });
-      }
+        const updatedAddress = `${addressData.zip}, ${addressData.city}, ${addressData.street} utca, ${addressData.num}`;
+        const payload = {
+            name,
+            email,
+            address: updatedAddress,
+        };
 
-      const [currentZip, currentCity, currentStreet, currentNum] = user.address?.split(', ') || [];
-      if (addressData.zip !== currentZip || 
-         addressData.city !== currentCity ||
-         addressData.street !== currentStreet ||
-         addressData.num !== currentNum) {
-        await apiClient.patch('/api/user/address', addressData);
-      }
-
-      setMessage('Profil sikeresen frissítve!');
+        await patchUser(payload); // Használjuk a patchUser függvényt az API-híváshoz
+        setMessage("Profil sikeresen frissítve!");
     } catch (error) {
-      console.error("Hiba:", error.response?.data);
-      setMessage(error.response?.data?.message || "Hiba történt a mentés során!");
+        console.error("Hiba a profil frissítésekor:", error);
+
+        if (error.response) {
+            console.log("Backend válasz:", error.response.data);
+            setMessage(error.response.data.message || "Hiba történt a mentés során!");
+        } else {
+            console.log("Általános hiba:", error);
+            setMessage("Hiba történt a mentés során!");
+        }
     } finally {
-      setIsLoading(false);
+        setIsLoading(false);
     }
   };
 

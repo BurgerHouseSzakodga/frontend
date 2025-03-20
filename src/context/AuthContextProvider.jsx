@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { AuthContext } from "./contexts";
 import { fetchData, authenticateUser, logoutUser } from "../api/http";
+import { apiClient } from "../api/axios";
 
 const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -19,6 +19,21 @@ const AuthContextProvider = ({ children }) => {
       setUser(data);
     } catch (error) {
       console.error("No authenticated user:", error);
+    } finally {
+      setAuthLoading(false);
+    }
+  }, [setUser]);
+
+  const patchUser = useCallback(async (updatedUserData) => {
+    setAuthLoading(true);
+    try {
+      const response = await apiClient.patch("/api/user/update-profile", updatedUserData);
+      console.log("Sikeres adat küldés happy van:)", response.data);
+      setUser(response.data); // Frissítjük a user állapotot a backend válasza alapján
+      return response.data;
+    } catch (error) {
+      console.error("Hiba a felhasználó frissítésekor:(", error.response?.data || error);
+      throw error; // Dobja a hibát, hogy a komponens kezelhesse
     } finally {
       setAuthLoading(false);
     }
@@ -72,6 +87,8 @@ const AuthContextProvider = ({ children }) => {
 
   const contextValue = {
     user,
+    setUser, // Hozzáadjuk a setUser-t, ha szükséges
+    patchUser, // Hozzáadjuk a postUser függvényt
     loginError,
     registerError,
     isAdmin,
