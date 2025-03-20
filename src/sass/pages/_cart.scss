@@ -38,7 +38,13 @@
       select {
         @include input;
         background-color: #fff;
-        width: 70%;
+        width: 60%;
+      }
+
+      button {
+        @include submit-button;
+        align-self: flex-end;
+        width: 60%;
       }
 
       .delivery {

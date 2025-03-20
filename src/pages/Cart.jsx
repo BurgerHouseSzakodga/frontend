@@ -6,6 +6,7 @@ import { AuthContext, UserContext } from "../context/contexts";
 import Loader from "../components/Loader";
 import deleteIcon from "/assets/delete.svg";
 import {
+  updateAddress,
   deleteBasketItem,
   fetchData,
   incrementBasket,
@@ -21,16 +22,9 @@ const Cart = () => {
   const { user } = useContext(AuthContext);
   const { hasActiveOrder, setHasActiveOrder } = useContext(UserContext);
 
+  const [editable, setEditbale] = useState(user.address);
   const [isDelivery, setIsDelivery] = useState(user.address);
-  const [userAddress, setUserAddress] = useState(user.address);
-
-  const handleChangeAddress = (event) => {
-    setUserAddress(event.target.value);
-  };
-
-  const handleChange = (event) => {
-    setIsDelivery(event.target.value);
-  };
+  const [userAddress, setUserAddress] = useState(user?.address || "");
 
   const arraysEqual = (a, b) => {
     if (a.length !== b.length) return false;
@@ -95,8 +89,8 @@ const Cart = () => {
   };
 
   const handleOrderCart = async () => {
-    if (!userAddress.trim()) {
-      setError(true);
+    if (!userAddress || !userAddress.trim()) {
+      setError("Kérlek töltsd ki a szállítási cím mezőt");
       return;
     }
 
@@ -116,6 +110,27 @@ const Cart = () => {
       setCart({ ...userCart, items: groupedCart });
     } catch (error) {
       setError(error.message || "Hiba történt a kosár betöltése során");
+    }
+  };
+
+  const handleUpdateAddress = async (value) => {
+    try {
+      const updatedAddress = await updateAddress(value);
+      setUserAddress(updatedAddress);
+    } catch (error) {
+      setError(error.message || "Hiba a cím frissítése során");
+      setEditbale(true);
+    }
+  };
+
+  const handleChange = (event) => {
+    setIsDelivery(event.target.value);
+
+    if (!event.target.value) {
+      handleUpdateAddress(null);
+      setEditbale(false);
+    } else {
+      setEditbale(true);
     }
   };
 
@@ -212,15 +227,31 @@ const Cart = () => {
               </select>
             </div>
             {isDelivery && (
-              <div className="delivery">
-                <label htmlFor="address">Szállítás ide:</label>
-                <input
-                  type="text"
-                  name="address"
-                  value={userAddress}
-                  onChange={(e) => handleChangeAddress(e)}
-                />
-              </div>
+              <>
+                <div className="delivery">
+                  <label htmlFor="address">Szállítás ide:</label>
+                  <input
+                    type="text"
+                    name="address"
+                    value={userAddress || ""}
+                    onChange={(e) => {
+                      setUserAddress(e.target.value);
+                      setEditbale(true);
+                    }}
+                  />
+                </div>
+                {editable && (
+                  <button
+                    onClick={() => {
+                      userAddress
+                        ? handleUpdateAddress(userAddress) && setEditbale(false)
+                        : setError("Kérlek töltsd ki a szállítási cím mezőt");
+                    }}
+                  >
+                    Megerősítés
+                  </button>
+                )}
+              </>
             )}
           </div>
           <div className="total">
@@ -232,14 +263,14 @@ const Cart = () => {
           </div>
         </div>
       </div>
-      <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar open={!!error} autoHideDuration={6000} onClose={handleClose}>
         <Alert
           onClose={handleClose}
           severity="error"
           variant="filled"
           sx={{ width: "100%" }}
         >
-          Hiba a kosárművelet során.
+          {error}
         </Alert>
       </Snackbar>
     </>

@@ -1,13 +1,9 @@
 import { apiClient } from "./axios";
 
-// Guest hívások
-
 export const fetchData = async (path) => {
   const response = await apiClient.get(path);
   return response.data;
 };
-
-// Auth hívások
 
 const csrf = () => apiClient.get("/sanctum/csrf-cookie");
 
@@ -20,7 +16,12 @@ export const logoutUser = async () => {
   await apiClient.post("/logout");
 };
 
-// Admin hívások
+export const updateAddress = async (address) => {
+  const response = await apiClient.put("api/user/update-full-address", {
+    address,
+  });
+  return response.data.address;
+};
 
 export const fetchRevenueByTimePeriod = async (days) => {
   const response = await apiClient.get(`api/revenue-by-days/${days}`);
