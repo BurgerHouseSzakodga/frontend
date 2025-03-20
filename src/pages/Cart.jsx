@@ -24,7 +24,7 @@ const Cart = () => {
 
   const [editable, setEditbale] = useState(user.address);
   const [isDelivery, setIsDelivery] = useState(user.address);
-  const [userAddress, setUserAddress] = useState(user?.address || "");
+  const [userAddress, setUserAddress] = useState(user.address);
 
   const arraysEqual = (a, b) => {
     if (a.length !== b.length) return false;
