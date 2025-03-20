@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { fetchData, updateOrderStatus } from "../api/http";
+import { deleteOrder, fetchData, updateOrderStatus } from "../api/http";
 import { AuthContext, OrderContext, UserContext } from "./contexts";
 
 const OrderContextProivder = ({ children }) => {
@@ -50,12 +50,23 @@ const OrderContextProivder = ({ children }) => {
   const handleUpdateStatus = async (orderId, status) => {
     if (!isAdmin) return;
 
-    setOrdersLoading(true);
     try {
       const updatedOrder = await updateOrderStatus(orderId, status);
-      setOrders((prevOrders) =>
-        prevOrders.map((order) => (order.id === orderId ? updatedOrder : order))
+      setOrders(updatedOrder);
+    } catch (error) {
+      setOrderError(
+        error.response.data.message || "Hiba történt a frissítés során."
       );
+    }
+  };
+
+  const handleDeleteOrder = async (id) => {
+    if (!isAdmin) return;
+
+    setOrdersLoading(true);
+    try {
+      const updatedOrders = await deleteOrder(id);
+      setOrders(updatedOrders);
     } catch (error) {
       setOrderError(
         error.response.data.message || "Hiba történt a frissítés során."
@@ -72,8 +83,10 @@ const OrderContextProivder = ({ children }) => {
     pendingOrders,
     orderError,
     ordersLoading,
-    handleUpdateStatus,
     userOrders,
+    handleUpdateStatus,
+    setOrders,
+    handleDeleteOrder,
   };
 
   return (

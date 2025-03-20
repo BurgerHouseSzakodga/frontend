@@ -75,7 +75,8 @@ export const updateOrderStatus = async (orderId, status) => {
   const response = await apiClient.put(`api/orders/${orderId}/status`, {
     status,
   });
-  return response.data.order;
+
+  return response.data;
 };
 
 export const createMenuItem = async (payload) => {
@@ -177,4 +178,9 @@ export const deleteBasketItem = async (id) => {
 
 export const orderCart = async () => {
   await apiClient.post("/api/order-basket");
+};
+
+export const deleteOrder = async (id) => {
+  const response = await apiClient.delete(`api/order/${id}`);
+  return response.data;
 };
