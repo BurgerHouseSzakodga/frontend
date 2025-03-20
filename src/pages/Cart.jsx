@@ -22,7 +22,7 @@ const Cart = () => {
   const { user } = useContext(AuthContext);
   const { hasActiveOrder, setHasActiveOrder } = useContext(UserContext);
 
-  const [editable, setEditbale] = useState(user.address);
+  const [editable, setEditbale] = useState(false);
   const [isDelivery, setIsDelivery] = useState(user.address);
   const [userAddress, setUserAddress] = useState(user.address);
 
