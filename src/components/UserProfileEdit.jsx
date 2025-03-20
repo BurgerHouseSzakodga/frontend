@@ -21,12 +21,12 @@ export default function UserProfileEdit() {
 
   useEffect(() => {
     if (user?.address) {
-      const addressParts= user.address.split(',');
+      const addressParts = user.address.split(',');
       setAddressData({
         zip: addressParts[0] || '',
         city: addressParts[1] || '',
         street: addressParts[2] || '',
-        num: addressParts[3]|| ''
+        num: addressParts[3] || ''
       });
     }
   }, [user]);
@@ -93,80 +93,92 @@ export default function UserProfileEdit() {
         
         <div className="form-group">
           <label htmlFor="name">Név:</label>
-          <img src={userIcon} alt="User icon" />
-          <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            type="text"
-            name="name"
-            placeholder="Add meg a neved..."
-            required
-          />
+          <div className="input-container">
+            <img src={userIcon} alt="User icon" className="input-icon" />
+            <input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              type="text"
+              name="name"
+              placeholder="Add meg a neved..."
+              required
+            />
+          </div>
         </div>
         
         <div className="form-group">
           <label htmlFor="email">Email cím:</label>
-          <img src={emailIcon} alt="Email icon" />
-          <input
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            type="email"
-            name="email"
-            placeholder="Add meg az email címed..."
-            required
-          />
+          <div className="input-container">
+            <img src={emailIcon} alt="Email icon" className="input-icon" />
+            <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              name="email"
+              placeholder="Add meg az email címed..."
+              required
+            />
+          </div>
         </div>
 
         <div className="form-group">
           <label htmlFor="zip">Irányítószám:</label>
-          <img src={orderIcon} alt="Address icon" />
-          <input
-            value={addressData.zip}
-            onChange={handleAddressChange('zip')}
-            type="text"
-            name="zip"
-            placeholder="1234"
-            required
-          />
+          <div className="input-container">
+            <img src={orderIcon} alt="Address icon" className="input-icon" />
+            <input
+              value={addressData.zip}
+              onChange={handleAddressChange('zip')}
+              type="text"
+              name="zip"
+              placeholder="1234"
+              required
+            />
+          </div>
         </div>
 
         <div className="form-group">
           <label htmlFor="city">Város:</label>
-          <img src={orderIcon} alt="Address icon" />
-          <input
-            value={addressData.city}
-            onChange={handleAddressChange('city')}
-            type="text"
-            name="city"
-            placeholder="Budapest"
-            required
-          />
+          <div className="input-container">
+            <img src={orderIcon} alt="Address icon" className="input-icon" />
+            <input
+              value={addressData.city}
+              onChange={handleAddressChange('city')}
+              type="text"
+              name="city"
+              placeholder="Budapest"
+              required
+            />
+          </div>
         </div>
 
         <div className="form-group">
           <label htmlFor="street">Utca:</label>
-          <img src={orderIcon} alt="Address icon" />
-          <input
-            value={addressData.street}
-            onChange={handleAddressChange('street')}
-            type="text"
-            name="street"
-            placeholder="Példa utca"
-            required
-          />
+          <div className="input-container">
+            <img src={orderIcon} alt="Address icon" className="input-icon" />
+            <input
+              value={addressData.street}
+              onChange={handleAddressChange('street')}
+              type="text"
+              name="street"
+              placeholder="Példa utca"
+              required
+            />
+          </div>
         </div>
 
         <div className="form-group">
           <label htmlFor="num">Házszám:</label>
-          <img src={orderIcon} alt="Address icon" />
-          <input
-            value={addressData.num}
-            onChange={handleAddressChange('num')}
-            type="text"
-            name="num"
-            placeholder="42"
-            required
-          />
+          <div className="input-container">
+            <img src={orderIcon} alt="Address icon" className="input-icon" />
+            <input
+              value={addressData.num}
+              onChange={handleAddressChange('num')}
+              type="text"
+              name="num"
+              placeholder="42"
+              required
+            />
+          </div>
         </div>
 
         <button 

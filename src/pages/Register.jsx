@@ -35,7 +35,7 @@ const Register = () => {
     <div className="register">
 
       <form onSubmit={handleRegister}>
-        <h1>Regisztráció</h1>
+        <h3>Regisztráció</h3>
         <div className="input-container">
           <label htmlFor="name">Teljes nevem:</label>
           <img src={userIcon} />
@@ -137,7 +137,7 @@ const Register = () => {
         {registerError.address && <p>{registerError.address}</p>}
        
         <div>
-        <Link className="bejelentekezesLink" to="/bejelentkezes">Van már fiókom. Bejelentkezek!</Link>
+        <Link  to="/bejelentkezes" >Van már fiókom.<br/> Bejelentkezek!<br/></Link>
           <input type="submit" value="Regisztráció" />
         </div>
       </form>
