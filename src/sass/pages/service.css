@@ -1,37 +1,32 @@
 .service-container {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 1rem;
-    font-family: 'Poppins', sans-serif;
-    color: #333;
+    padding: 40px;
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .service-title {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
     color: #e67e22;
-    text-align: left;
+    font-size: 2.5em;
+    margin-bottom: 70px;
+    text-align: center;
 }
 
 .service-description {
-    font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 1rem;
-    text-align: left;
     color: #7f8c8d;
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    text-align: center;
 }
 
 .service-list {
     list-style-type: disc;
-    padding-left: 1.5rem;
+    padding-left: 40px;
 }
 
 .service-list li {
-    font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 0.5rem;
+    margin-bottom: 15px;
     color: #34495e;
+    font-size: 1.1em;
 }

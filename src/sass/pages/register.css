@@ -17,9 +17,9 @@
   width: 32rem;
 }
 
-.register form h1 {
-  text-align: left;
-  color: #333;
+.register form h3 {
+  text-align: center;
+;
   margin-bottom: 0rem;
   font-weight: 600;
   font-size: 1.5rem;
@@ -33,7 +33,7 @@
 }
 
 .input-container label {
-  color: #555;
+
   font-size: 1rem;
   font-weight: 500;
 }
@@ -80,7 +80,10 @@
   color: white;
   cursor: pointer;
   padding: 0.75rem 1.5rem;
-  width: 100%;
+  width: auto;
+  height: auto;
+  border-radius: 10px;
+  align-self: center;
   margin-top: 1rem;
   transition: all 0.3s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -92,7 +95,9 @@
 }
 
 .register form a {
-  color: #333;
+  color: black;
+  font-weight: 500;
+  font-size: 0.8rem;
   text-decoration: none;
 }
 
@@ -102,8 +107,8 @@
 
 @media (max-width: 768px) {
   .register form {
-      width: 90%;
-      margin: 0 auto;
+    width: 90%;
+    margin: 0 auto;
   }
 
   .button-container {
@@ -111,7 +116,7 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 1rem;
-}
+  }
 
 
 }
