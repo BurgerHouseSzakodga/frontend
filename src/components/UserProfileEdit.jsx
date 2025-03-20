@@ -7,7 +7,7 @@ import orderIcon from "/assets/orders.svg";
 import '../sass/components/user-profile-edit.css';
 
 export default function UserProfileEdit() {
-  const { user } = useContext(AuthContext);
+  const {user} = useContext(AuthContext);
   const [name, setName] = useState(user?.name || '');
   const [email, setEmail] = useState(user?.email || '');
   const [isLoading, setIsLoading] = useState(false);
@@ -36,6 +36,11 @@ export default function UserProfileEdit() {
       ...prev,
       [field]: e.target.value
     }));
+
+    user.name=name;
+    user.email=email;
+    user.address=addressData.zip + ', ' + addressData.city + ', ' + addressData.street + ', ' + addressData.num;
+
   };
 
   const hasChanges = () => {

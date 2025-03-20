@@ -10,6 +10,13 @@
     padding: 1.5rem;
 }
 
+.orders-container h3{
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
 .orders-header {
     display: grid;
     grid-template-columns: 1fr 2fr 2fr 1fr 1fr;
@@ -47,6 +54,11 @@
     cursor: pointer;
 }
 
+.orders-row details div{
+
+    align-items: center;
+}
+
 .orders-row summary {
     color: #ff6b35;
     font-weight: 500;
@@ -58,7 +70,7 @@
     color: #ff5419;
 }
 
-.orders-row details > div {
+.orders-row details  div {
     padding: 1rem;
     border-radius: 0.5rem;
     margin-top: 0.5rem;
@@ -98,6 +110,10 @@
        font-size: 1rem;
     }
 
+    .orders-container h3{
+        font-size: 1.1rem;
+    }
+    
     .orders-body {
         gap: 0.5rem;
     }
