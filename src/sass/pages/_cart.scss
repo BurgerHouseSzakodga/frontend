@@ -17,7 +17,6 @@
   &__summary {
     @include flex($direction: column, $justify: space-between);
     background-color: $light-grey;
-
     width: 40%;
 
     h2 {
@@ -29,9 +28,24 @@
     }
 
     .summary__body {
+      @include flex($direction: column, $justify: flex-start, $align: stretch);
+      gap: 2rem;
       height: 100%;
       padding: 16px 32px;
       width: 100%;
+
+      input,
+      select {
+        @include input;
+        background-color: #fff;
+        width: 60%;
+      }
+
+      button {
+        @include submit-button;
+        align-self: flex-end;
+        width: 60%;
+      }
 
       .delivery {
         @include flex($justify: space-between);
@@ -147,4 +161,11 @@
       }
     }
   }
+}
+
+.active-order {
+  @include flex($direction: column);
+  background-color: #fccb93;
+  height: 90%;
+  width: 100%;
 }
