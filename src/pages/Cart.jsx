@@ -89,7 +89,7 @@ const Cart = () => {
   };
 
   const handleOrderCart = async () => {
-    if (!userAddress || !userAddress.trim()) {
+    if (isDelivery && (!userAddress || !userAddress.trim())) {
       setError("Kérlek töltsd ki a szállítási cím mezőt");
       return;
     }
