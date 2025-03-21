@@ -8,7 +8,8 @@ const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loginError, setLoginError] = useState([]);
   const [registerError, setRegisterError] = useState([]);
-  const [updateError, setUpdateError] = useState([]);
+  const [updateMessage, setUpdateMessage] = useState([]);
+  const [updatePasswordError, setUpdatePasswordError] = useState([]);
   const [authLoading, setAuthLoading] = useState(true);
 
   const navigate = useNavigate();
@@ -25,21 +26,43 @@ const AuthContextProvider = ({ children }) => {
     }
   }, [setUser]);
 
+
   const patchUser = useCallback(async (updatedUserData) => {
     setAuthLoading(true);
-    setUpdateError([]);
+    setUpdateMessage([]);
     try {
       const response = await apiClient.patch("/api/user/update-profile", updatedUserData);
       console.log("Sikeres adat küldés happy van:)", response.data);
       setUser(response.data); 
+      setUpdateMessage({ success: "Adatok sikeresen modositva!" });
       return response.data;
     } catch (error) {
       error.response.status === 422 &&
-      setUpdateError(error.response.data.errors);
+      setUpdateMessage(error.response.data.errors);
     } finally {
       setAuthLoading(false);
     }
   }, [setUser]);
+
+  const patchPassword = useCallback(async (updatedPasswordData) => {
+    setAuthLoading(true);
+    setUpdatePasswordError([]); // Töröljük az előző hibákat
+    try {
+        const response = await apiClient.patch("/api/user/password", updatedPasswordData);
+        console.log("Sikeres adat küldés happy van:)", response.data);
+        
+        return response.data;
+    } catch (error) {
+        if (error.response?.status === 422) {
+            setUpdatePasswordError(error.response.data.errors); // Hibák beállítása
+        } else {
+            console.error("Hiba a jelszó frissítésekor:", error);
+        }
+    } finally {
+        setAuthLoading(false);
+    }
+}, [setUser]);
+
 
   const login = async (payload) => {
     setAuthLoading(true);
@@ -89,11 +112,14 @@ const AuthContextProvider = ({ children }) => {
 
   const contextValue = {
     user,
-    setUser, // Hozzáadjuk a setUser-t, ha szükséges
-    patchUser, // Hozzáadjuk a postUser függvényt
+    setUser, 
+    patchUser, 
     loginError,
     registerError,
-    updateError,
+    patchPassword,
+    updateMessage,
+    setUpdateMessage,
+    updatePasswordError,
     isAdmin,
     authLoading,
     login,

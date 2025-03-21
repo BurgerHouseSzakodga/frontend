@@ -6,7 +6,7 @@ import orderIcon from "/assets/orders.svg";
 import '../sass/components/user-profile-edit.css';
 
 export default function UserProfileEdit() {
-  const {user, patchUser, updateError} = useContext(AuthContext);
+  const { user, patchUser, updateMessage , setUpdateMessage} = useContext(AuthContext);
   const [name, setName] = useState(user?.name || '');
   const [email, setEmail] = useState(user?.email || '');
   const [isLoading, setIsLoading] = useState(false);
@@ -33,8 +33,8 @@ export default function UserProfileEdit() {
     const value = e.target.value;
 
     setAddressData((prev) => ({
-        ...prev,
-        [field]: value,
+      ...prev,
+      [field]: value,
     }));
   };
 
@@ -43,21 +43,22 @@ export default function UserProfileEdit() {
     setIsLoading(true);
 
     try {
-        const streetWithUtca = addressData.street.toLowerCase().includes("utca")
-            ? addressData.street.trim()
-            : `${addressData.street.trim()} utca`;
+      const streetWithUtca = addressData.street.toLowerCase().includes("utca")
+        ? addressData.street.trim()
+        : `${addressData.street.trim()} utca`;
 
-        const updatedAddress = `${addressData.zip}, ${addressData.city}, ${streetWithUtca}, ${addressData.num}`;
-        const payload = {
-            name,
-            email,
-            address: updatedAddress,
-        };
+      const updatedAddress = `${addressData.zip}, ${addressData.city}, ${streetWithUtca}, ${addressData.num}`;
+      const payload = {
+        name,
+        email,
+        address: updatedAddress,
+      };
 
-        await patchUser(payload);
-        console.log("Profil sikeresen frissítve!");
+      await patchUser(payload);
+      console.log("Profil sikeresen frissítve!");
     } catch (error) {
-        console.error("Hiba történt a profil frissítése közben:", error);
+      setUpdateMessage("Hiba történt a profil frisitésekor"+error);
+
     }
   };
 
@@ -65,8 +66,15 @@ export default function UserProfileEdit() {
     <div className="profile-edit">
       <form onSubmit={handleSubmit}>
         <h3>Profil szerkesztése</h3>
-       
-        
+        {/* Sikeres üzenet megjelenítése */}
+        {updateMessage?.success && (
+          <div className="alert success">{updateMessage.success}</div>
+        )}
+        {/* Hibák megjelenítése */}
+        {updateMessage?.errorr && (
+          <p className="alert success">{updateMessage.error}</p>
+        )}
+
         <div className="form-group">
           <label htmlFor="name">Név:</label>
           <div className="input-container">
@@ -77,12 +85,12 @@ export default function UserProfileEdit() {
               type="text"
               name="name"
               placeholder="Add meg a neved..."
-              
+
             />
           </div>
-          {updateError.name && <p className="error">{updateError.name}</p>} {/* Formázott hibaüzenet */}
+          {updateMessage.name && <p className="message">{updateMessage.name}</p>} {/* Formázott hibaüzenet */}
         </div>
-        
+
         <div className="form-group">
           <label htmlFor="email">Email cím:</label>
           <div className="input-container">
@@ -93,12 +101,12 @@ export default function UserProfileEdit() {
               type="email"
               name="email"
               placeholder="Add meg az email címed..."
-              
+
             />
           </div>
-          {updateError.email && <p className="error">{updateError.email}</p>} {/* Formázott hibaüzenet */}
+          {updateMessage.email && <p className="message">{updateMessage.email}</p>} {/* Formázott hibaüzenet */}
         </div>
-
+        {updateMessage.address && <p className="message">{updateMessage.address}</p>} {/* Formázott hibaüzenet */}
         <div className="form-group">
           <label htmlFor="zip">Irányítószám:</label>
           <div className="input-container">
@@ -114,7 +122,7 @@ export default function UserProfileEdit() {
               title="Az irányítószámnak pontosan 4 számjegyből kell állnia."
             />
           </div>
-          {updateError.address && <p className="error">{updateError.address}</p>} {/* Formázott hibaüzenet */}
+
         </div>
 
         <div className="form-group">
@@ -132,7 +140,7 @@ export default function UserProfileEdit() {
               title="A város neve csak betűket tartalmazhat."
             />
           </div>
-          {updateError.address && <p className="error">{updateError.address}</p>} {/* Formázott hibaüzenet */}
+         
         </div>
 
         <div className="form-group">
@@ -148,7 +156,7 @@ export default function UserProfileEdit() {
               required
             />
           </div>
-          {updateError.address && <p className="error">{updateError.address}</p>} {/* Formázott hibaüzenet */}
+      
         </div>
 
         <div className="form-group">
@@ -166,11 +174,11 @@ export default function UserProfileEdit() {
               title="A házszám csak számokat és opcionális szóközöket tartalmazhat."
             />
           </div>
-          {updateError.address && <p className="error">{updateError.address}</p>} {/* Formázott hibaüzenet */}
+        
         </div>
 
-        <button 
-          type="submit" 
+        <button
+          type="submit"
           disabled={isLoading}
           className="submit-button"
         >
