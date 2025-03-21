@@ -32,9 +32,11 @@ export default function UserProfileEdit() {
   }, [user]);
 
   const handleAddressChange = (field) => (e) => {
+    const value = e.target.value;
+
     setAddressData((prev) => ({
         ...prev,
-        [field]: e.target.value,
+        [field]: value,
     }));
   };
 
@@ -45,7 +47,12 @@ export default function UserProfileEdit() {
     setMessage("");
 
     try {
-        const updatedAddress = `${addressData.zip}, ${addressData.city}, ${addressData.street} utca, ${addressData.num}`;
+        // Ellenőrizzük, hogy a "street" tartalmazza-e az "utca" szót
+        const streetWithUtca = addressData.street.toLowerCase().includes("utca")
+            ? addressData.street.trim()
+            : `${addressData.street.trim()} utca`;
+
+        const updatedAddress = `${addressData.zip}, ${addressData.city}, ${streetWithUtca}, ${addressData.num}`;
         const payload = {
             name,
             email,

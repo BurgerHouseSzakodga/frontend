@@ -157,3 +157,9 @@
         padding: 0.6rem 0.8rem;
     }
 }
+
+.error {
+  color: #ff0000;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
