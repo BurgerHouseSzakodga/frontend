@@ -8,6 +8,7 @@ const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loginError, setLoginError] = useState([]);
   const [registerError, setRegisterError] = useState([]);
+  const [updateError, setUpdateError] = useState([]);
   const [authLoading, setAuthLoading] = useState(true);
 
   const navigate = useNavigate();
@@ -26,14 +27,15 @@ const AuthContextProvider = ({ children }) => {
 
   const patchUser = useCallback(async (updatedUserData) => {
     setAuthLoading(true);
+    setUpdateError([]);
     try {
       const response = await apiClient.patch("/api/user/update-profile", updatedUserData);
       console.log("Sikeres adat küldés happy van:)", response.data);
-      setUser(response.data); // Frissítjük a user állapotot a backend válasza alapján
+      setUser(response.data); 
       return response.data;
     } catch (error) {
-      console.error("Hiba a felhasználó frissítésekor:(", error.response?.data || error);
-      throw error; // Dobja a hibát, hogy a komponens kezelhesse
+      error.response.status === 422 &&
+      setUpdateError(error.response.data.errors);
     } finally {
       setAuthLoading(false);
     }
@@ -91,6 +93,7 @@ const AuthContextProvider = ({ children }) => {
     patchUser, // Hozzáadjuk a postUser függvényt
     loginError,
     registerError,
+    updateError,
     isAdmin,
     authLoading,
     login,

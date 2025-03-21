@@ -1,17 +1,15 @@
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/contexts";
-import { apiClient } from "../api/axios";
 import emailIcon from "/assets/email.svg";
 import userIcon from "/assets/users.svg";
 import orderIcon from "/assets/orders.svg";
 import '../sass/components/user-profile-edit.css';
 
 export default function UserProfileEdit() {
-  const {user, patchUser} = useContext(AuthContext);
+  const {user, patchUser, updateError} = useContext(AuthContext);
   const [name, setName] = useState(user?.name || '');
   const [email, setEmail] = useState(user?.email || '');
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState('');
   const [addressData, setAddressData] = useState({
     zip: '',
     city: '',
@@ -41,13 +39,10 @@ export default function UserProfileEdit() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Megakadályozzuk az oldal újratöltését
-
+    e.preventDefault();
     setIsLoading(true);
-    setMessage("");
 
     try {
-        // Ellenőrizzük, hogy a "street" tartalmazza-e az "utca" szót
         const streetWithUtca = addressData.street.toLowerCase().includes("utca")
             ? addressData.street.trim()
             : `${addressData.street.trim()} utca`;
@@ -59,20 +54,10 @@ export default function UserProfileEdit() {
             address: updatedAddress,
         };
 
-        await patchUser(payload); // Használjuk a patchUser függvényt az API-híváshoz
-        setMessage("Profil sikeresen frissítve!");
+        await patchUser(payload);
+        console.log("Profil sikeresen frissítve!");
     } catch (error) {
-        console.error("Hiba a profil frissítésekor:", error);
-
-        if (error.response) {
-            console.log("Backend válasz:", error.response.data);
-            setMessage(error.response.data.message || "Hiba történt a mentés során!");
-        } else {
-            console.log("Általános hiba:", error);
-            setMessage("Hiba történt a mentés során!");
-        }
-    } finally {
-        setIsLoading(false);
+        console.error("Hiba történt a profil frissítése közben:", error);
     }
   };
 
@@ -80,7 +65,7 @@ export default function UserProfileEdit() {
     <div className="profile-edit">
       <form onSubmit={handleSubmit}>
         <h3>Profil szerkesztése</h3>
-        {message && <div className="message">{message}</div>}
+       
         
         <div className="form-group">
           <label htmlFor="name">Név:</label>
@@ -92,9 +77,10 @@ export default function UserProfileEdit() {
               type="text"
               name="name"
               placeholder="Add meg a neved..."
-              required
+              
             />
           </div>
+          {updateError.name && <p className="error">{updateError.name}</p>} {/* Formázott hibaüzenet */}
         </div>
         
         <div className="form-group">
@@ -107,9 +93,10 @@ export default function UserProfileEdit() {
               type="email"
               name="email"
               placeholder="Add meg az email címed..."
-              required
+              
             />
           </div>
+          {updateError.email && <p className="error">{updateError.email}</p>} {/* Formázott hibaüzenet */}
         </div>
 
         <div className="form-group">
@@ -123,8 +110,11 @@ export default function UserProfileEdit() {
               name="zip"
               placeholder="1234"
               required
+              pattern="^\d{4}$" // Csak 4 számjegy
+              title="Az irányítószámnak pontosan 4 számjegyből kell állnia."
             />
           </div>
+          {updateError.address && <p className="error">{updateError.address}</p>} {/* Formázott hibaüzenet */}
         </div>
 
         <div className="form-group">
@@ -138,8 +128,11 @@ export default function UserProfileEdit() {
               name="city"
               placeholder="Budapest"
               required
+              pattern="^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s]+$" // Csak betűk és szóközök
+              title="A város neve csak betűket tartalmazhat."
             />
           </div>
+          {updateError.address && <p className="error">{updateError.address}</p>} {/* Formázott hibaüzenet */}
         </div>
 
         <div className="form-group">
@@ -155,6 +148,7 @@ export default function UserProfileEdit() {
               required
             />
           </div>
+          {updateError.address && <p className="error">{updateError.address}</p>} {/* Formázott hibaüzenet */}
         </div>
 
         <div className="form-group">
@@ -168,8 +162,11 @@ export default function UserProfileEdit() {
               name="num"
               placeholder="42"
               required
+              pattern="^\s*\d+\s*$" // Számok előtt és után opcionális szóközök
+              title="A házszám csak számokat és opcionális szóközöket tartalmazhat."
             />
           </div>
+          {updateError.address && <p className="error">{updateError.address}</p>} {/* Formázott hibaüzenet */}
         </div>
 
         <button 
