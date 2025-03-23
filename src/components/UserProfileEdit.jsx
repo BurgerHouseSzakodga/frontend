@@ -1,17 +1,15 @@
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/contexts";
-import { apiClient } from "../api/axios";
 import emailIcon from "/assets/email.svg";
 import userIcon from "/assets/users.svg";
 import orderIcon from "/assets/orders.svg";
 import '../sass/components/user-profile-edit.css';
 
 export default function UserProfileEdit() {
-  const { user } = useContext(AuthContext);
+  const { user, patchUser, updateMessage , setUpdateMessage} = useContext(AuthContext);
   const [name, setName] = useState(user?.name || '');
   const [email, setEmail] = useState(user?.email || '');
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState('');
   const [addressData, setAddressData] = useState({
     zip: '',
     city: '',
@@ -32,56 +30,35 @@ export default function UserProfileEdit() {
   }, [user]);
 
   const handleAddressChange = (field) => (e) => {
-    setAddressData(prev => ({
-      ...prev,
-      [field]: e.target.value
-    }));
-  };
+    const value = e.target.value;
 
-  const hasChanges = () => {
-    const [currentZip, currentCity, currentStreet, currentNum] = user.address?.split(', ') || [];
-    return name !== user.name || 
-           email !== user.email ||
-           addressData.zip !== currentZip || 
-           addressData.city !== currentCity ||
-           addressData.street !== currentStreet ||
-           addressData.num !== currentNum;
+    setAddressData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (!hasChanges()) {
-      setMessage('Nem történt módosítás');
-      return;
-    }
-
     setIsLoading(true);
-    setMessage('');
-    
+
     try {
-      if (name !== user.name) {
-        await apiClient.patch('/api/user/name', { name });
-      }
-      
-      if (email !== user.email) {
-        await apiClient.patch('/api/user/email', { email });
-      }
+      const streetWithUtca = addressData.street.toLowerCase().includes("utca")
+        ? addressData.street.trim()
+        : `${addressData.street.trim()} utca`;
 
-      const [currentZip, currentCity, currentStreet, currentNum] = user.address?.split(', ') || [];
-      if (addressData.zip !== currentZip || 
-         addressData.city !== currentCity ||
-         addressData.street !== currentStreet ||
-         addressData.num !== currentNum) {
-        await apiClient.patch('/api/user/address', addressData);
-      }
+      const updatedAddress = `${addressData.zip}, ${addressData.city}, ${streetWithUtca}, ${addressData.num}`;
+      const payload = {
+        name,
+        email,
+        address: updatedAddress,
+      };
 
-      setMessage('Profil sikeresen frissítve!');
+      await patchUser(payload);
+      console.log("Profil sikeresen frissítve!");
     } catch (error) {
-      console.error("Hiba:", error.response?.data);
-      setMessage(error.response?.data?.message || "Hiba történt a mentés során!");
-    } finally {
-      setIsLoading(false);
+      setUpdateMessage("Hiba történt a profil frisitésekor"+error);
+
     }
   };
 
@@ -89,8 +66,15 @@ export default function UserProfileEdit() {
     <div className="profile-edit">
       <form onSubmit={handleSubmit}>
         <h3>Profil szerkesztése</h3>
-        {message && <div className="message">{message}</div>}
-        
+        {/* Sikeres üzenet megjelenítése */}
+        {updateMessage?.success && (
+          <div className="alert success">{updateMessage.success}</div>
+        )}
+        {/* Hibák megjelenítése */}
+        {updateMessage?.errorr && (
+          <p className="alert success">{updateMessage.error}</p>
+        )}
+
         <div className="form-group">
           <label htmlFor="name">Név:</label>
           <div className="input-container">
@@ -101,11 +85,12 @@ export default function UserProfileEdit() {
               type="text"
               name="name"
               placeholder="Add meg a neved..."
-              required
+
             />
           </div>
+          {updateMessage.name && <p className="message">{updateMessage.name}</p>} {/* Formázott hibaüzenet */}
         </div>
-        
+
         <div className="form-group">
           <label htmlFor="email">Email cím:</label>
           <div className="input-container">
@@ -116,11 +101,12 @@ export default function UserProfileEdit() {
               type="email"
               name="email"
               placeholder="Add meg az email címed..."
-              required
+
             />
           </div>
+          {updateMessage.email && <p className="message">{updateMessage.email}</p>} {/* Formázott hibaüzenet */}
         </div>
-
+        {updateMessage.address && <p className="message">{updateMessage.address}</p>} {/* Formázott hibaüzenet */}
         <div className="form-group">
           <label htmlFor="zip">Irányítószám:</label>
           <div className="input-container">
@@ -132,8 +118,11 @@ export default function UserProfileEdit() {
               name="zip"
               placeholder="1234"
               required
+              pattern="^\d{4}$" // Csak 4 számjegy
+              title="Az irányítószámnak pontosan 4 számjegyből kell állnia."
             />
           </div>
+
         </div>
 
         <div className="form-group">
@@ -147,8 +136,11 @@ export default function UserProfileEdit() {
               name="city"
               placeholder="Budapest"
               required
+              pattern="^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s]+$" // Csak betűk és szóközök
+              title="A város neve csak betűket tartalmazhat."
             />
           </div>
+         
         </div>
 
         <div className="form-group">
@@ -164,6 +156,7 @@ export default function UserProfileEdit() {
               required
             />
           </div>
+      
         </div>
 
         <div className="form-group">
@@ -177,12 +170,15 @@ export default function UserProfileEdit() {
               name="num"
               placeholder="42"
               required
+              pattern="^\s*\d+\s*$" // Számok előtt és után opcionális szóközök
+              title="A házszám csak számokat és opcionális szóközöket tartalmazhat."
             />
           </div>
+        
         </div>
 
-        <button 
-          type="submit" 
+        <button
+          type="submit"
           disabled={isLoading}
           className="submit-button"
         >

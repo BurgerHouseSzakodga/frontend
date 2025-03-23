@@ -7,8 +7,9 @@ function UserOrderTable() {
 
   return (
     <div className="orders-container">
+      <h3>Rendeléseim</h3>
       <div className="orders-header">
-        <div>Rendelés azonosító</div>
+        <div>Azonosító</div>
         <div>Szállítási cím</div>
         <div>Termékek</div>
         <div>Státusz</div>
@@ -22,7 +23,7 @@ function UserOrderTable() {
             {order.delivery_address ? (
               <div className="delivery-address">{order.delivery_address}</div>
             ) : (
-              <div>Átvétel az étteremben</div>
+              <div>Átvétel az étteremben📍</div>
             )}
             <details>
               <summary>Rendelés megtekintés</summary>
@@ -30,7 +31,7 @@ function UserOrderTable() {
                 {order.order_items && order.order_items.length > 0 ? (
                   order.order_items.map((item) => (
                     <p key={item.id}>
-                      {item.menu_item.name} - {item.buying_price} Ft
+                      {item.menu_item.name} - {item.buying_price} Ft <br/>
                     </p>
                   ))
                 ) : (

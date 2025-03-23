@@ -19,7 +19,7 @@
 
 .profile-edit form h3 {
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     font-weight: 600;
     font-size: 1.5rem;
 }
@@ -38,7 +38,7 @@
 
 .form-group img {
     position: absolute;
-    left: 10px; /* Ikon távolsága a bal oldaltól */
+    left: 10px;
     top: 50%;
     transform: translateY(-50%);
     width: 1.4rem;
@@ -51,17 +51,17 @@
     font-family: 'Poppins', sans-serif;
     border: 1px solid #ddd;
     border-radius: 0.25rem;
-    padding: 0.75rem 1rem 0.75rem 3rem; /* Több hely a bal oldalon */
+    padding: 0.75rem 1rem 0.75rem 3rem;
     width: 100%;
     font-size: 0.9rem;
-    text-align: left; /* Szöveg balra igazítva, de beljebb */
-    padding-left: 3.5rem; /* Szöveg eltolása az ikon után */
+    text-align: left;
+    padding-left: 3.5rem;
     transition: all 0.3s ease;
 }
 
 .form-group input::placeholder {
-    text-align: left; /* Placeholder szöveg is balra igazítva */
-    padding-left: 3.5rem; /* Placeholder is beljebb kerül */
+    text-align: left;
+    padding-left: 3.5rem;
 }
 
 .form-group input:focus {
@@ -96,7 +96,6 @@
     cursor: not-allowed;
 }
 
-/* Tablet nézet */
 @media (max-width: 768px) {
     .profile-edit form {
         width: 90%;
@@ -113,7 +112,7 @@
 
     .form-group input {
         font-size: 0.85rem;
-        padding: 0.7rem 0.7rem 0.7rem 3.2rem; /* Tablet nézethez igazítva */
+        padding: 0.7rem 0.7rem 0.7rem 3.2rem;
     }
 
     .form-group img {
@@ -127,7 +126,6 @@
     }
 }
 
-/* Mobil nézet */
 @media (max-width: 480px) {
     .profile-edit form {
         width: 100%;
@@ -144,7 +142,7 @@
 
     .form-group input {
         font-size: 0.8rem;
-        padding: 0.6rem 0.6rem 0.6rem 3rem; /* Mobilon is beljebb */
+        padding: 0.6rem 0.6rem 0.6rem 3rem;
     }
 
     .form-group img {
@@ -156,4 +154,25 @@
         font-size: 0.8rem;
         padding: 0.6rem 0.8rem;
     }
+}
+.message {
+    color: #ff6b35; /* Narancssárga szín */
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+    font-weight: 500;
+    background-color: #fff4e6; /* Halvány narancssárga háttér */
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    border: 1px solid #ff6b35; /* Narancssárga keret */
+}
+
+.form-group .error {
+    color: #ff6b35; /* Narancssárga szín */
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+    font-weight: 500;
+    background-color: #fff4e6; /* Halvány narancssárga háttér */
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    border: 1px solid #ff6b35; /* Narancssárga keret */
 }
