@@ -5,9 +5,9 @@
   @include card;
   @include flex($direction: column);
   gap: 32px;
-  margin: 16px $side-padding;
+  margin: 16px auto;
   padding: 24px;
-  width: 856px;
+  width: clamp(50%, 856px, 80%);
 
   img {
     width: 1rem;

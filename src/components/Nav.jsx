@@ -14,7 +14,7 @@ const Nav = () => {
 
   return (
     <div className="nav">
-      <Link className="nav__logo" to="/">
+      <Link className="nav__logo hide-on-mobile" to="/">
         <img src={logo} />
       </Link>
       <div className="nav__address">
@@ -24,7 +24,12 @@ const Nav = () => {
           {user ? user.address : "2040, Budaörs, Lévai utca 29."}
         </strong>
       </div>
-      <div className="nav__buttons">
+      <button className="show-on-mobile">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div className="nav__buttons hide-on-mobile">
         <Link to="/rendeles" className="find-food-button">
           <img src={searchIcon} />
           <p> Felfedezés</p>

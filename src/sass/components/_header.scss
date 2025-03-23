@@ -8,7 +8,8 @@
   width: 100%;
 
   &__title {
-    margin: 64px $side-padding 16px;
+    margin: 64px auto 16px;
+    width: clamp(50%, 856px, 80%);
 
     h1 {
       color: #fff;
@@ -16,7 +17,4 @@
       font-weight: 700;
     }
   }
-  
 }
-
-
