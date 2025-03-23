@@ -6,21 +6,88 @@
   box-shadow: $box-shadow;
   width: 100%;
   height: 78px;
-  overflow: hidden;
   position: relative;
   z-index: 1;
 
-  .show-on-mobile {
+  .burger-menu {
     background-color: #fff;
     border: none;
     display: none;
+    float: left;
     gap: 4px;
+    position: relative;
+    z-index: 101;
 
     span {
+      @include default-trasition;
       background-color: $orange;
       border-radius: 2px;
       height: 4px;
+      position: absolute;
       width: 30px;
+
+      &::before {
+        @include default-trasition;
+        content: "";
+        background-color: $orange;
+        border-radius: 2px;
+        height: 4px;
+        left: 0;
+        position: absolute;
+        top: -8px;
+        width: 30px;
+      }
+
+      &::after {
+        @include default-trasition;
+        content: "";
+        background-color: $orange;
+        border-radius: 2px;
+        height: 4px;
+        left: 0;
+        position: absolute;
+        top: 8px;
+        width: 22px;
+      }
+    }
+
+    &.open {
+      span {
+        transform: rotate(360deg);
+        background-color: transparent;
+
+        &::before {
+          top: 0;
+          transform: rotate(-45deg);
+        }
+
+        &::after {
+          top: 0;
+          transform: rotate(45deg);
+          width: 30px;
+        }
+      }
+    }
+  }
+
+  &__menu {
+    @include default-trasition;
+    background-color: #fff;
+    height: 100vh;
+    left: 0;
+    position: fixed;
+    top: 0;
+    transform: translateX(-100%);
+    width: 100vw;
+    z-index: 100;
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+
+    &.open {
+      transform: translateX(0);
     }
   }
 
@@ -29,7 +96,7 @@
       display: none;
     }
 
-    .show-on-mobile {
+    .burger-menu {
       @include flex($direction: column);
     }
   }

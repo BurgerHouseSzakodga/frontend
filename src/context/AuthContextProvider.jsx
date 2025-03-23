@@ -26,43 +26,50 @@ const AuthContextProvider = ({ children }) => {
     }
   }, [setUser]);
 
-
-  const patchUser = useCallback(async (updatedUserData) => {
-    setAuthLoading(true);
-    setUpdateMessage([]);
-    try {
-      const response = await apiClient.patch("/api/user/update-profile", updatedUserData);
-      console.log("Sikeres adat küldés happy van:)", response.data);
-      setUser(response.data); 
-      setUpdateMessage({ success: "Adatok sikeresen modositva!" });
-      return response.data;
-    } catch (error) {
-      error.response.status === 422 &&
-      setUpdateMessage(error.response.data.errors);
-    } finally {
-      setAuthLoading(false);
-    }
-  }, [setUser]);
+  const patchUser = useCallback(
+    async (updatedUserData) => {
+      setAuthLoading(true);
+      setUpdateMessage([]);
+      try {
+        const response = await apiClient.patch(
+          "/api/user/update-profile",
+          updatedUserData
+        );
+        console.log("Sikeres adat küldés happy van:)", response.data);
+        setUser(response.data);
+        setUpdateMessage({ success: "Adatok sikeresen modositva!" });
+        return response.data;
+      } catch (error) {
+        error.response.status === 422 &&
+          setUpdateMessage(error.response.data.errors);
+      } finally {
+        setAuthLoading(false);
+      }
+    },
+    [setUser]
+  );
 
   const patchPassword = useCallback(async (updatedPasswordData) => {
     setAuthLoading(true);
     setUpdatePasswordError([]); // Töröljük az előző hibákat
     try {
-        const response = await apiClient.patch("/api/user/password", updatedPasswordData);
-        console.log("Sikeres adat küldés happy van:)", response.data);
-        
-        return response.data;
-    } catch (error) {
-        if (error.response?.status === 422) {
-            setUpdatePasswordError(error.response.data.errors); // Hibák beállítása
-        } else {
-            console.error("Hiba a jelszó frissítésekor:", error);
-        }
-    } finally {
-        setAuthLoading(false);
-    }
-}, [setUser]);
+      const response = await apiClient.patch(
+        "/api/user/password",
+        updatedPasswordData
+      );
+      console.log("Sikeres adat küldés happy van:)", response.data);
 
+      return response.data;
+    } catch (error) {
+      if (error.response?.status === 422) {
+        setUpdatePasswordError(error.response.data.errors);
+      } else {
+        console.error("Hiba a jelszó frissítésekor:", error);
+      }
+    } finally {
+      setAuthLoading(false);
+    }
+  }, []);
 
   const login = async (payload) => {
     setAuthLoading(true);
@@ -112,8 +119,8 @@ const AuthContextProvider = ({ children }) => {
 
   const contextValue = {
     user,
-    setUser, 
-    patchUser, 
+    setUser,
+    patchUser,
     loginError,
     registerError,
     patchPassword,
