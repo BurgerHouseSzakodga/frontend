@@ -27,13 +27,15 @@ const Nav = () => {
       <Link className="nav__logo hide-on-mobile" to="/">
         <img src={logo} />
       </Link>
-      <div className="nav__address">
-        <img src={locationIcon} />
-        <p>Kiszállítás ide:</p>
-        <strong className="address_name">
-          {user ? user.address : "2040, Budaörs, Lévai utca 29."}
-        </strong>
-      </div>
+      {user && (
+        <div className="nav__address">
+          <img src={locationIcon} />
+          <p>Átvétel:</p>
+          <strong className="address_name">
+            {user.address ? user.address : "Étteremben"}
+          </strong>
+        </div>
+      )}
       <button
         onClick={handleOpenMenu}
         className={"burger-menu" + menuClassName}
@@ -67,30 +69,55 @@ const Nav = () => {
         )}
       </div>
       <div className={"nav__menu" + menuClassName}>
-        <Link to="/rendeles" className="find-food-button">
-          <img src={searchIcon} />
-          <p> Felfedezés</p>
-        </Link>
-        {user ? (
-          <>
-            <Link to="/felhasznalo" className="action-button">
-              <img src={accountIcon} />
-            </Link>
-            <Link to="/kosar" className="action-button">
-              <img src={cartIcon} />
-            </Link>
-            {isAdmin && (
-              <Link to="/admin/kezelofelulet" className="action-button">
-                <img src={gearIcon} />
-              </Link>
-            )}
-          </>
-        ) : (
-          <Link to="/bejelentkezes" className="action-button">
-            <img src={accountIcon} />
-            <p>Bejelentkezés</p>
+        <div className="button-wrapper">
+          <Link
+            to="/rendeles"
+            className="find-food-button"
+            onClick={() => setMenuClassName("")}
+          >
+            <img src={searchIcon} />
+            <p> Felfedezés</p>
           </Link>
-        )}
+          {user ? (
+            <>
+              <Link
+                to="/felhasznalo"
+                className="action-button"
+                onClick={() => setMenuClassName("")}
+              >
+                <img src={accountIcon} />
+                <p> Felhasználó</p>
+              </Link>
+              <Link
+                to="/kosar"
+                className="action-button"
+                onClick={() => setMenuClassName("")}
+              >
+                <img src={cartIcon} />
+                <p> Kosár</p>
+              </Link>
+              {isAdmin && (
+                <Link
+                  to="/admin/kezelofelulet"
+                  className="action-button"
+                  onClick={() => setMenuClassName("")}
+                >
+                  <img src={gearIcon} />
+                  <p> Kezelőfelület</p>
+                </Link>
+              )}
+            </>
+          ) : (
+            <Link
+              to="/bejelentkezes"
+              className="action-button"
+              onClick={() => setMenuClassName("")}
+            >
+              <img src={accountIcon} />
+              <p>Bejelentkezés</p>
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   );
