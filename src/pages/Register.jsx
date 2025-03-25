@@ -5,7 +5,7 @@ import emailIcon from "/assets/email.svg";
 import userIcon from "/assets/users.svg";
 import passwordIcon from "/assets/password.svg";
 import orderIcon from "/assets/orders.svg";
-import '../sass/pages/register.css'; 
+import '../sass/pages/register.css';
 import { Link } from "react-router-dom";
 
 const Register = () => {
@@ -13,7 +13,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const [address, setAddress] = useState({zip: "", city:"",  street: "",num: ""});
+  const [address, setAddress] = useState({ zip: "", city: "", street: "", num: "" });
 
   const { register, registerError } = useContext(AuthContext);
 
@@ -25,7 +25,7 @@ const Register = () => {
       email,
       password,
       password_confirmation: passwordConfirmation,
-      address: address.zip + ", " +address.city+","+ address.street +" utca" +"," + address.num,
+      address: address.zip + ", " + address.city + "," + address.street + " utca" + "," + address.num,
     };
 
     register(payload);
@@ -57,7 +57,10 @@ const Register = () => {
             onChange={(e) => setEmail(e.target.value)}
             type="email"
             name="email"
-            placeholder="Email cím"
+            placeholder="example@email.com"
+            required
+            pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+            title="Az email cím formátuma nem megfelelő."
           />
         </div>
         {registerError.email && <p>{registerError.email}</p>}
@@ -87,57 +90,66 @@ const Register = () => {
           />
         </div>
 
+
         <div className="input-container">
-          <label htmlFor="address">Irányitó szám:</label>
+          <label htmlFor="zip">Irányítószám:</label>
           <img src={orderIcon} />
           <input
             value={address.zip}
-            onChange={(e) => setAddress((prevAddress) => ({...prevAddress, zip: e.target.value}))}
+            onChange={(e) => setAddress((prevAddress) => ({ ...prevAddress, zip: e.target.value }))}
             type="text"
-            name="address"
+            name="zip"
             placeholder="1119"
+            required
+            pattern="^\d{4}$"
+            title="Az irányítószámnak pontosan 4 számjegyből kell állnia."
           />
         </div>
-        {registerError.address && <p>{registerError.address}</p>}
+
         <div className="input-container">
-          <label htmlFor="address">Település:</label>
+          <label htmlFor="city">Település:</label>
           <img src={orderIcon} />
           <input
             value={address.city}
-            onChange={(e) => setAddress((prevAddress) => ({...prevAddress, city: e.target.value}))}
+            onChange={(e) => setAddress((prevAddress) => ({ ...prevAddress, city: e.target.value }))}
             type="text"
-            name="address"
+            name="city"
             placeholder="Budapest"
+            required
+            pattern="^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s]+$"
+            title="A város neve csak betűket tartalmazhat."
           />
         </div>
 
         <div className="input-container">
-          <label htmlFor="address">Utca:</label>
+          <label htmlFor="street">Utca:</label>
           <img src={orderIcon} />
           <input
             value={address.street}
-            onChange={(e) => setAddress((prevAddress) => ({...prevAddress, street: e.target.value}))}
+            onChange={(e) => setAddress((prevAddress) => ({ ...prevAddress, street: e.target.value }))}
             type="text"
-            name="address"
+            name="street"
             placeholder="Rátz László"
+            required
           />
         </div>
 
         <div className="input-container">
-          <label htmlFor="address">Ház szám:</label>
+          <label htmlFor="num">Házszám:</label>
           <img src={orderIcon} />
           <input
             value={address.num}
-            onChange={(e) => setAddress((prevAddress) => ({...prevAddress, num: e.target.value}))}
+            onChange={(e) => setAddress((prevAddress) => ({ ...prevAddress, num: e.target.value }))}
             type="text"
-            name="address"
+            name="num"
             placeholder="3"
+            required
+            pattern="^\s*\d+\s*$"
+            title="A házszám csak számokat és opcionális szóközöket tartalmazhat."
           />
         </div>
-        {registerError.address && <p>{registerError.address}</p>}
-       
-        <div>
-        <Link  to="/bejelentkezes" >Van már fiókom.<br/> Bejelentkezek!<br/></Link>
+        <div className="input-container">
+          <Link to="/bejelentkezes" >Van már fiókom.<br /> Bejelentkezek!<br /></Link>
           <input type="submit" value="Regisztráció" />
         </div>
       </form>

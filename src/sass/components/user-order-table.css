@@ -1,12 +1,10 @@
- 
-  .orders-container {
+   .orders-container {
     font-family: 'Poppins', sans-serif;
     background-color: white;
     border-radius: 0.5rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin: 4rem auto;
-    width: 80%;
-    max-width: 1200px;
+    width: 70%;
     padding: 1.5rem;
 }
 

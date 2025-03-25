@@ -1,8 +1,8 @@
 import axios from "axios";
 
 export const apiClient = axios.create({
-  baseURL: "http://localhost:8000",
-  withCredentials: true,
+  baseURL: "http://localhost:8000/", // Győződj meg róla, hogy a helyes URL-t használod
+  withCredentials: true, // Cookie-k kezelése
 });
 
 apiClient.interceptors.request.use(
@@ -12,7 +12,7 @@ apiClient.interceptors.request.use(
       .find((row) => row.startsWith("XSRF-TOKEN="))
       ?.split("=")[1];
     if (token) {
-      config.headers["X-XSRF-TOKEN"] = decodeURIComponent(token);
+      config.headers["X-XSRF-TOKEN"] = decodeURIComponent(token); // XSRF token hozzáadása
     }
     return config;
   },

@@ -1,12 +1,9 @@
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/contexts";
-import emailIcon from "/assets/email.svg";
-import userIcon from "/assets/users.svg";
-import orderIcon from "/assets/orders.svg";
 import '../sass/components/user-profile-edit.css';
 
 export default function UserProfileEdit() {
-  const { user, patchUser, updateMessage , setUpdateMessage} = useContext(AuthContext);
+  const { user, patchUser, updateMessage, setUpdateMessage } = useContext(AuthContext);
   const [name, setName] = useState(user?.name || '');
   const [email, setEmail] = useState(user?.email || '');
   const [isLoading, setIsLoading] = useState(false);
@@ -43,22 +40,30 @@ export default function UserProfileEdit() {
     setIsLoading(true);
 
     try {
-      const streetWithUtca = addressData.street.toLowerCase().includes("utca")
-        ? addressData.street.trim()
-        : `${addressData.street.trim()} utca`;
+        const payload = {
+            name,
+            email,
+            zip: addressData.zip.trim(),
+            city: addressData.city.trim(),
+            street: addressData.street.trim().toLowerCase().includes("utca")
+                ? addressData.street.trim()
+                : `${addressData.street.trim()} utca`, // Csak akkor adja hozzá az "utca" szót, ha nem tartalmazza
+            num: addressData.num.trim(),
+        };
 
-      const updatedAddress = `${addressData.zip}, ${addressData.city}, ${streetWithUtca}, ${addressData.num}`;
-      const payload = {
-        name,
-        email,
-        address: updatedAddress,
-      };
+        console.log("Elküldött adatok:", payload); // Ellenőrizd, hogy az adatok helyesen jelennek meg
 
-      await patchUser(payload);
-      console.log("Profil sikeresen frissítve!");
+        await patchUser(payload);
+        console.log("Profil sikeresen frissítve!");
     } catch (error) {
-      setUpdateMessage("Hiba történt a profil frisitésekor"+error);
-
+        if (error.response?.status === 422) {
+            setUpdateMessage(error.response.data.errors); // Hibák mentése
+        } else {
+            console.error("Hiba történt a profil frissítése közben:", error);
+            setUpdateMessage({ error: "Ismeretlen hiba történt." });
+        }
+    } finally {
+        setIsLoading(false);
     }
   };
 
@@ -66,115 +71,104 @@ export default function UserProfileEdit() {
     <div className="profile-edit">
       <form onSubmit={handleSubmit}>
         <h3>Profil szerkesztése</h3>
-        {/* Sikeres üzenet megjelenítése */}
         {updateMessage?.success && (
           <div className="alert success">{updateMessage.success}</div>
         )}
-        {/* Hibák megjelenítése */}
-        {updateMessage?.errorr && (
-          <p className="alert success">{updateMessage.error}</p>
+        {updateMessage?.error && (
+          <p className="alert error">{updateMessage.error}</p>
         )}
 
         <div className="form-group">
           <label htmlFor="name">Név:</label>
-          <div className="input-container">
-            <img src={userIcon} alt="User icon" className="input-icon" />
-            <input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              type="text"
-              name="name"
-              placeholder="Add meg a neved..."
-
-            />
-          </div>
-          {updateMessage.name && <p className="message">{updateMessage.name}</p>} {/* Formázott hibaüzenet */}
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            type="text"
+            name="name"
+            placeholder="Add meg a neved..."
+          />
+          {updateMessage?.name && (
+            <p className="message">{updateMessage.name[0]}</p>
+          )}
         </div>
 
         <div className="form-group">
           <label htmlFor="email">Email cím:</label>
-          <div className="input-container">
-            <img src={emailIcon} alt="Email icon" className="input-icon" />
-            <input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              type="email"
-              name="email"
-              placeholder="Add meg az email címed..."
-
-            />
-          </div>
-          {updateMessage.email && <p className="message">{updateMessage.email}</p>} {/* Formázott hibaüzenet */}
+          <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            name="email"
+            placeholder="Add meg az email címed..."
+          />
+          {updateMessage?.email && (
+            <p className="message">{updateMessage.email[0]}</p>
+          )}
         </div>
-        {updateMessage.address && <p className="message">{updateMessage.address}</p>} {/* Formázott hibaüzenet */}
+
         <div className="form-group">
           <label htmlFor="zip">Irányítószám:</label>
-          <div className="input-container">
-            <img src={orderIcon} alt="Address icon" className="input-icon" />
-            <input
-              value={addressData.zip}
-              onChange={handleAddressChange('zip')}
-              type="text"
-              name="zip"
-              placeholder="1234"
-              required
-              pattern="^\d{4}$" // Csak 4 számjegy
-              title="Az irányítószámnak pontosan 4 számjegyből kell állnia."
-            />
-          </div>
-
+          <input
+            value={addressData.zip}
+            onChange={handleAddressChange('zip')}
+            type="text"
+            name="zip"
+            placeholder="1234"
+            required
+            pattern="^\d{4}$"
+            title="Az irányítószámnak pontosan 4 számjegyből kell állnia."
+          />
+          {updateMessage?.zip && (
+            <p className="message">{updateMessage.zip[0]}</p>
+          )}
         </div>
 
         <div className="form-group">
           <label htmlFor="city">Város:</label>
-          <div className="input-container">
-            <img src={orderIcon} alt="Address icon" className="input-icon" />
-            <input
-              value={addressData.city}
-              onChange={handleAddressChange('city')}
-              type="text"
-              name="city"
-              placeholder="Budapest"
-              required
-              pattern="^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s]+$" // Csak betűk és szóközök
-              title="A város neve csak betűket tartalmazhat."
-            />
-          </div>
-         
+          <input
+            value={addressData.city}
+            onChange={handleAddressChange('city')}
+            type="text"
+            name="city"
+            placeholder="Budapest"
+            required
+            pattern="^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s]+$"
+            title="A város neve csak betűket tartalmazhat."
+          />
+          {updateMessage?.city && (
+            <p className="message">{updateMessage.city[0]}</p>
+          )}
         </div>
 
         <div className="form-group">
           <label htmlFor="street">Utca:</label>
-          <div className="input-container">
-            <img src={orderIcon} alt="Address icon" className="input-icon" />
-            <input
-              value={addressData.street}
-              onChange={handleAddressChange('street')}
-              type="text"
-              name="street"
-              placeholder="Példa utca"
-              required
-            />
-          </div>
-      
+          <input
+            value={addressData.street}
+            onChange={handleAddressChange('street')}
+            type="text"
+            name="street"
+            placeholder="Példa utca"
+          />
+          {updateMessage?.street && (
+            <p className="message">{updateMessage.street[0]}</p>
+          )}
         </div>
 
         <div className="form-group">
           <label htmlFor="num">Házszám:</label>
-          <div className="input-container">
-            <img src={orderIcon} alt="Address icon" className="input-icon" />
-            <input
-              value={addressData.num}
-              onChange={handleAddressChange('num')}
-              type="text"
-              name="num"
-              placeholder="42"
-              required
-              pattern="^\s*\d+\s*$" // Számok előtt és után opcionális szóközök
-              title="A házszám csak számokat és opcionális szóközöket tartalmazhat."
-            />
-          </div>
-        
+          <input
+            value={addressData.num}
+            onChange={handleAddressChange('num')}
+            type="text"
+            name="num"
+            placeholder="42"
+            required
+            pattern="^\s*\d+\s*$"
+            title="A házszám csak számokat és opcionális szóközöket tartalmazhat."
+          />
+          {updateMessage?.num && (
+            <p className="message">{updateMessage.num[0]}</p>
+          )}
         </div>
 
         <button
