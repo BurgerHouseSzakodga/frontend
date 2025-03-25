@@ -121,8 +121,8 @@ const AuthContextProvider = ({ children }) => {
 
   const contextValue = {
     user,
-    setUser, 
-    patchUser, 
+    setUser,
+    patchUser,
     loginError,
     registerError,
     patchPassword,

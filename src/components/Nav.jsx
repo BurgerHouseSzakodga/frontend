@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 import { AuthContext } from "../context/contexts";
 import logo from "/assets/logo.png";
@@ -12,19 +12,37 @@ import gearIcon from "/assets/gear.svg";
 const Nav = () => {
   const { user, isAdmin } = useContext(AuthContext);
 
+  const [menuClassName, setMenuClassName] = useState("");
+
+  const handleOpenMenu = () => {
+    if (!menuClassName) {
+      setMenuClassName(" open");
+    } else {
+      setMenuClassName("");
+    }
+  };
+
   return (
     <div className="nav">
-      <Link className="nav__logo" to="/">
+      <Link className="nav__logo hide-on-mobile" to="/">
         <img src={logo} />
       </Link>
-      <div className="nav__address">
-        <img src={locationIcon} />
-        <p>Kiszállítás ide:</p>
-        <strong className="address_name">
-          {user ? user.address : "2040, Budaörs, Lévai utca 29."}
-        </strong>
-      </div>
-      <div className="nav__buttons">
+      {user && (
+        <div className="nav__address">
+          <img src={locationIcon} />
+          <p>Átvétel:</p>
+          <strong className="address_name">
+            {user.address ? user.address : "Étteremben"}
+          </strong>
+        </div>
+      )}
+      <button
+        onClick={handleOpenMenu}
+        className={"burger-menu" + menuClassName}
+      >
+        <span></span>
+      </button>
+      <div className="nav__buttons hide-on-mobile">
         <Link to="/rendeles" className="find-food-button">
           <img src={searchIcon} />
           <p> Felfedezés</p>
@@ -49,6 +67,57 @@ const Nav = () => {
             <p>Bejelentkezés</p>
           </Link>
         )}
+      </div>
+      <div className={"nav__menu" + menuClassName}>
+        <div className="button-wrapper">
+          <Link
+            to="/rendeles"
+            className="find-food-button"
+            onClick={() => setMenuClassName("")}
+          >
+            <img src={searchIcon} />
+            <p> Felfedezés</p>
+          </Link>
+          {user ? (
+            <>
+              <Link
+                to="/felhasznalo"
+                className="action-button"
+                onClick={() => setMenuClassName("")}
+              >
+                <img src={accountIcon} />
+                <p> Felhasználó</p>
+              </Link>
+              <Link
+                to="/kosar"
+                className="action-button"
+                onClick={() => setMenuClassName("")}
+              >
+                <img src={cartIcon} />
+                <p> Kosár</p>
+              </Link>
+              {isAdmin && (
+                <Link
+                  to="/admin/kezelofelulet"
+                  className="action-button"
+                  onClick={() => setMenuClassName("")}
+                >
+                  <img src={gearIcon} />
+                  <p> Kezelőfelület</p>
+                </Link>
+              )}
+            </>
+          ) : (
+            <Link
+              to="/bejelentkezes"
+              className="action-button"
+              onClick={() => setMenuClassName("")}
+            >
+              <img src={accountIcon} />
+              <p>Bejelentkezés</p>
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   );

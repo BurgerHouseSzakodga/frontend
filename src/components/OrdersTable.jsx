@@ -52,12 +52,12 @@ const OrdersTable = () => {
     {
       field: "user_name",
       headerName: "Felhasználó",
-      width: 150,
+      width: 125,
     },
     {
       field: "delivery_address",
       headerName: "Szállítási cím",
-      width: 200,
+      width: 250,
       renderCell: (params) =>
         params.value ? (
           "📍 " + params.value
@@ -68,7 +68,7 @@ const OrdersTable = () => {
     {
       field: "status",
       headerName: "Státusz",
-      width: 150,
+      width: 132,
       renderCell: (params) => {
         const color = params.value === "kiszállítva" ? "success" : "warning";
         return (
@@ -85,7 +85,7 @@ const OrdersTable = () => {
     {
       field: "order_items",
       headerName: "Részletek",
-      width: 200,
+      width: 147,
       renderCell: (params) => (
         <Button
           variant="contained"
@@ -98,7 +98,7 @@ const OrdersTable = () => {
     {
       field: "delete",
       headerName: "Törlés",
-      width: 200,
+      width: 115,
       renderCell: (params) => (
         <Button
           variant="outlined"
