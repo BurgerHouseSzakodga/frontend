@@ -1,12 +1,5 @@
-import React from 'react'
-
 function FooterPicture() {
-    
-  return (
-    <div>
-      
-    </div>
-  )
+  return <div></div>;
 }
 
-export default FooterPicture
+export default FooterPicture;

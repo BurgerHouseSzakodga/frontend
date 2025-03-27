@@ -84,3 +84,9 @@
     color: white;
   }
 }
+
+.orders-table__modall {
+  small {
+    @include flex($justify: flex-start);
+  }
+}

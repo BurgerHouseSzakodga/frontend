@@ -24,7 +24,7 @@ function Item() {
         const menuItem = await fetchData(`api/menu-item/${id}`);
         setItem(menuItem);
       } catch (error) {
-        console.log(error);
+        setError(error.message || "Hiba a betöltés során");
         navigate("/");
       } finally {
         setLoading(false);
@@ -63,8 +63,7 @@ function Item() {
       await addToBasket(user.id, item);
       setOpen(true);
     } catch (error) {
-      console.error("Error adding item to basket:", error);
-      setError(true);
+      setError(error.message || "Hiba a kosárhoz adás során");
     }
   };
 
@@ -141,14 +140,14 @@ function Item() {
           Étel sikeresen kosárhoz adva
         </Alert>
       </Snackbar>
-      <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar open={!!error} autoHideDuration={6000} onClose={handleClose}>
         <Alert
           onClose={handleClose}
           severity="error"
           variant="filled"
           sx={{ width: "100%" }}
         >
-          Hiba a kosárhoz adás során.
+          {error}
         </Alert>
       </Snackbar>
     </>

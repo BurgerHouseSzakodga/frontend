@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 
-import { Button, Chip } from "@mui/material";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 
@@ -10,6 +9,7 @@ import Modal from "./Modal";
 import Loader from "./Loader";
 import { localeText } from "../utils/locale-text";
 import waringIcon from "/assets/warning.svg";
+import { createOrdersColumns } from "../utils/table-columns";
 
 const OrdersTable = () => {
   const { ordersLoading, orders, handleUpdateStatus, handleDeleteOrder } =
@@ -47,69 +47,11 @@ const OrdersTable = () => {
     user_name: order.user?.name || "N/A",
   }));
 
-  const columns = [
-    { field: "id", headerName: "ID", type: "number", width: 90 },
-    {
-      field: "user_name",
-      headerName: "Felhasználó",
-      width: 125,
-    },
-    {
-      field: "delivery_address",
-      headerName: "Szállítási cím",
-      width: 250,
-      renderCell: (params) =>
-        params.value ? (
-          "📍 " + params.value
-        ) : (
-          <Chip label="Átvétel az étteremben" />
-        ),
-    },
-    {
-      field: "status",
-      headerName: "Státusz",
-      width: 132,
-      renderCell: (params) => {
-        const color = params.value === "kiszállítva" ? "success" : "warning";
-        return (
-          <Button
-            onClick={() => handleUpdateOrder(params.id, params.value)}
-            color={color}
-            variant={color === "success" ? "contained" : "outlined"}
-          >
-            {params.value.toUpperCase()}
-          </Button>
-        );
-      },
-    },
-    {
-      field: "order_items",
-      headerName: "Részletek",
-      width: 147,
-      renderCell: (params) => (
-        <Button
-          variant="contained"
-          onClick={() => handleOpenModal(params.id, params.value)}
-        >
-          Megtekintés
-        </Button>
-      ),
-    },
-    {
-      field: "delete",
-      headerName: "Törlés",
-      width: 115,
-      renderCell: (params) => (
-        <Button
-          variant="outlined"
-          color="error"
-          onClick={() => handleDelete(params.id)}
-        >
-          Törlés
-        </Button>
-      ),
-    },
-  ];
+  const columns = createOrdersColumns(
+    handleUpdateOrder,
+    handleOpenModal,
+    handleDelete
+  );
 
   if (ordersLoading) {
     return <Loader />;
@@ -140,10 +82,28 @@ const OrdersTable = () => {
           localeText={localeText}
         />
       </Box>
-      <Modal className="modal" open={open} onCloseModal={handleCloseModal}>
+      <Modal
+        className="modal orders-table__modall"
+        open={open}
+        onCloseModal={handleCloseModal}
+      >
         {selectedItems.map((item, i) => (
           <div key={i}>
             {item.menu_item.name} x {item.buying_price} Ft
+            <div>
+              {item.extras.map((extra) => (
+                <small key={extra.id}>
+                  {extra.quantity > 1 ? (
+                    <>
+                      + {extra.ingredients.name}
+                      (+ {extra.ingredients.extra_price} Ft)
+                    </>
+                  ) : (
+                    <> - {extra.ingredients.name}</>
+                  )}
+                </small>
+              ))}
+            </div>
           </div>
         ))}
         <hr />
