@@ -1,8 +1,8 @@
 import axios from "axios";
 
 export const apiClient = axios.create({
-  baseURL: "http://localhost:8000",
-  withCredentials: true,
+  baseURL: "http://localhost:8000/",
+  withCredentials: true, 
 });
 
 apiClient.interceptors.request.use(
@@ -12,7 +12,7 @@ apiClient.interceptors.request.use(
       .find((row) => row.startsWith("XSRF-TOKEN="))
       ?.split("=")[1];
     if (token) {
-      config.headers["X-XSRF-TOKEN"] = decodeURIComponent(token);
+      config.headers["X-XSRF-TOKEN"] = decodeURIComponent(token); 
     }
     return config;
   },

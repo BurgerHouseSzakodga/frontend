@@ -17,11 +17,16 @@ function Item() {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState(false);
 
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
   useEffect(() => {
     const getItem = async () => {
       setLoading(true);
       try {
         const menuItem = await fetchData(`api/menu-item/${id}`);
+        menuItem.name = capitalizeFirstLetter(menuItem.name); // Termék neve nagybetűs
         setItem(menuItem);
       } catch (error) {
         setError(error.message || "Hiba a betöltés során");
@@ -91,7 +96,8 @@ function Item() {
           <div className="item-info">
             <h1>{item.name}</h1>
             <p className="description">{item.description}</p>
-            <p className="price">{item.actual_price} Ft</p>
+            <p className="original-price">{Math.round(item.price)} Ft</p>
+            <p className="actual-price">{item.actual_price} Ft</p>
           </div>
         </div>
         <div className="ingredients-section">

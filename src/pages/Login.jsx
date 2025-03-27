@@ -19,7 +19,7 @@ const Login = () => {
   return (
     <div className="login">
       <form onSubmit={handleLogin}>
-        <h3>Bejelentekezés</h3>
+        <h3>Bejelentkezés</h3>
         <div>
           <label htmlFor="email">Email cím:</label>
           <div>
@@ -33,7 +33,9 @@ const Login = () => {
               placeholder="Írd be az email címed..."
             />
           </div>
-          {loginError.email && <p>{loginError.email}</p>}
+          {loginError?.email && (
+            <p className="message">{loginError.email[0]}</p>
+          )}
         </div>
         <div>
           <label htmlFor="password">Jelszó:</label>
@@ -48,10 +50,12 @@ const Login = () => {
               placeholder="Írd be a jelszavad..."
             />
           </div>
-          {loginError.password && <p>{loginError.password}</p>}
+          {loginError?.password && (
+            <p className="message">{loginError.password[0]}</p>
+          )}
         </div>
         <div>
-          <Link to="/regisztracio" className="link">Nincs még fiókja?<br/> Csináljon egyet most!</Link>
+          <Link to="/regisztracio" className="link">Nincs még fiókja?<br /> Csináljon egyet most!</Link>
           <input type="submit" value="Bejelentkezés" />
         </div>
       </form>
