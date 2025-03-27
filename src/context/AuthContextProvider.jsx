@@ -31,14 +31,13 @@ const AuthContextProvider = ({ children }) => {
     setAuthLoading(true);
     setUpdateMessage([]);
     try {
-        const response = await apiClient.patch("/api/user/update-profile", updatedUserData); // Győződj meg róla, hogy PATCH metódust használ
-        console.log("Sikeres adat küldés:", response.data);
+        const response = await apiClient.patch("/api/user/update-profile", updatedUserData); 
         setUser(response.data);
         setUpdateMessage({ success: "Adatok sikeresen módosítva!" });
         return response.data;
     } catch (error) {
         if (error.response?.status === 422) {
-            setUpdateMessage(error.response.data.errors); // Hibák mentése
+            setUpdateMessage(error.response.data.errors); 
         } else {
             console.error("Hiba történt a profil frissítése közben:", error);
             setUpdateMessage({ error: "Ismeretlen hiba történt." });
@@ -51,7 +50,7 @@ const AuthContextProvider = ({ children }) => {
 
   const patchPassword = useCallback(async (updatedPasswordData) => {
     setAuthLoading(true);
-    setupdatePasswordMessage([]); // Töröljük az előző hibákat
+    setupdatePasswordMessage([]);
     try {
         const response = await apiClient.put("/api/user/password", updatedPasswordData);
         console.log("Sikeres adat küldés happy van:)", response.data);
@@ -59,7 +58,7 @@ const AuthContextProvider = ({ children }) => {
         return response.data;
     } catch (error) {
         if (error.response?.status === 422) {
-            setupdatePasswordMessage(error.response.data.errors); // Hibák beállítása
+            setupdatePasswordMessage(error.response.data.errors); 
         } else {
             console.error("Hiba a jelszó frissítésekor:", error);
         }

@@ -15,10 +15,10 @@
 
 .item-card img {
   width: 100%;
-  height: 200px; 
+  height: 200px;
   object-fit: cover;
   border-radius: 8px;
-  margin: 0 auto; 
+  margin: 0 auto;
 }
 
 .discount-badge {
@@ -53,7 +53,7 @@
 
 .basket-button {
   display: inline-block;
-  margin-top: 20px; 
+  margin-top: 20px;
   padding: 10px 20px;
   background-color: #e67e22;
   color: white;
@@ -66,7 +66,7 @@
 }
 
 .basket-button:hover {
-  background-color: darken(#e67e22, 10%);
+  background-color: #d35400;
 }
 
 .swiper-button {
@@ -91,46 +91,93 @@
   height: 30px;
 }
 
-@media screen and (max-width: 480px) {
-  .cim{
-    font-size: 1.3rem;
-  }
-  cim{
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-  }
-
-
-  .popular-item-container {
-    padding: 5px;
-  }
-
+/* Reszponzív stílusok */
+@media screen and (max-width: 768px) {
   .item-card {
-    padding: 5px;
+    padding: 8px;
+    margin-bottom: 15px;
   }
 
-  
+  .item-card img {
+    height: 150px;
+  }
+
   .item-card h3 {
-    font-size: 1.2rem;
+    font-size: 1rem;
+  }
+
+  .item-card p {
+    font-size: 0.9rem;
+  }
+
+  .item-card .discounted-price {
+    font-size: 1rem;
+  }
+
+  .item-card .original-price {
+    font-size: 0.8rem;
+  }
+
+  .basket-button {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .discount-item-container {
+    padding: 10px;
+  }
+
+  .item-card img {
+    height: 120px;
+  }
+
+  .item-card h3 {
+    font-size: 0.9rem;
   }
 
   .item-card p {
     font-size: 0.8rem;
   }
 
-  
   .item-card .discounted-price {
-    font-size: 1.280rem;
+    font-size: 0.9rem;
   }
 
   .item-card .original-price {
     font-size: 0.7rem;
   }
 
-  .item-card .basket-button {
-    padding: 12px 15px;
-    font-size: 0.9rem;
+  .basket-button {
+    padding: 6px 10px;
+    font-size: 0.8rem;
   }
 }
-  
+
+@media screen and (max-width: 320px) {
+  .item-card img {
+    height: 100px;
+  }
+
+  .item-card h3 {
+    font-size: 0.8rem;
+  }
+
+  .item-card p {
+    font-size: 0.7rem;
+  }
+
+  .item-card .discounted-price {
+    font-size: 0.8rem;
+  }
+
+  .item-card .original-price {
+    font-size: 0.6rem;
+  }
+
+  .basket-button {
+    padding: 5px 8px;
+    font-size: 0.7rem;
+  }
+}

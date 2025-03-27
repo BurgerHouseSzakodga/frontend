@@ -15,7 +15,6 @@ function AllItems() {
     navigate(`/order/${id}`);
   };
 
-  // Szűrt és rendezett elemek
   const filteredAndSortedItems = menuItems
     .filter(item => selectedCategory === 'all' || item.category_id === parseInt(selectedCategory))
     .sort((a, b) => {
@@ -35,7 +34,7 @@ function AllItems() {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
-  // Csoportosítás kategóriák szerint
+  
   const groupedItems = filteredAndSortedItems.reduce((acc, item) => {
     const category = item.category_id;
     if (!acc[category]) {

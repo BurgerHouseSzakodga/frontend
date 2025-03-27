@@ -1,14 +1,20 @@
 import { useContext, useEffect, useState } from "react";
 import { OrderContext } from "../context/contexts";
 import "../sass/components/user-order-table.css";
+import Loader from "./Loader";
 
 function UserOrderTable() {
   const { userOrders } = useContext(OrderContext);
-  const [orders, setOrders] = useState(userOrders);
+  const [orders, setOrders, ordersLoading] = useState(userOrders);
 
   useEffect(() => {
-    setOrders(userOrders); // Frissítjük az állapotot, ha a `userOrders` változik
+    setOrders(userOrders); 
   }, [userOrders]);
+
+  
+    if (ordersLoading) {
+      return <Loader />;
+    }
 
   return (
     <div className="orders-container">

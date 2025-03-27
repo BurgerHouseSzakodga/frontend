@@ -1,4 +1,3 @@
-import React from 'react';
 import '../sass/pages/about-you.css';
 import Foot from '../components/Footer';
 
