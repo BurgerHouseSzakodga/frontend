@@ -5,7 +5,7 @@ export default function Foot() {
   return (
     <footer className="footer-container">
       <div className="footer-content">
-
+        {/* Első oszlop */}
         <div className="footer-column">
           <h2 className="footer-title">Kapcsolat</h2>
           <p className="footer-text">Cím: Budapest, 1234 Valahol utca 12.</p>
@@ -13,30 +13,35 @@ export default function Foot() {
           <p className="footer-text">E-mail: info@pelda.hu</p>
         </div>
 
-
+        {/* Második oszlop */}
         <div className="footer-column">
           <h2 className="footer-title">Hasznos linkek</h2>
           <ul className="footer-links">
             <li>
-              <Link to="/rolunk" className="footer-link">Rólunk</Link>
+              <Link to="/rolunk" className="footer-link">
+                Rólunk
+              </Link>
             </li>
             <li>
-              <Link to="/szolgaltatas" className="footer-link">Szolgáltatásaink</Link>
-            
+              <Link to="/szolgaltatas" className="footer-link">
+                Szolgáltatásaink
+              </Link>
             </li>
-           
             <li>
-              <Link to="/kapcsolat" className="footer-link">Kapcsolat</Link>
+              <Link to="/kapcsolat" className="footer-link">
+                Kapcsolat
+              </Link>
             </li>
           </ul>
         </div>
 
-  
+        {/* Harmadik oszlop */}
         <div className="footer-column">
-          <img src="../public/assets/logo.png" alt="Logo"  />
+          <img src="/assets/logo.png" alt="Logo" />
         </div>
       </div>
 
+      {/* Alsó szekció */}
       <div className="footer-bottom">
         <p className="footer-bottom-text">
           © {new Date().getFullYear()} Burger House. Minden jog fenntartva.va.

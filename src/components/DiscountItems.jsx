@@ -30,7 +30,7 @@ function DiscountItems() {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
-  return (
+  return discountedItems.length > 0 ? (
     <div className="discount-item-container">
       <h1 className="cim">Akciós termékek</h1>
       <button
@@ -99,6 +99,8 @@ function DiscountItems() {
         <img src={rightIcon} alt="Next" />
       </button>
     </div>
+  ) : (
+    <></>
   );
 }
 

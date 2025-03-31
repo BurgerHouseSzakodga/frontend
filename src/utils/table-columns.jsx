@@ -169,3 +169,75 @@ export const createUsersColumns = (usersIcon, handleDelete) => {
 
   return columns;
 };
+
+export const createOrdersColumns = (
+  handleUpdateOrder,
+  handleOpenModal,
+  handleDelete
+) => {
+  const columns = [
+    { field: "id", headerName: "ID", type: "number", width: 90 },
+    {
+      field: "user_name",
+      headerName: "Felhasználó",
+      width: 125,
+    },
+    {
+      field: "delivery_address",
+      headerName: "Szállítási cím",
+      width: 250,
+      renderCell: (params) =>
+        params.value ? (
+          "📍 " + params.value
+        ) : (
+          <Chip label="Átvétel az étteremben" />
+        ),
+    },
+    {
+      field: "status",
+      headerName: "Státusz",
+      width: 132,
+      renderCell: (params) => {
+        const color = params.value === "kiszállítva" ? "success" : "warning";
+        return (
+          <Button
+            onClick={() => handleUpdateOrder(params.id, params.value)}
+            color={color}
+            variant={color === "success" ? "contained" : "outlined"}
+          >
+            {params.value.toUpperCase()}
+          </Button>
+        );
+      },
+    },
+    {
+      field: "order_items",
+      headerName: "Részletek",
+      width: 147,
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          onClick={() => handleOpenModal(params.id, params.value)}
+        >
+          Megtekintés
+        </Button>
+      ),
+    },
+    {
+      field: "delete",
+      headerName: "Törlés",
+      width: 115,
+      renderCell: (params) => (
+        <Button
+          variant="outlined"
+          color="error"
+          onClick={() => handleDelete(params.id)}
+        >
+          Törlés
+        </Button>
+      ),
+    },
+  ];
+
+  return columns;
+};
