@@ -4,8 +4,8 @@
   justify-content: center;
   overflow: hidden;
   height: 200px;
-  width: 100%;
-  position: relative;
+  width: 170px;
+  /* position: relative; */
 }
 
 .discount-badge {
@@ -63,6 +63,7 @@
 @media screen and (max-width: 768px) {
   .image-container {
     height: 150px;
+    width: 100px;
   }
 
   .item-name {
@@ -90,6 +91,7 @@
 @media screen and (max-width: 480px) {
   .image-container {
     height: 120px;
+   
   }
 
   .item-name {
