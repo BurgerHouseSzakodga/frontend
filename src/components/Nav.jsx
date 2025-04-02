@@ -8,6 +8,7 @@ import searchIcon from "/assets/search.svg";
 import accountIcon from "/assets/account.svg";
 import cartIcon from "/assets/cart.svg";
 import gearIcon from "/assets/gear.svg";
+import { Tooltip } from "@mui/material";
 
 const Nav = () => {
   const { user, isAdmin } = useContext(AuthContext);
@@ -31,9 +32,14 @@ const Nav = () => {
         <div className="nav__address">
           <img src={locationIcon} />
           <p>Átvétel:</p>
-          <strong className="address_name">
-            {user.address ? user.address : "Étteremben"}
-          </strong>
+          <Tooltip
+            title={user.address ? user.address : "Étteremben"}
+            placement="bottom"
+          >
+            <strong className="address_name">
+              {user.address ? user.address : "Étteremben"}
+            </strong>
+          </Tooltip>
         </div>
       )}
       <button

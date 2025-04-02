@@ -1,7 +1,9 @@
 import { useContext, useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
-import { Link } from "react-router-dom";
+
 import { MenuItemContext } from "../context/contexts";
 import rightIcon from "/assets/right.svg";
 import leftIcon from "/assets/left.svg";

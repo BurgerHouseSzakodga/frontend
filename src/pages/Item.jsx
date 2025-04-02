@@ -96,12 +96,18 @@ function Item() {
           <div className="item-info">
             <h1>{item.name}</h1>
             <p className="description">{item.description}</p>
-            <p className="original-price">{Math.round(item.price)} Ft</p>
-            <p className="actual-price">{item.actual_price} Ft</p>
+            {item.price != item.actual_price ? (
+              <>
+                <p className="original-price">{item.price} Ft</p>
+                <p className="actual-price">{item.actual_price} Ft</p>
+              </>
+            ) : (
+              <p className="actual-price">{item.actual_price} Ft</p>
+            )}
           </div>
         </div>
         <div className="ingredients-section">
-          <h2>Összetevők:</h2>
+          {item.compositions?.length > 0 && <h2>Összetevők:</h2>}
           <form onSubmit={handleSubmit}>
             {item.compositions ? (
               <div className="ingredients-list">
