@@ -5,6 +5,7 @@ import { Alert, Snackbar } from "@mui/material";
 import { AuthContext, UserContext } from "../context/contexts";
 import Loader from "../components/Loader";
 import deleteIcon from "/assets/delete.svg";
+import cartIcon from "/assets/cart.svg";
 import {
   updateAddress,
   deleteBasketItem,
@@ -153,7 +154,12 @@ const Cart = () => {
       </div>
     );
   } else if (!cart || !cart.items || !cart.items.length) {
-    return <div>A kosarad üres</div>;
+    return (
+      <div className="empty-cart">
+        <img src={cartIcon} alt="Üres kosár ikon" />
+        <h2>A kosarad üres</h2>
+      </div>
+    );
   }
 
   return (

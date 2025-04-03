@@ -47,11 +47,11 @@ export default function UserProfileEdit() {
             city: addressData.city.trim(),
             street: addressData.street.trim().toLowerCase().includes("utca")
                 ? addressData.street.trim()
-                : `${addressData.street.trim()} utca`, // Csak akkor adja hozzá az "utca" szót, ha nem tartalmazza
+                : `${addressData.street.trim()} utca`,
             num: addressData.num.trim(),
         };
 
-        console.log("Elküldött adatok:", payload); // Ellenőrizd, hogy az adatok helyesen jelennek meg
+        console.log("Elküldött adatok:", payload); 
 
         await patchUser(payload);
         console.log("Profil sikeresen frissítve!");
