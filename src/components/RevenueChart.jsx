@@ -3,14 +3,24 @@ import { useEffect, useState } from "react";
 import { LineChart } from "@mui/x-charts/LineChart";
 
 import Modal from "./Modal";
-import { fetchRevenueByTimePeriod } from "../api/http";
+import Loader from "./Loader";
 import errorIcon from "/assets/error.svg";
+import { fetchRevenueByTimePeriod } from "../api/http";
 
 const RevenueChart = () => {
   const [revenueByTimePeriod, setRevenueByTimePeriod] = useState([]);
-  const [selectedRange, setSelectedRange] = useState(15);
+  const [selectedRange, setSelectedRange] = useState(30);
   const [isLoading, setIsLoading] = useState(false);
   const [chartError, setChartError] = useState(null);
+
+  const generateDates = (length) => {
+    const today = new Date();
+    return Array.from({ length }, (_, i) => {
+      const date = new Date(today);
+      date.setDate(today.getDate() - (length - 1 - i));
+      return date.toISOString().split("T")[0];
+    });
+  };
 
   useEffect(() => {
     const fetchRevenue = async () => {
@@ -30,26 +40,50 @@ const RevenueChart = () => {
   }, [selectedRange]);
 
   if (isLoading) {
-    return <div className="loader"></div>;
+    return <Loader />;
   }
+
+  const chartData = generateDates(revenueByTimePeriod.length).map(
+    (date, index) => ({
+      x: new Date(date),
+      y:
+        parseFloat(revenueByTimePeriod[index]) == 0
+          ? null
+          : parseFloat(revenueByTimePeriod[index]),
+    })
+  );
 
   return (
     <>
       <div className="revenue-chart">
         <select
           value={selectedRange}
-          onChange={(e) => setSelectedRange(e.target.value)}
+          onChange={(e) => setSelectedRange(Number(e.target.value))}
         >
-          <option>30</option>
-          <option>15</option>
-          <option>7</option>
+          <option value={30}>Az elmúlt hónap</option>
+          <option value={15}>Az elmúlt két hét</option>
+          <option value={7}>A héten</option>
         </select>
         <LineChart
           series={[
             {
-              data: [...revenueByTimePeriod],
+              dataKey: "y",
+              connectNulls: true,
             },
           ]}
+          xAxis={[
+            {
+              scaleType: "time",
+              dataKey: "x",
+              label: "Dátum",
+              valueFormatter: (date) =>
+                new Date(date).toLocaleDateString("hu-HU", {
+                  month: "short",
+                  day: "numeric",
+                }),
+            },
+          ]}
+          dataset={chartData}
           width={848}
           height={300}
           sx={{ backgroundColor: "white", borderRadius: "5px" }}

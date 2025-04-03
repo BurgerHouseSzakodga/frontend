@@ -1,20 +1,17 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
+
 import { OrderContext } from "../context/contexts";
-import "../sass/components/user-order-table.css";
 import Loader from "./Loader";
+import "../sass/components/user-order-table.css";
 
 function UserOrderTable() {
-  const { userOrders } = useContext(OrderContext);
-  const [orders, setOrders, ordersLoading] = useState(userOrders);
+  const { userOrders, ordersLoading } = useContext(OrderContext);
 
-  useEffect(() => {
-    setOrders(userOrders); 
-  }, [userOrders]);
+  console.log(userOrders);
 
-  
-    if (ordersLoading) {
-      return <Loader />;
-    }
+  if (ordersLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="orders-container">
@@ -28,8 +25,8 @@ function UserOrderTable() {
       </div>
 
       <div className="orders-body">
-        {orders.length > 0 ? (
-          orders.map((order) => (
+        {userOrders.length > 0 ? (
+          userOrders.map((order) => (
             <div key={order.id} className="orders-row">
               <div>{order.id}</div>
               {order.delivery_address ? (
@@ -42,9 +39,27 @@ function UserOrderTable() {
                 <div>
                   {order.order_items && order.order_items.length > 0 ? (
                     order.order_items.map((item) => (
-                      <p key={item.id}>
-                        {item.menu_item.name} - {item.buying_price} Ft <br />
-                      </p>
+                      <>
+                        <p>
+                          {item.menu_item.name} - {item.buying_price} Ft <br />
+                        </p>
+                        {item.extras.length > 0 && (
+                          <div className="order-details">
+                            {item.extras.map((extra) => (
+                              <>
+                                {extra.quantity > 1 ? (
+                                  <small>
+                                    + {extra.ingredients.name} (+{" "}
+                                    {extra.ingredients.extra_price} ft)
+                                  </small>
+                                ) : (
+                                  <small>- {extra.ingredients.name}</small>
+                                )}
+                              </>
+                            ))}
+                          </div>
+                        )}
+                      </>
                     ))
                   ) : (
                     <p>Nincs termék a rendelésben</p>

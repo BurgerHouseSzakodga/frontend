@@ -20,11 +20,6 @@ const ItemsTreeView = () => {
             ></TreeItem>
           ))}
         </TreeItem>
-        <TreeItem itemId="asd" label="Data Grid">
-          <TreeItem itemId="asda" label="@mui/x-data-grid" />
-          <TreeItem itemId="asb" label="@mui/x-data-grid-pro" />
-          <TreeItem itemId="asc" label="@mui/x-data-grid-premium" />
-        </TreeItem>
       </SimpleTreeView>
     </Box>
   );

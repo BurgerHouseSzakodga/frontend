@@ -33,7 +33,7 @@ const Dashboard = () => {
         />
         <InfoCard
           title="Teljes bevétel"
-          value={totalRevenue}
+          value={totalRevenue + " Ft"}
           loading={ordersLoading}
           image={revenueIcon}
         />
