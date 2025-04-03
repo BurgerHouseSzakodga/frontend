@@ -1,11 +1,10 @@
 import { useContext, useState } from "react";
-import '../sass/pages/register.css';
+import "../sass/pages/register.css";
 import { AuthContext } from "../context/contexts";
 import emailIcon from "/assets/email.svg";
 import userIcon from "/assets/users.svg";
 import passwordIcon from "/assets/password.svg";
 import orderIcon from "/assets/orders.svg";
-import '../sass/pages/register.css';
 import { Link } from "react-router-dom";
 
 const Register = () => {
@@ -13,7 +12,12 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const [address, setAddress] = useState({ zip: "", city: "", street: "", num: "" });
+  const [address, setAddress] = useState({
+    zip: "",
+    city: "",
+    street: "",
+    num: "",
+  });
 
   const { register, registerError } = useContext(AuthContext);
 
@@ -25,7 +29,15 @@ const Register = () => {
       email,
       password,
       password_confirmation: passwordConfirmation,
-      address: address.zip + ", " + address.city + "," + address.street + " utca" + "," + address.num,
+      address:
+        address.zip +
+        ", " +
+        address.city +
+        "," +
+        address.street +
+        " utca" +
+        "," +
+        address.num,
     };
 
     register(payload);
@@ -33,7 +45,6 @@ const Register = () => {
 
   return (
     <div className="register">
-
       <form onSubmit={handleRegister}>
         <h3>Regisztráció</h3>
         <div className="input-container">
@@ -90,13 +101,17 @@ const Register = () => {
           />
         </div>
 
-
         <div className="input-container">
           <label htmlFor="zip">Irányítószám:</label>
           <img src={orderIcon} />
           <input
             value={address.zip}
-            onChange={(e) => setAddress((prevAddress) => ({ ...prevAddress, zip: e.target.value }))}
+            onChange={(e) =>
+              setAddress((prevAddress) => ({
+                ...prevAddress,
+                zip: e.target.value,
+              }))
+            }
             type="text"
             name="zip"
             placeholder="1119"
@@ -111,7 +126,12 @@ const Register = () => {
           <img src={orderIcon} />
           <input
             value={address.city}
-            onChange={(e) => setAddress((prevAddress) => ({ ...prevAddress, city: e.target.value }))}
+            onChange={(e) =>
+              setAddress((prevAddress) => ({
+                ...prevAddress,
+                city: e.target.value,
+              }))
+            }
             type="text"
             name="city"
             placeholder="Budapest"
@@ -126,7 +146,12 @@ const Register = () => {
           <img src={orderIcon} />
           <input
             value={address.street}
-            onChange={(e) => setAddress((prevAddress) => ({ ...prevAddress, street: e.target.value }))}
+            onChange={(e) =>
+              setAddress((prevAddress) => ({
+                ...prevAddress,
+                street: e.target.value,
+              }))
+            }
             type="text"
             name="street"
             placeholder="Rátz László"
@@ -139,7 +164,12 @@ const Register = () => {
           <img src={orderIcon} />
           <input
             value={address.num}
-            onChange={(e) => setAddress((prevAddress) => ({ ...prevAddress, num: e.target.value }))}
+            onChange={(e) =>
+              setAddress((prevAddress) => ({
+                ...prevAddress,
+                num: e.target.value,
+              }))
+            }
             type="text"
             name="num"
             placeholder="3"
@@ -149,7 +179,11 @@ const Register = () => {
           />
         </div>
         <div className="input-container">
-          <Link to="/bejelentkezes" >Van már fiókom.<br /> Bejelentkezek!<br /></Link>
+          <Link to="/bejelentkezes">
+            Van már fiókom.
+            <br /> Bejelentkezek!
+            <br />
+          </Link>
           <input type="submit" value="Regisztráció" />
         </div>
       </form>

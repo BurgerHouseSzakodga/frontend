@@ -1,5 +1,5 @@
 import "../sass/pages/about-you.css";
-import Foot from "../components/Footer";
+import Footer from "../components/Footer";
 
 const AboutYou = () => {
   return (
@@ -27,7 +27,7 @@ const AboutYou = () => {
           </li>
         </ul>
       </div>
-      <Foot />
+      <Footer />
     </div>
   );
 };

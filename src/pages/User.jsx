@@ -7,6 +7,7 @@ import ChangePassword from "../components/ChangePassword";
 
 const UserProfile = () => {
   const { logout } = useContext(AuthContext);
+
   const scroolToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };

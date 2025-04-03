@@ -1,5 +1,5 @@
 import "../sass/pages/contact-us.css";
-import Foot from "../components/Footer";
+import Footer from "../components/Footer";
 
 const ContactUs = () => {
   return (
@@ -33,7 +33,7 @@ const ContactUs = () => {
           ></iframe>
         </div>
       </div>
-      <Foot />
+      <Footer />
     </div>
   );
 };

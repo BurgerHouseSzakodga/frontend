@@ -1,16 +1,11 @@
-import React from 'react'
-import MenuItemCard from '../components/MenuItemCrard'
-
-  const { menuItems } = useContext(MenuItemContext);
-  const { menuItems } = useContext(OrderContext);
+import MenuItemCard from "../components/MenuItemCrard";
 
 function ItemOrder() {
   return (
     <div>
-      <MenuItemCard/>
-      
+      <MenuItemCard />
     </div>
-  )
+  );
 }
 
-export default ItemOrder
+export default ItemOrder;

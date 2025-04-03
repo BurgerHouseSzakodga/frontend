@@ -40,10 +40,10 @@ const AppRouter = () => {
         <Route path="/bejelentkezes" element={<Login />} />
         <Route path="/regisztracio" element={<Register />} />
       </Route>
-      <Route path="*" element={<NoPage />} />
       <Route path="/rolunk" element={<AboutYou />} />
       <Route path="/kapcsolat" element={<ContactUs />} />
       <Route path="/szolgaltatas" element={<Service />} />
+      <Route path="*" element={<NoPage />} />
     </Routes>
   );
 };
