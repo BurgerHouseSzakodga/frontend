@@ -39,7 +39,7 @@ const AddressCard = () => {
           }
         >
           <img src={cartIcon} />
-          Átvtel az étteremben
+          Átvétel az étteremben
         </button>
       </div>
       <form className="address-form" onSubmit={handleSubmitAddress}>
