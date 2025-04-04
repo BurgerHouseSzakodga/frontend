@@ -1,3 +1,9 @@
+@use "../config" as *;
+
 .statistics {
+  @include flex;
+  flex-wrap: wrap;
+  gap: 16px;
   padding: 32px 0;
+  width: 60%;
 }

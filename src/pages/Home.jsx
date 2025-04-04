@@ -4,7 +4,7 @@ import "swiper/css";
 import PopularItem from "../components/PopularItem";
 import DiscountItems from "../components/DiscountItems";
 import AboutYouCard from "../components/AboutYou";
-import AddresAbout from "../components/AddresAbout";
+import AddressAbout from "../components/AddressAbout";
 import Footer from "../components/Footer";
 
 const Home = () => {
@@ -14,7 +14,7 @@ const Home = () => {
       <PopularItem />
       <AboutYouCard />
       <DiscountItems />
-      <AddresAbout />
+      <AddressAbout />
       <Footer />
     </div>
   );
