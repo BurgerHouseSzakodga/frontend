@@ -61,7 +61,6 @@ const AuthContextProvider = ({ children }) => {
         "/api/user/password",
         updatedPasswordData
       );
-      console.log("Sikeres adat küldés happy van:)", response.data);
       setupdatePasswordMessage({ success: "Jelszó sikeresen módosítva!" });
       return response.data;
     } catch (error) {

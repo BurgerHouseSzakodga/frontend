@@ -1,27 +1,28 @@
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/contexts";
-import '../sass/components/user-profile-edit.css';
+import "../sass/components/user-profile-edit.css";
 
 export default function UserProfileEdit() {
-  const { user, patchUser, updateMessage, setUpdateMessage } = useContext(AuthContext);
-  const [name, setName] = useState(user?.name || '');
-  const [email, setEmail] = useState(user?.email || '');
+  const { user, patchUser, updateMessage, setUpdateMessage } =
+    useContext(AuthContext);
+  const [name, setName] = useState(user?.name || "");
+  const [email, setEmail] = useState(user?.email || "");
   const [isLoading, setIsLoading] = useState(false);
   const [addressData, setAddressData] = useState({
-    zip: '',
-    city: '',
-    street: '',
-    num: ''
+    zip: "",
+    city: "",
+    street: "",
+    num: "",
   });
 
   useEffect(() => {
     if (user?.address) {
-      const addressParts = user.address.split(',');
+      const addressParts = user.address.split(",");
       setAddressData({
-        zip: addressParts[0] || '',
-        city: addressParts[1] || '',
-        street: addressParts[2] || '',
-        num: addressParts[3] || ''
+        zip: addressParts[0] || "",
+        city: addressParts[1] || "",
+        street: addressParts[2] || "",
+        num: addressParts[3] || "",
       });
     }
   }, [user]);
@@ -40,30 +41,27 @@ export default function UserProfileEdit() {
     setIsLoading(true);
 
     try {
-        const payload = {
-            name,
-            email,
-            zip: addressData.zip.trim(),
-            city: addressData.city.trim(),
-            street: addressData.street.trim().toLowerCase().includes("utca")
-                ? addressData.street.trim()
-                : `${addressData.street.trim()} utca`,
-            num: addressData.num.trim(),
-        };
+      const payload = {
+        name,
+        email,
+        zip: addressData.zip.trim(),
+        city: addressData.city.trim(),
+        street: addressData.street.trim().toLowerCase().includes("utca")
+          ? addressData.street.trim()
+          : `${addressData.street.trim()} utca`,
+        num: addressData.num.trim(),
+      };
 
-        console.log("Elküldött adatok:", payload); 
-
-        await patchUser(payload);
-        console.log("Profil sikeresen frissítve!");
+      await patchUser(payload);
     } catch (error) {
-        if (error.response?.status === 422) {
-            setUpdateMessage(error.response.data.errors); // Hibák mentése
-        } else {
-            console.error("Hiba történt a profil frissítése közben:", error);
-            setUpdateMessage({ error: "Ismeretlen hiba történt." });
-        }
+      if (error.response?.status === 422) {
+        setUpdateMessage(error.response.data.errors); // Hibák mentése
+      } else {
+        console.error("Hiba történt a profil frissítése közben:", error);
+        setUpdateMessage({ error: "Ismeretlen hiba történt." });
+      }
     } finally {
-        setIsLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -110,7 +108,7 @@ export default function UserProfileEdit() {
           <label htmlFor="zip">Irányítószám:</label>
           <input
             value={addressData.zip}
-            onChange={handleAddressChange('zip')}
+            onChange={handleAddressChange("zip")}
             type="text"
             name="zip"
             placeholder="1234"
@@ -127,7 +125,7 @@ export default function UserProfileEdit() {
           <label htmlFor="city">Város:</label>
           <input
             value={addressData.city}
-            onChange={handleAddressChange('city')}
+            onChange={handleAddressChange("city")}
             type="text"
             name="city"
             placeholder="Budapest"
@@ -144,7 +142,7 @@ export default function UserProfileEdit() {
           <label htmlFor="street">Utca:</label>
           <input
             value={addressData.street}
-            onChange={handleAddressChange('street')}
+            onChange={handleAddressChange("street")}
             type="text"
             name="street"
             placeholder="Példa utca"
@@ -158,7 +156,7 @@ export default function UserProfileEdit() {
           <label htmlFor="num">Házszám:</label>
           <input
             value={addressData.num}
-            onChange={handleAddressChange('num')}
+            onChange={handleAddressChange("num")}
             type="text"
             name="num"
             placeholder="42"
@@ -171,12 +169,8 @@ export default function UserProfileEdit() {
           )}
         </div>
 
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="submit-button"
-        >
-          {isLoading ? 'Mentés...' : 'Mentés'}
+        <button type="submit" disabled={isLoading} className="submit-button">
+          {isLoading ? "Mentés..." : "Mentés"}
         </button>
       </form>
     </div>

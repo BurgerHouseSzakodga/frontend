@@ -7,8 +7,6 @@ import "../sass/components/user-order-table.css";
 function UserOrderTable() {
   const { userOrders, ordersLoading } = useContext(OrderContext);
 
-  console.log(userOrders);
-
   if (ordersLoading) {
     return <Loader />;
   }
