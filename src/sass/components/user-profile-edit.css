@@ -1,154 +1,154 @@
 .profile-edit {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    margin-top: 4rem;
-    font-family: 'Poppins', sans-serif;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin-top: 4rem;
+  font-family: "Poppins", sans-serif;
 }
 
 .profile-edit form {
-    background-color: white;
-    border-radius: 0.5rem;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem; /* Csökkentett térköz a mezők között */
-    padding: 1.5rem;
-    width: 70%;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* Csökkentett térköz a mezők között */
+  padding: 1.5rem;
+  width: 70%;
 }
 
 .profile-edit form h3 {
-    text-align: center;
-    margin-bottom: 1rem;
-    font-weight: 600;
-    font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  font-size: 1.5rem;
 }
 
 .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem; 
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 .form-group label {
-    font-size: 0.9rem;
-    font-weight: 500;
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
 .form-group input {
-    font-family: 'Poppins', sans-serif;
-    border: 1px solid #ddd;
-    border-radius: 0.25rem;
-    padding: 0.75rem 1rem;
-    width: 100%;
-    font-size: 0.9rem;
-    text-align: left;
-    transition: all 0.3s ease;
+  font-family: "Poppins", sans-serif;
+  border: 1px solid #ddd;
+  border-radius: 0.25rem;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  font-size: 0.9rem;
+  text-align: left;
+  transition: all 0.3s ease;
 }
 
 .form-group input::placeholder {
-    text-align: left;
+  text-align: left;
 }
 
 .form-group input:focus {
-    outline: none;
-    border-color: #ff6b35;
-    box-shadow: 0 0 5px rgba(255, 107, 53, 0.2);
+  outline: none;
+  border-color: #ff6b35;
+  box-shadow: 0 0 5px rgba(255, 107, 53, 0.2);
 }
 
 .submit-button {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 500;
-    background-color: #ff5419;
-    border: none;
-    border-radius: 0.25rem;
-    color: white;
-    cursor: pointer;
-    padding: 0.75rem 1.5rem;
-    margin-top: 1rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    align-self: center;
-    font-size: 1rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  background-color: #ff5419;
+  border: none;
+  border-radius: 0.25rem;
+  color: white;
+  cursor: pointer;
+  padding: 0.75rem 1.5rem;
+  margin-top: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  align-self: center;
+  font-size: 1rem;
 }
 
 .submit-button:hover {
-    background-color: #ff6b35;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: #ff6b35;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .submit-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+  background-color: #ccc;
+  cursor: not-allowed;
 }
 
 .message {
-    color: #ff6b35;
-    font-size: 0.9rem;
-    margin-top: 0.25rem;
-    font-weight: 500;
-    background-color: #fff4e6;
-    padding: 0.5rem;
-    border-radius: 0.25rem;
-    border: 1px solid #ff6b35;
+  color: #ff6b35;
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+  font-weight: 500;
+  background-color: #fff4e6;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid #ff6b35;
 }
 
 @media (max-width: 768px) {
-    .profile-edit form {
-        width: 90%;
-        padding: 1rem;
-    }
+  .profile-edit form {
+    width: 90%;
+    padding: 1rem;
+  }
 
-    .profile-edit form h3 {
-        font-size: 1.3rem;
-    }
+  .profile-edit form h3 {
+    font-size: 1.3rem;
+  }
 
-    .form-group label {
-        font-size: 0.85rem;
-    }
+  .form-group label {
+    font-size: 0.85rem;
+  }
 
-    .form-group input {
-        font-size: 0.85rem;
-        padding: 0.7rem 1rem;
-    }
+  .form-group input {
+    font-size: 0.85rem;
+    padding: 0.7rem 1rem;
+  }
 
-    .submit-button {
-        font-size: 0.9rem;
-        padding: 0.7rem 1rem;
-    }
+  .submit-button {
+    font-size: 0.9rem;
+    padding: 0.7rem 1rem;
+  }
 
-    .message {
-        font-size: 0.85rem;
-        padding: 0.4rem;
-    }
+  .message {
+    font-size: 0.85rem;
+    padding: 0.4rem;
+  }
 }
 
 @media (max-width: 480px) {
-    .profile-edit form {
-        width: 100%;
-        padding: 0.8rem;
-    }
+  .profile-edit form {
+    width: 100%;
+    padding: 0.8rem;
+  }
 
-    .profile-edit form h3 {
-        font-size: 1.1rem;
-    }
+  .profile-edit form h3 {
+    font-size: 1.1rem;
+  }
 
-    .form-group label {
-        font-size: 0.8rem;
-    }
+  .form-group label {
+    font-size: 0.8rem;
+  }
 
-    .form-group input {
-        font-size: 0.8rem;
-        padding: 0.6rem 1rem;
-    }
+  .form-group input {
+    font-size: 0.8rem;
+    padding: 0.6rem 1rem;
+  }
 
-    .submit-button {
-        font-size: 0.8rem;
-        padding: 0.6rem 0.8rem;
-    }
+  .submit-button {
+    font-size: 0.8rem;
+    padding: 0.6rem 0.8rem;
+  }
 
-    .message {
-        font-size: 0.8rem;
-        padding: 0.3rem;
-    }
+  .message {
+    font-size: 0.8rem;
+    padding: 0.3rem;
+  }
 }
