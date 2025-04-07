@@ -55,7 +55,10 @@ const Login = () => {
           )}
         </div>
         <div>
-          <Link to="/regisztracio" className="link">Nincs még fiókja?<br /> Csináljon egyet most!</Link>
+          <small>Nincs még fiókja?</small>
+          <Link to="/regisztracio" className="link">
+            Csináljon egyet most!
+          </Link>
           <input type="submit" value="Bejelentkezés" />
         </div>
       </form>

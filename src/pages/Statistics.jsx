@@ -6,9 +6,9 @@ import RevenueChart from "../components/RevenueChart";
 const Statistics = () => {
   return (
     <div className="statistics">
+      <RevenueChart />
       <OrdersPieChart />
       <CategoriesPieChart />
-      <RevenueChart />
       {/* <ItemsTreeView /> */}
     </div>
   );

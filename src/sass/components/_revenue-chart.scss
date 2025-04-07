@@ -1,0 +1,9 @@
+@use "../config" as *;
+
+.revenue-chart {
+  select {
+    border: none;
+    height: 2rem;
+    margin-bottom: 1rem;
+  }
+}
