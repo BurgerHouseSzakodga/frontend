@@ -24,8 +24,6 @@ const UserContextProvider = ({ children }) => {
         const numberOfUsersData = await fetchData("api/number-of-users");
         const activeUserOrder = await fetchData("api/active-orders");
 
-        console.log(activeUserOrder);
-
         setUsers(usersData);
         setNumberOfUsers(numberOfUsersData);
         setHasActiveOrder(!!activeUserOrder.length);
@@ -73,8 +71,6 @@ const UserContextProvider = ({ children }) => {
       setUserLoading(false);
     }
   };
-
-  
 
   const ctxValue = {
     users,

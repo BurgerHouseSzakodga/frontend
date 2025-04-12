@@ -1,12 +1,12 @@
-import { useState, useContext } from 'react';
-import { AuthContext } from '../context/contexts';
-import '../sass/components/change-password.css';
+import { useState, useContext } from "react";
+import { AuthContext } from "../context/contexts";
+import "../sass/components/change-password.css";
 
 function ChangePassword() {
   const [passwords, setPasswords] = useState({
-    current_password: '',
-    new_password: '',
-    new_password_confirmation: ''
+    current_password: "",
+    new_password: "",
+    new_password_confirmation: "",
   });
 
   const { patchPassword, updatePasswordMessage } = useContext(AuthContext);
@@ -20,12 +20,12 @@ function ChangePassword() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const updatedData = await patchPassword(passwords);
-      console.log("Jelszó módosítása sikeres:", updatedData);
+      await patchPassword(passwords);
+
       setPasswords({
-        current_password: '',
-        new_password: '',
-        new_password_confirmation: ''
+        current_password: "",
+        new_password: "",
+        new_password_confirmation: "",
       });
     } catch (error) {
       if (error.response?.status === 422) {
@@ -54,7 +54,7 @@ function ChangePassword() {
             type="password"
             id="current_password"
             name="current_password"
-            placeholder='Jelenlegi jelszó'
+            placeholder="Jelenlegi jelszó"
             value={passwords.current_password}
             onChange={handleChange}
             required
@@ -67,7 +67,7 @@ function ChangePassword() {
             type="password"
             id="new_password"
             name="new_password"
-            placeholder='Új jelszó'
+            placeholder="Új jelszó"
             value={passwords.new_password}
             onChange={handleChange}
             required
@@ -78,18 +78,22 @@ function ChangePassword() {
         </div>
 
         <div>
-          <label htmlFor="new_password_confirmation">Új jelszó megerősítése:</label>
+          <label htmlFor="new_password_confirmation">
+            Új jelszó megerősítése:
+          </label>
           <input
             type="password"
             id="new_password_confirmation"
             name="new_password_confirmation"
-            placeholder='Új jelszó megerősítése'
+            placeholder="Új jelszó megerősítése"
             value={passwords.new_password_confirmation}
             onChange={handleChange}
             required
           />
-           {updatePasswordMessage?.new_password_confirmation && (
-            <p className="message">{updatePasswordMessage.new_password_confirmation}</p>
+          {updatePasswordMessage?.new_password_confirmation && (
+            <p className="message">
+              {updatePasswordMessage.new_password_confirmation}
+            </p>
           )}
         </div>
         <button type="submit">Módosítás</button>

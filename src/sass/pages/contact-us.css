@@ -2,7 +2,7 @@
   max-width: 800px;
   margin: 2rem auto;
   padding: 1rem;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   color: #333;
 }
 
@@ -47,7 +47,7 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 1rem;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .form-group textarea {

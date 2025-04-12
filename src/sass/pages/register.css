@@ -3,7 +3,7 @@
   align-items: flex-start;
   justify-content: center;
   margin-top: 4rem;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .register form {
@@ -19,7 +19,6 @@
 
 .register form h3 {
   text-align: center;
-;
   margin-bottom: 0rem;
   font-weight: 600;
   font-size: 1.5rem;
@@ -33,7 +32,6 @@
 }
 
 .input-container label {
-
   font-size: 1rem;
   font-weight: 500;
 }
@@ -44,11 +42,12 @@
   top: 70%;
   transform: translateY(-50%);
   width: 1.2rem;
-  filter: invert(56%) sepia(100%) saturate(1680%) hue-rotate(338deg) brightness(99%) contrast(100%);
+  filter: invert(56%) sepia(100%) saturate(1680%) hue-rotate(338deg)
+    brightness(99%) contrast(100%);
 }
 
 .input-container input {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   border: 1px solid #ddd;
   border-radius: 0.25rem;
   padding: 0.75rem 0.75rem 0.75rem 2.5rem;
@@ -71,7 +70,7 @@
 }
 
 .register form input[type="submit"] {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 500;
   font-size: 1rem;
   background-color: #ff5419;
@@ -117,6 +116,4 @@
     align-items: center;
     margin-top: 1rem;
   }
-
-
 }

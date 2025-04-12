@@ -9,7 +9,7 @@ const AuthContextProvider = ({ children }) => {
   const [loginError, setLoginError] = useState([]);
   const [registerError, setRegisterError] = useState([]);
   const [updateMessage, setUpdateMessage] = useState([]);
-  const [updatePasswordMessage , setupdatePasswordMessage ] = useState([]);
+  const [updatePasswordMessage, setupdatePasswordMessage] = useState([]);
   const [authLoading, setAuthLoading] = useState(true);
 
   const navigate = useNavigate();
@@ -26,47 +26,53 @@ const AuthContextProvider = ({ children }) => {
     }
   }, [setUser]);
 
-
-  const patchUser = useCallback(async (updatedUserData) => {
-    setAuthLoading(true);
-    setUpdateMessage([]);
-    try {
-        const response = await apiClient.patch("/api/user/update-profile", updatedUserData); 
+  const patchUser = useCallback(
+    async (updatedUserData) => {
+      setAuthLoading(true);
+      setUpdateMessage([]);
+      try {
+        const response = await apiClient.patch(
+          "/api/user/update-profile",
+          updatedUserData
+        );
         setUser(response.data);
         setUpdateMessage({ success: "Adatok sikeresen módosítva!" });
         return response.data;
-    } catch (error) {
+      } catch (error) {
         if (error.response?.status === 422) {
-            setUpdateMessage(error.response.data.errors); 
+          setUpdateMessage(error.response.data.errors);
         } else {
-            console.error("Hiba történt a profil frissítése közben:", error);
-            setUpdateMessage({ error: "Ismeretlen hiba történt." });
+          console.error("Hiba történt a profil frissítése közben:", error);
+          setUpdateMessage({ error: "Ismeretlen hiba történt." });
         }
         throw error;
-    } finally {
+      } finally {
         setAuthLoading(false);
-    }
-}, [setUser]);
+      }
+    },
+    [setUser]
+  );
 
   const patchPassword = useCallback(async (updatedPasswordData) => {
     setAuthLoading(true);
     setupdatePasswordMessage([]);
     try {
-        const response = await apiClient.put("/api/user/password", updatedPasswordData);
-        console.log("Sikeres adat küldés happy van:)", response.data);
-        setupdatePasswordMessage({ success: "Jelszó sikeresen módosítva!" });
-        return response.data;
+      const response = await apiClient.put(
+        "/api/user/password",
+        updatedPasswordData
+      );
+      setupdatePasswordMessage({ success: "Jelszó sikeresen módosítva!" });
+      return response.data;
     } catch (error) {
-        if (error.response?.status === 422) {
-            setupdatePasswordMessage(error.response.data.errors); 
-        } else {
-            console.error("Hiba a jelszó frissítésekor:", error);
-        }
+      if (error.response?.status === 422) {
+        setupdatePasswordMessage(error.response.data.errors);
+      } else {
+        console.error("Hiba a jelszó frissítésekor:", error);
+      }
     } finally {
-        setAuthLoading(false);
+      setAuthLoading(false);
     }
-}, [setUser]);
-
+  }, []);
 
   const login = async (payload) => {
     setAuthLoading(true);
@@ -93,12 +99,9 @@ const AuthContextProvider = ({ children }) => {
     } catch (error) {
       error.response.status === 422 &&
         setRegisterError(error.response.data.errors);
-        
     } finally {
       setAuthLoading(false);
       setRegisterError([]);
-      
-
     }
   };
 

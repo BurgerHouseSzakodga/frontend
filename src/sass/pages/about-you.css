@@ -2,7 +2,7 @@
   max-width: 800px;
   margin: 2rem auto;
   padding: 1rem;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   color: #333;
 }
 
@@ -37,7 +37,6 @@
 }
 
 @media screen and (max-width: 480px) {
-
   .about-you-title {
     font-size: 1.5rem;
   }
@@ -58,4 +57,5 @@
     .about-you p {
       font-size: 0.9rem;
     }
-}}
+  }
+}

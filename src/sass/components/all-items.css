@@ -30,7 +30,10 @@
 
 .category-items {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Azonos méretű oszlopok */
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(200px, 1fr)
+  ); /* Azonos méretű oszlopok */
   gap: 20px;
 }
 
@@ -124,7 +127,10 @@
   }
 
   .category-items {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Kisebb oszlopok */
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(150px, 1fr)
+    ); /* Kisebb oszlopok */
     gap: 15px;
   }
 
@@ -165,7 +171,10 @@
   }
 
   .category-items {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Még kisebb oszlopok */
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(120px, 1fr)
+    ); /* Még kisebb oszlopok */
     gap: 10px;
   }
 

@@ -35,7 +35,7 @@ const OrdersPieChart = () => {
           data: [...data],
         },
       ]}
-      width={400}
+      width={380}
       height={300}
       slotProps={{
         legend: {

@@ -1,7 +1,7 @@
 import { FaTag, FaMapMarkerAlt, FaClock } from "react-icons/fa";
 import "../sass/components/addres-about.css";
 
-export default function AddresAbout() {
+export default function AddressAbout() {
   const features = [
     {
       icon: <FaTag className="icon" />,

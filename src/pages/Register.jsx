@@ -179,10 +179,9 @@ const Register = () => {
           />
         </div>
         <div className="input-container">
+          <small>Van már fiókom.</small>
           <Link to="/bejelentkezes">
-            Van már fiókom.
             <br /> Bejelentkezek!
-            <br />
           </Link>
           <input type="submit" value="Regisztráció" />
         </div>

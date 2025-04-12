@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
 import {
@@ -16,11 +16,22 @@ const AdminLayout = () => {
   const { menuItemError, setMenuItemError } = useContext(MenuItemContext);
   const { categoriesError, setCategoriesError } = useContext(CategoryContext);
 
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth > 1024);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   if (authLoading) {
     return <Loader />;
   }
 
-  return isAdmin ? (
+  return isAdmin && isDesktop ? (
     <div className="admin-layout">
       <Sidebar />
       <Outlet />
