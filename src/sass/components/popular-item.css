@@ -6,6 +6,7 @@
 
 .cim {
   text-align: center;
+ 
 }
 
 .item-card {
@@ -158,6 +159,10 @@
     padding: 10px;
   }
 
+  .cim{
+    font-size: 1.5rem;
+  }
+
   .item-card img {
     height: 120px;
   }
@@ -187,8 +192,12 @@
     height: 100px;
   }
 
+.cim{
+    font-size: 0.5rem;
+  }
+
   .item-card h3 {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
   }
 
   .item-card p {
