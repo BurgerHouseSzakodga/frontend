@@ -7,9 +7,17 @@
   height: 600px;
   width: 100%;
 
+  @media (max-width: 427px) {
+    height: auto;
+  }
+
   &__title {
     margin: 64px auto 16px;
     width: clamp(50%, 856px, 80%);
+
+    @media (max-width: 427px) {
+      display: none;
+    }
 
     h1 {
       color: #fff;

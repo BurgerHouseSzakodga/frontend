@@ -13,14 +13,26 @@
     overflow: scroll;
 
     @media (max-width: 1336px) {
-      height: 90vh;
       width: 100%;
-      overflow: scroll;
+      overflow: visible;
+      margin-top: 660px;
+    }
+
+    @media (max-width: 768px) {
+      margin-top: 540px;
+    }
+
+    @media (max-width: 533px) {
+      margin-top: 400px;
     }
 
     & > div {
       padding: 16px 32px;
       border-bottom: 1px solid $light-grey;
+
+      @media (max-width: 768px) {
+        padding: 6px;
+      }
     }
   }
 
@@ -63,6 +75,17 @@
 
       .delivery {
         @include flex($justify: space-between);
+
+        @media (max-width: 768px) {
+          align-items: stretch;
+          flex-direction: column;
+          gap: 1rem;
+
+          input,
+          select {
+            width: 100%;
+          }
+        }
       }
     }
 
@@ -71,6 +94,16 @@
       border-top: 1px solid $font-color-light;
       padding: 16px;
       width: 90%;
+
+      @media (max-width: 768px) {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 1rem;
+
+        button {
+          width: 100%;
+        }
+      }
 
       button {
         @include submit-button;
@@ -99,6 +132,10 @@
       @media (max-width: 776px) {
         font-size: 14px;
       }
+
+      @media (max-width: 467px) {
+        display: none;
+      }
     }
   }
 
@@ -106,8 +143,8 @@
     @include flex($justify: flex-start);
     margin-left: auto;
 
-    @media (max-width: 776px) {
-      font-size: 12px;
+    @media (max-width: 768px) {
+      font-size: 10px;
     }
 
     .plus {
@@ -151,10 +188,15 @@
   .extras {
     margin-left: auto;
     width: 10rem;
+
+    @media (max-width: 425px) {
+      margin-left: 16px;
+    }
   }
 
   .item-quantity {
     @include flex($justify: flex-start);
+    margin: 1rem;
 
     span {
       @include flex;

@@ -8,6 +8,7 @@ import searchIcon from "/assets/search.svg";
 import accountIcon from "/assets/account.svg";
 import cartIcon from "/assets/cart.svg";
 import gearIcon from "/assets/gear.svg";
+import homeIcon from "/assets/home.svg";
 import { Tooltip } from "@mui/material";
 
 const Nav = () => {
@@ -76,6 +77,14 @@ const Nav = () => {
       </div>
       <div className={"nav__menu" + menuClassName}>
         <div className="button-wrapper">
+          <Link
+            to="/"
+            className="find-food-button"
+            onClick={() => setMenuClassName("")}
+          >
+            <img src={homeIcon} />
+            <p> Főoldal</p>
+          </Link>
           <Link
             to="/rendeles"
             className="find-food-button"
