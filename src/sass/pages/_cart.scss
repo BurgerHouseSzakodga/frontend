@@ -301,8 +301,42 @@
 }
 
 .active-order {
-  @include flex($direction: column);
+  @include flex($direction: column, $justify: center, $align: center);
   background-color: #fccb93;
   height: 90%;
   width: 100%;
+  text-align: center;
+
+  img {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    color: $orange;
+  }
+
+  @media (max-width: 768px) {
+    img {
+      width: 150px;
+      height: 150px;
+    }
+
+    h2 {
+      font-size: 1.2rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    img {
+      width: 100px;
+      height: 100px;
+    }
+
+    h2 {
+      font-size: 1rem;
+    }
+  }
 }

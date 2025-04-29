@@ -67,6 +67,8 @@
   font-size: 0.8rem;
   font-weight: 400;
   margin-top: -0.5rem;
+  visibility: visible; /* Ensure error messages are always visible */
+  display: block; /* Ensure error messages are displayed */
 }
 
 .register form input[type="submit"] {
@@ -115,5 +117,9 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 1rem;
+  }
+
+  .register form p {
+    font-size: 0.8rem; /* Keep font size consistent for smaller screens */
   }
 }
